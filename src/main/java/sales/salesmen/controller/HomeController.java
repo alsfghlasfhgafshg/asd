@@ -11,4 +11,26 @@ public class HomeController {
     public String index(){
         return "index";
     }
+
+    @GetMapping("/home")
+    public String home(){
+        return "page/home";
+    }
+
+    @GetMapping("/myself")
+    public String myself(){
+        return "page/myself";
+    }
+
+    @GetMapping("/productservice")
+    public String productservice(){
+        return "page/productservice";
+    }
+
+    @GetMapping("/course")
+    public String course(){
+        return "page/course";
+    }
+
+
 }

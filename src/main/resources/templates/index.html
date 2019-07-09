@@ -11,18 +11,14 @@
 
 
 <div class="weui-tab" style="position: absolute;bottom:0px;width: 100%">
-<!--搜索框-->
+    <!--搜索框-->
 
 
-
-<!--    对应四个页面-->
-    <div class="weui-tab__panel">
-        <div th:include="page/home :: home" id="homepage"></div>
-        <div style="display:none" th:include="page/productservice :: productservice" id="productservicepage"></div>
-        <div style="display:none" th:include="page/course :: course" id="coursepage"></div>
-        <div style="display:none" th:include="page/myself :: myself" id="myselfpage"></div>
+    <!--    对应四个页面-->
+    <div class="weui-tab__panel" id="pagecontent">
+        <!--        js 初始化-->
     </div>
-<!--    底部 tabbar-->
+    <!--    底部 tabbar-->
 
     <div class="weui-tabbar">
         <a href="javascript:showhome();" class="weui-tabbar__item weui-bar__item_on" id="homea">
@@ -47,6 +43,21 @@
 
 <script>
 
+    var homeinited = false;
+    var productserviceinited = false;
+    var coursepageinited = false;
+    var myselfinited = false;
+
+
+    var homeframe = '<iframe src="/home" frameborder="0" width="100%" height="100%" id="homepage"></iframe>'
+    var productserviceframe = '<iframe src="/productservice" frameborder="0" width="100%" height="100%" id="productserviceframe"></iframe>'
+    var coursepageframe = '<iframe src="/course" frameborder="0" width="100%" height="100%" id="coursepageframe"></iframe>'
+    var myselfframe = '<iframe src="/myself" frameborder="0" width="100%" height="100%" id="myselfframe"></iframe>'
+
+    function initpage(p) {
+        $("#pagecontent").append(p)
+    }
+
     function hideall() {
         $("#homepage").hide()
         $("#productservicepage").hide()
@@ -60,31 +71,55 @@
 
 
     }
+
     function showhome() {
+        if (homeinited == false) {
+            initpage(homeframe)
+            homeinited = true
+        }
         hideall()
         $("#homepage").show()
         $("#homea").addClass("weui-bar__item_on")
 
     }
+
     function showproductservice() {
+        if (productserviceinited == false) {
+            initpage(productserviceframe)
+            productserviceinited = true
+
+        }
         hideall()
         $("#productservicepage").show()
         $("#productservicea").addClass("weui-bar__item_on")
 
     }
+
     function showcourse() {
+        if (coursepageinited == false) {
+            initpage(coursepageframe)
+            coursepageinited = true
+
+        }
         hideall()
         $("#coursepage").show()
         $("#coursea").addClass("weui-bar__item_on")
 
     }
+
     function showmyself() {
+        if (myselfinited == false) {
+            initpage(myselfframe)
+            myselfinited = true
+        }
         hideall()
         $("#myselfpage").show()
         $("#myselfa").addClass("weui-bar__item_on")
 
     }
 
+    // 显示home
+    showhome()
 
 </script>
 </body>
