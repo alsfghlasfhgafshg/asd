@@ -36,13 +36,9 @@ dependencies {
     compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity5', version: '3.0.4.RELEASE'
     compile group: 'commons-codec', name: 'commons-codec', version: '1.12'
     compile group: 'es.nitaur.markdown', name: 'txtmark', version: '0.16'
-// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-elasticsearch
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-elasticsearch', version: '2.0.0.RELEASE'
-// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: '2.0.0.RELEASE'
-//    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-elasticsearch', version: '2.0.0.RELEASE'
+
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'de.codecentric:spring-boot-admin-starter-client'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
