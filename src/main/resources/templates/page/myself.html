@@ -1,7 +1,89 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
-<div >
 
-    我
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" th:href="@{/lib/bootstrap/css/bootstrap.css}">
+    <script th:src="@{/js/jquery-3.1.1.min.js}"></script>
+    <script th:src="@{/lib/bootstrap/js/bootstrap.js}"></script>
+
+</head>
+<body>
+<div>我</div>
+<div style="height: 30px;"></div>
+
+<div class="container">
+    <div class="row" style="margin-bottom: 20px;">
+        <div class="col-3">
+            <img th:src="@{/img/star.png}" class="rounded float-left" style="max-height: 100%;width: 50px;" alt="...">
+        </div>
+        <div class="col-5">
+            用户名
+        </div>
+        <div class="col-4" style="border: 1px solid #cccccc">
+            我的积分
+        </div>
+    </div>
 </div>
+
+<div class="container" style="margin-bottom: 30px">
+    <div class="row" style="">
+        <div class="col-4">
+
+            <div class="text-center">
+                <img th:src="@{/img/star.png}" class="rounded mx-auto d-block" style="max-height: 100%;width: 50px;">
+                <span>我的收藏</span>
+            </div>
+
+        </div>
+        <div class="col-4">
+
+            <div class="text-center">
+                <img th:src="@{/img/reservation.png}" class="rounded mx-auto d-block"
+                     style="max-height: 100%;width: 50px;">
+                <span>我的预约</span>
+            </div>
+
+        </div>
+        <div class="col-4">
+
+            <div class="text-center">
+                <img th:src="@{/img/evaluation.png}" class="rounded mx-auto d-block"
+                     style="max-height: 100%;width: 50px;">
+                <span>我的测评</span>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div style="border-bottom: 1px solid #cccccc;height: 35px;padding-bottom: 5px;margin-bottom: 20px">
+    <span style="font-size: 22px;padding-left: 25px">消息通知</span>
+    <img th:src="@{/img/in.png}" class="rounded float-right" style="height: 30px;max-width: 100%;padding-right: 15px">
+</div>
+
+<div style="border-bottom: 1px solid #cccccc;height: 35px;padding-bottom: 5px;margin-bottom: 20px;">
+    <span style="font-size: 22px;padding-left: 25px">我的销售</span>
+    <img th:src="@{/img/in.png}" class="rounded float-right" style="height: 30px;max-width: 100%;padding-right: 15px">
+</div>
+
+<div style="border-bottom: 1px solid #cccccc;height: 35px;padding-bottom: 5px;margin-bottom: 20px">
+    <span style="font-size: 22px;padding-left: 25px">用户反馈</span>
+    <img th:src="@{/img/in.png}" class="rounded float-right" style="height: 30px;max-width: 100%;padding-right: 15px">
+</div>
+
+<div style="border-bottom: 1px solid #cccccc;height: 35px;padding-bottom: 5px;margin-bottom: 20px">
+    <span style="font-size: 22px;padding-left: 25px">系统设置</span>
+    <img th:src="@{/img/in.png}" class="rounded float-right" style="height: 30px;max-width: 100%;padding-right: 15px">
+</div>
+
+
+</body>
+</html>
