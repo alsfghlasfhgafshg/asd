@@ -1,39 +1,57 @@
 plugins {
+    id 'org.springframework.boot' version '2.1.5.RELEASE'
     id 'java'
 }
+apply plugin: 'io.spring.dependency-management'
 
 group 'springboot_blog'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
+
+configurations {
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+}
+
 repositories {
     mavenCentral()
+}
+ext {
+    set('springBootAdminVersion', "2.1.5")
 }
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.1.5.RELEASE'
-// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter
     compile group: 'org.springframework.boot', name: 'spring-boot-starter', version: '2.1.5.RELEASE'
-// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.1.5.RELEASE'
-// https://mvnrepository.com/artifact/mysql/mysql-connector-java
     compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.47'
-// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.1.5.RELEASE'
-// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
-// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.1.5.RELEASE'
-// https://mvnrepository.com/artifact/org.thymeleaf.extras/thymeleaf-extras-springsecurity5
     compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity5', version: '3.0.4.RELEASE'
-// https://mvnrepository.com/artifact/commons-codec/commons-codec
     compile group: 'commons-codec', name: 'commons-codec', version: '1.12'
-// https://mvnrepository.com/artifact/es.nitaur.markdown/txtmark
     compile group: 'es.nitaur.markdown', name: 'txtmark', version: '0.16'
-// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-elasticsearch
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-elasticsearch', version: '2.0.0.RELEASE'
+//    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-elasticsearch', version: '2.0.0.RELEASE'
+
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'de.codecentric:spring-boot-admin-starter-client'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    compile 'com.alibaba:druid-spring-boot-starter:1.1.10'
+    compile group: 'com.alibaba', name: 'fastjson', version: '1.2.47'
 
 }
+
+dependencyManagement {
+    imports {
+        mavenBom "de.codecentric:spring-boot-admin-dependencies:${springBootAdminVersion}"
+    }
+}
+

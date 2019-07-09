@@ -1,7 +1,10 @@
 package sales.salesmen.config;
 
+import org.aspectj.lang.annotation.SuppressAjWarnings;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -14,7 +17,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private static final String KEY = "dewitt";
+
+    @Value("${secert_key}")
+    private  String KEY = "dewitt";
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -47,6 +52,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login").failureUrl("/login-error")
                 .and().rememberMe().key(KEY)
                 .and().exceptionHandling().accessDeniedPage("/403");
+        //监控
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/actuator/**").hasIpAddress("127.0.0.1");
+        http.authorizeRequests().antMatchers("/druid/**").hasIpAddress("127.0.0.1");
+
     }
 
     @Autowired
