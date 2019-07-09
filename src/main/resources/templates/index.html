@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+    <link rel="stylesheet" th:href="@{/css/weui/weui.css}">
+    <script th:src="@{/js/jquery.js}"></script>
+</head>
+<body>
+
+
+<div class="weui-tab" style="position: absolute;bottom:0px;width: 100%">
+<!--搜索框-->
+
+
+
+<!--    对应四个页面-->
+    <div class="weui-tab__panel">
+        <div th:include="page/home :: home" id="homepage"></div>
+        <div style="display:none" th:include="page/productservice :: productservice" id="productservicepage"></div>
+        <div style="display:none" th:include="page/course :: course" id="coursepage"></div>
+        <div style="display:none" th:include="page/myself :: myself" id="myselfpage"></div>
+    </div>
+<!--    底部 tabbar-->
+
+    <div class="weui-tabbar">
+        <a href="javascript:showhome();" class="weui-tabbar__item weui-bar__item_on" id="homea">
+            <img th:src="@{/img/star.png}" alt="" class="weui-tabbar__icon">
+            <p class="weui-tabbar__label">首页</p>
+        </a>
+        <a href="javascript:showproductservice();" class="weui-tabbar__item" id="productservicea">
+            <img th:src="@{/img/star.png}" alt="" class="weui-tabbar__icon">
+            <p class="weui-tabbar__label">产品与服务</p>
+        </a>
+        <a href="javascript:showcourse();" class="weui-tabbar__item" id="coursea">
+            <img th:src="@{/img/star.png}" alt="" class="weui-tabbar__icon">
+            <p class="weui-tabbar__label">课程</p>
+        </a>
+        <a href="javascript:showmyself();" class="weui-tabbar__item" id="myselfa">
+            <img th:src="@{/img/star.png}" alt="" class="weui-tabbar__icon">
+            <p class="weui-tabbar__label">我的</p>
+        </a>
+    </div>
+</div>
+
+
+<script>
+
+    function hideall() {
+        $("#homepage").hide()
+        $("#productservicepage").hide()
+        $("#coursepage").hide()
+        $("#myselfpage").hide()
+
+        $("#homea").removeClass("weui-bar__item_on")
+        $("#productservicea").removeClass("weui-bar__item_on")
+        $("#coursea").removeClass("weui-bar__item_on")
+        $("#myselfa").removeClass("weui-bar__item_on")
+
+
+    }
+    function showhome() {
+        hideall()
+        $("#homepage").show()
+        $("#homea").addClass("weui-bar__item_on")
+
+    }
+    function showproductservice() {
+        hideall()
+        $("#productservicepage").show()
+        $("#productservicea").addClass("weui-bar__item_on")
+
+    }
+    function showcourse() {
+        hideall()
+        $("#coursepage").show()
+        $("#coursea").addClass("weui-bar__item_on")
+
+    }
+    function showmyself() {
+        hideall()
+        $("#myselfpage").show()
+        $("#myselfa").addClass("weui-bar__item_on")
+
+    }
+
+
+</script>
+</body>
+</html>
