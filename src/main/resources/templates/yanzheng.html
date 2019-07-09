@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>验证</title>
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.css">
+</head>
+<body>
+<div class="identity_form container">
+    <form th:action="@{~/auth/verifyAuthcode}" method="post">
+        <div class="form-group">
+            <label>验证码</label>
+            <input name="authcode" type="text" class="form-control" id="NameInput" th:value="${authcode}" required="required">
+        </div>
+        <div class="form-group">
+            <label>手机号</label>
+            <input type="text" name="phonenum" class="form-control" id="TelephoneInput" required="required">
+        </div>
+        <div class="form-group select-section">
+            <input type="submit" value="登陆" class="btn btn-primary"/>
+        </div>
+    </form>
+</div>
+</body>
+<script src="../../lib/bootstrap/js/bootstrap.js"></script>
+</html>
