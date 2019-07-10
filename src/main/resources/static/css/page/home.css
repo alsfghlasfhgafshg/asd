@@ -7,10 +7,27 @@
     margin-bottom: 10px;
 }
 .centerinline{
-    margin-top: 20px;
+    font-size: 28px;
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+.four>div {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.four{
+    margin-bottom: 30px;
+}
+.four>div>div {
+    margin-top: 10px;
+    height: 150px;
+    font-size: 40px;
+    margin-left: 5px;
     margin-bottom: 20px;
 }
-.centerinline li{
-    padding-left: 20px;
-    padding-right:20px;
+.four>div>div div {
+    margin: 22% 10%;
+}
+.carousel-inner div{
+    height: 400px;
 }
