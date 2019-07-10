@@ -50,6 +50,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+        //测试
+        http.authorizeRequests().antMatchers("/test**").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.POST,"/test*").permitAll();
+
         http.authorizeRequests().antMatchers("/css/**", "/js/**", "/fonts/**", "/index").permitAll()
                 .antMatchers("/admins/**").hasRole("ADMIN")
                 .and()
@@ -65,6 +70,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().sameOrigin();
         http.addFilterAfter(wxLoginFilter,UsernamePasswordAuthenticationFilter.class);
 
+        //在测试和上传文件时禁用 csrf
+        http.csrf().ignoringAntMatchers("/uploadimg","/test**");
     }
 
     @Autowired
