@@ -1,0 +1,16 @@
+.layui-tab-title li{
+    padding: 0;
+    width:25%;
+}
+#toplun{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.centerinline{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.centerinline li{
+    padding-left: 20px;
+    padding-right:20px;
+}
