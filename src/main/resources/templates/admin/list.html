@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<body>
+<div class="container" >
+    <!--<div class="row">-->
+        <!--<div class="col-lg-4">-->
+            <!--<div class="input-group">-->
+                <!--<a class="btn btn-primary" th:href="@{/users/form}" role="button">添加管理员</a>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <div id="mainContainer" class="container">
+        <div id="mainContainerRepleace" class="row">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th data-field="id">ID</th>
+                    <th data-field="age">用户名</th>
+                    <th data-field="name">手机号</th>
+                    <th data-field="authorities">禁用</th>
+                    <th data-field="operation">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr>
+                    <td >1</td>
+                    <td >11</td>
+                    <td >dewitt</td>
+                    <td >顾客</td>
+                    <td>
+                        <div>
+                            <button class="btn btn-secondary">
+                                <a class="blog-edit-user" data-toggle="modal" data-target="#flipFlop" >
+                                    编辑
+                                </a></button>
+                            <button class="btn btn-secondary">
+                                <a class="blog-delete-user" >
+                                    删除
+                                </a></button>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr th:each="user : ${userModel.userList}">
+                    <td th:text="${user.id}">1</td>
+                    <td th:text="${user.username}">11</td>
+                    <td th:text="${user.phonenum}">dewitt</td>
+                    <td th:text="${user.disabled}==false?'否':'是'">dewitt</td>
+                    <td>
+                        <div>
+                            <button class="btn btn-secondary">
+                                <a class="blog-edit-user" data-toggle="modal" data-target="#flipFlop" data-th-attr="userId=${user.id}">
+                                    编辑
+                                </a></button>
+                            <button class="btn btn-secondary">
+                                <a class="blog-delete-user" data-th-attr="userId=${user.id}">
+                                    删除
+                                </a></button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+            <div th:replace="~{page :: page}">...</div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="flipFlop" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modalLabel">新增/编辑</h4>
+                    <button type="button" class="close" data-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="userFormContainer"></div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-dismiss="modal" id="submitEdit">提交</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- /.container -->
+<!-- JavaScript -->
+
+<script th:src="@{/js/admin/users.js}"></script>
+</body>
+</html>

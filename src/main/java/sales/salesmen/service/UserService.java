@@ -15,4 +15,5 @@ public interface UserService {
     User registerUser(User user);
     void removeUser(Long id);
     Optional<User> getUserById(Long id);
+    Page<User> listUserByUsernameLike(String username,Pageable pageable);
 }

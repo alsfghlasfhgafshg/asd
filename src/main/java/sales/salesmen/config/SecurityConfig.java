@@ -14,12 +14,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Value("${secert_key}")
-    private  String KEY = "dewitt";
+    private String KEY = "dewitt";
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -29,7 +30,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     WxLoginFilter wxLoginFilter;
-
 
 
     @Bean
@@ -53,10 +53,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         //测试
         http.authorizeRequests().antMatchers("/test**").permitAll();
-        http.authorizeRequests().antMatchers(HttpMethod.POST,"/test*").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/test*").permitAll();
 
         http.authorizeRequests().antMatchers("/css/**", "/js/**", "/fonts/**", "/index").permitAll()
-                .antMatchers("/admins/**").hasRole("ADMIN")
+                .antMatchers("/admins/**").permitAll()
                 .and()
                 .formLogin()   //基于 Form 表单登录验证
                 .loginPage("/login").failureUrl("/login-error")
