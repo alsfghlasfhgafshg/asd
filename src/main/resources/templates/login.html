@@ -11,6 +11,8 @@
 <body>
   <div class="identity_form container">
     <form th:action="@{~/login}" method="post">
+      <!--/*@thymesVar id="beforeurl" type="java.lang.String"*/-->
+      <input type="hidden" name="redirectto" th:value="${beforeurl}">
       <div class="form-group">
         <label>账号</label>
         <input name="username" type="text" class="form-control" id="NameInput" placeholder="请输入账号" required="required">

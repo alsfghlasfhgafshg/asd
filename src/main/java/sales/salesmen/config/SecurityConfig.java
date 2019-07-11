@@ -23,6 +23,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private String KEY = "dewitt";
 
     @Autowired
+    LoginSuccessHandler loginSuccessHandler;
+
+    @Autowired
     private UserDetailsService userDetailsService;
 
     @Autowired
@@ -56,10 +59,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/test*").permitAll();
 
         http.authorizeRequests().antMatchers("/css/**", "/js/**", "/fonts/**", "/index").permitAll()
-                .antMatchers("/admins/**").permitAll()
-                .and()
-                .formLogin()   //基于 Form 表单登录验证
-                .loginPage("/login").failureUrl("/login-error")
+                .antMatchers("/admins/**").permitAll();
+        //基于 Form 表单登录验证
+        http.formLogin().loginPage("/login").failureUrl("/login-error")
+                .successHandler(loginSuccessHandler)
                 .and().rememberMe().key(KEY)
                 .and().exceptionHandling().accessDeniedPage("/403");
         //监控
@@ -70,10 +73,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.logout().logoutUrl("/logout").logoutSuccessUrl("/home").invalidateHttpSession(true);
 
         http.headers().frameOptions().sameOrigin();
-        http.addFilterAfter(wxLoginFilter,UsernamePasswordAuthenticationFilter.class);
+        http.addFilterAfter(wxLoginFilter, UsernamePasswordAuthenticationFilter.class);
 
         //在测试和上传文件时禁用 csrf
-        http.csrf().ignoringAntMatchers("/uploadimg","/test**");
+        http.csrf().ignoringAntMatchers("/uploadimg", "/test**");
     }
 
     @Autowired
