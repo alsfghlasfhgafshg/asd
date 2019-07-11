@@ -66,6 +66,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(HttpMethod.GET, "/actuator/**").hasIpAddress("127.0.0.1");
         http.authorizeRequests().antMatchers("/druid/**").hasIpAddress("127.0.0.1");
 
+        //注销登录
+        http.logout().logoutUrl("/logout").logoutSuccessUrl("/home").invalidateHttpSession(true);
 
         http.headers().frameOptions().sameOrigin();
         http.addFilterAfter(wxLoginFilter,UsernamePasswordAuthenticationFilter.class);

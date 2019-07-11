@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 
 <!doctype html>
@@ -22,10 +23,16 @@
 <div class="container">
     <div class="row" style="margin-bottom: 20px;">
         <div class="col-3">
-            <img th:src="@{/img/star.png}" class="rounded float-left" style="max-height: 100%;width: 50px;" alt="...">
+            <!--/*@thymesVar id="avatarimg" type="java.lang.String"*/-->
+            <img th:src="${avatarimg}" class="rounded float-left" style="max-height: 100%;width: 50px;" alt="...">
         </div>
         <div class="col-5">
-            用户名
+            <span th:if="${#authentication.name=='anonymousUser'}">
+                <a th:href="@{/login}">登录</a>
+            </span>
+            <span th:if="${#authentication.name!='anonymousUser'}">
+                <span th:text="${#authentication.name}"></span>
+            </span>
         </div>
         <div class="col-4" style="border: 1px solid #cccccc">
             我的积分
@@ -65,23 +72,36 @@
 </div>
 
 <div style="border-bottom: 1px solid #cccccc;height: 35px;padding-bottom: 5px;margin-bottom: 20px">
-    <span style="font-size: 22px;padding-left: 25px">消息通知</span>
+    <a style="font-size: 22px;padding-left: 25px">消息通知</a>
     <img th:src="@{/img/in.png}" class="rounded float-right" style="height: 30px;max-width: 100%;padding-right: 15px">
 </div>
 
 <div style="border-bottom: 1px solid #cccccc;height: 35px;padding-bottom: 5px;margin-bottom: 20px;">
-    <span style="font-size: 22px;padding-left: 25px">我的销售</span>
+    <a style="font-size: 22px;padding-left: 25px">我的销售</a>
     <img th:src="@{/img/in.png}" class="rounded float-right" style="height: 30px;max-width: 100%;padding-right: 15px">
 </div>
 
 <div style="border-bottom: 1px solid #cccccc;height: 35px;padding-bottom: 5px;margin-bottom: 20px">
-    <span style="font-size: 22px;padding-left: 25px">用户反馈</span>
+    <a style="font-size: 22px;padding-left: 25px">用户反馈</a>
     <img th:src="@{/img/in.png}" class="rounded float-right" style="height: 30px;max-width: 100%;padding-right: 15px">
 </div>
 
 <div style="border-bottom: 1px solid #cccccc;height: 35px;padding-bottom: 5px;margin-bottom: 20px">
-    <span style="font-size: 22px;padding-left: 25px">系统设置</span>
+    <a style="font-size: 22px;padding-left: 25px">系统设置</a>
     <img th:src="@{/img/in.png}" class="rounded float-right" style="height: 30px;max-width: 100%;padding-right: 15px">
+</div>
+
+
+<div th:if="${#authentication.name!='anonymousUser'}">
+    <div style="border-bottom: 1px solid #cccccc;height: 35px;padding-bottom: 5px;margin-bottom: 20px">
+        <a style="font-size: 22px;padding-left: 25px" href="#"
+           onclick="document.getElementById('logout-form').submit();">
+            退出登录 </a>
+        <form id="logout-form" th:action="@{/logout}" method="post">
+
+        </form>
+    </div>
+
 </div>
 
 
