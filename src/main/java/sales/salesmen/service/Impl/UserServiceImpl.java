@@ -42,6 +42,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public Page<User> listUserByUsernameLike(String username, Pageable pageable) {
+        username = "%" + username + "%";
+        return userRepository.findByUsernameLike(username,pageable);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username);
     }

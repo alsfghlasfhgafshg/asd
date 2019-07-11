@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/thymeleaf-bootstrap-paginator.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/bootstrap/css/bootstrap.min.css}">
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script th:src="@{/lib/bootstrap/js/bootstrap.js}"></script>
+    <script th:src="@{/js/admin/main.js}"></script>
+    <script th:src="@{/js/thymeleaf-bootstrap-paginator.js}"></script>
+    <script th:src="@{/js/toastr.min.js}"></script>
+</head>
+<body>
+<div class="container blog-content-container">
+
+    <div class="row">
+
+        <!-- 左侧栏目 -->
+        <div class="col-md-4 col-xl-3">
+
+
+            <!-- 分类 -->
+            <div class="card ">
+                <h5 class="card-header">菜单</h5>
+
+                <ul class="list-group blog-menu" th:each="menu:${menuList.list}">
+                    <a href="javascript:void(0)" class="list-group-item" th:title="${menu.name}" th:text="${menu.name}" th:attr="url=${menu.url}">
+                        用户管理
+                    </a>
+
+                </ul>
+            </div>
+
+        </div>
+
+
+
+        <!-- 右侧栏目 -->
+
+
+        <div class="col-md-8 col-xl-9">
+            <div class="card" id="rightContainer">
+            </div>
+        </div>
+    <!-- /.row -->
+    </div>
+</div>
+<!-- /.container -->
+
+
+</body>
+</html>
