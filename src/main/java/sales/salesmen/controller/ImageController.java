@@ -20,7 +20,7 @@ public class ImageController {
     public JSONObject uploadImg(@RequestParam("img") MultipartFile file) {
         String filepath = fileService.uploadImage(file);
         JSONObject responsejson = new JSONObject();
-        responsejson.put("url", filepath);
+        responsejson.put("default", filepath);
         return responsejson;
     }
 }
