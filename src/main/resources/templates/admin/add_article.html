@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<div class="container">
+    <form th:action="@{/articles}" method="post" th:object="${articleModel.article}" id="articleForm">
+        <input type="hidden" id="articleId" name="id" th:value="*{id}">
+        <div class="form-group">
+            <label for="title" class="col-form-label">标题</label>
+            <input type="text" class="form-control" id="title" name="title" th:value="*{title}" maxlength="50"
+                   placeholder="请输入标题">
+        </div>
+        <div class="form-group">
+            <label for="author" class="col-form-label">作者</label>
+            <input type="text" class="form-control" id="author" name="author" th:value="*{author}" maxlength="50"
+                   placeholder="请输入作者">
+        </div>
+        <div class="form-group">
+            <label class="col-form-label">文章内容</label>
+            <div th:replace="snipaste/ck"></div>
+        </div>
+        <div class="form-group">
+            <label for="catalog" class="col-form-label">选择分类</label>
+            <select id="catalog" name="acatalog_id" class="form-control" data-placeholder="请选择">
+                <option value="1">金融话题</option>
+                <option value="2">投资技能</option>
+            </select>
+        </div>
+    </form>
+</div>
+</body>
+</html>

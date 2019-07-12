@@ -1,6 +1,7 @@
 package sales.salesmen.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
 @Entity
@@ -10,11 +11,15 @@ public class ACatalog implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column
+    @NotEmpty(message = "类型名为空")
+    @Column(nullable = false)
     private String name;
 
-    protected ACatalog() {
+    public ACatalog(@NotEmpty(message = "类型名为空") String name) {
+        this.name = name;
     }
+
+    protected ACatalog() {}
 
     public Integer getId() {
         return id;

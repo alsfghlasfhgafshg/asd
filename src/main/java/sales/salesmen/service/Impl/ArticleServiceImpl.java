@@ -1,7 +1,10 @@
 package sales.salesmen.service.Impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 import sales.salesmen.entity.Article;
 import sales.salesmen.entity.Comment;
 import sales.salesmen.entity.User;
@@ -12,6 +15,7 @@ import sales.salesmen.service.ArticleService;
 import javax.servlet.annotation.ServletSecurity;
 import java.util.Optional;
 
+@Service
 public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
@@ -44,5 +48,10 @@ public class ArticleServiceImpl implements ArticleService {
             origionalArticle.addComment(comment);
         }
         return origionalArticle;
+    }
+
+    @Override
+    public Page<Article> listAllArticle(Pageable pageable) {
+        return articleRepository.findAll(pageable);
     }
 }
