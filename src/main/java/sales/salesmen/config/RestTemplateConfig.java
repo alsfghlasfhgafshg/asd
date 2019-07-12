@@ -11,7 +11,9 @@ import org.springframework.web.client.RestTemplate;
 public class RestTemplateConfig {
     @Bean
     public RestTemplate restTemplate(ClientHttpRequestFactory factory) {
-        return new RestTemplate(factory);
+        RestTemplate restTemplate= new RestTemplate(factory);
+        restTemplate.getMessageConverters().add(new WxUserInfoHttpMessageConverter());
+        return restTemplate;
     }
 
     @Bean
