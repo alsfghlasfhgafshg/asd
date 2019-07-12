@@ -5,4 +5,5 @@ import sales.salesmen.entity.User;
 import sales.salesmen.entity.WxUser;
 
 public interface WxUserRepository extends JpaRepository<WxUser, String> {
+    WxUser findWxUserByWxopenid(String Wxopenid);
 }

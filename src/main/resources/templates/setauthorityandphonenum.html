@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"
+    <script th:src="@{/js/jquery.js}"></script>
+    <script th:src="@{/lib/bootstrap/js/bootstrap.js}"></script>
+    <link rel="stylesheet" th:href="@{/lib/bootstrap/css/bootstrap.css}">
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <h4 class="text-center">完善信息</h4>
+
+    <!--/*@thymesVar id="errmsg" type="java.lang.String"*/-->
+    <div class="alert alert-danger" role="alert" th:text="${errmsg}"></div>
+
+
+    <br>
+
+
+    <form th:action="@{/setauthorityandphonenum}" method="post">
+        <!--/*@thymesVar id="uid" type="java.lang.Long"*/-->
+        <input type="hidden" name="uid" th:value="${uid}">
+
+        <div class="form-row">
+
+            <div class="col-3 text-center align-self-center" style="font-size: 18px">
+                我是
+            </div>
+            <div class="col-9">
+                <select name="authorityid" class="form-inline form-control form-control">
+                    <div th:each="authority:${as}">
+                        <option th:value="${authority.id}" th:text="${authority.name}" class="form-control"></option>
+                    </div>
+                </select>
+            </div>
+
+        </div>
+
+
+        <br>
+        <div class="form-row">
+            <div class="col-3 text-center align-self-center" style="font-size: 18px">
+                手机号
+            </div>
+            <div class="col-9">
+                <input type="text" name="phonenum" class="form-control">
+            </div>
+
+        </div>
+
+
+        <br>
+
+        <div class="form-row">
+            <div class="col-3 text-center align-self-center" style="font-size: 18px">
+                验证码
+            </div>
+            <div class="col-5 align-self-center">
+                <input type="text" name="verificationcode" class="form-control">
+
+            </div>
+
+            <div class="col-4 align-self-center">
+                <input type="button" value="获取验证码" class="form-control">
+
+            </div>
+
+        </div>
+        <br>
+
+        <div class="form-row">
+            <div class="col-12 align-self-center text-center">
+                <input type="submit" value="提交" class="btn btn-primary">
+
+            </div>
+
+        </div>
+
+        </select>
+
+    </form>
+</div>
+</body>
+</html>
+
+

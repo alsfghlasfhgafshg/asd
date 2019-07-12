@@ -22,18 +22,17 @@ public class User implements UserDetails {
     private Long id;
 
     @NotEmpty(message = "用户名不能为空")
-    @Size(min = 2,max = 20)
-    @Column(nullable = false,length = 20,unique = true)
+    @Size(min = 2, max = 20)
+    @Column(nullable = false, length = 20, unique = true)
     private String username;
 
-    @NotEmpty(message = "密码不能为空")
+
     @Size(max = 100)
     @Column(length = 100)
     private String password;
 
-    @NotEmpty(message = "手机号不能为空")
     @Size(max = 50)
-    @Column(nullable = false,length = 50,unique = true)
+    @Column(nullable = true, length = 50, unique = true)
     private String phonenum;
 
     @Column(nullable = false)
@@ -49,11 +48,11 @@ public class User implements UserDetails {
     @Column(length = 200)
     private String avatar;
 
-    @ManyToMany(cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
-    @JoinTable(name = "user_authority",joinColumns = @JoinColumn(name = "user_id",referencedColumnName = "id"))
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_authority", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
     private List<Authority> authorities;
 
-    public User(@NotEmpty(message = "用户名不能为空") @Size(min = 2, max = 20) String username, @NotEmpty(message = "密码不能为空") @Size(max = 100) String password, @NotEmpty(message = "手机号不能为空") @Size(max = 50) String phonenum) {
+    public User(@NotEmpty(message = "用户名不能为空") @Size(min = 0, max = 20) String username, @NotEmpty(message = "密码不能为空") @Size(max = 100) String password, @NotEmpty(message = "手机号不能为空") @Size(max = 50) String phonenum) {
         this.username = username;
         this.password = password;
         this.phonenum = phonenum;
@@ -139,12 +138,13 @@ public class User implements UserDetails {
         this.avatar = avatar;
     }
 
-    protected User(){}
+    public User() {
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> simple = new ArrayList<>();
-        for (GrantedAuthority authority: this.authorities) {
+        for (GrantedAuthority authority : this.authorities) {
             simple.add(new SimpleGrantedAuthority((authority.getAuthority())));
         }
         return simple;
