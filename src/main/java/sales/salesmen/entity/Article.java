@@ -51,6 +51,12 @@ public class Article implements Serializable {
         this.id = id;
     }
 
+    public Article(@NotEmpty(message = "作者为空") String author, @NotEmpty(message = "标题为空") String title, @NotEmpty(message = "内容为空") String htmlContent) {
+        this.author = author;
+        this.title = title;
+        this.htmlContent = htmlContent;
+    }
+
     public String getAuthor() {
         return author;
     }
