@@ -15,11 +15,9 @@ public class SCatalog implements Serializable {
     @Column
     private String name;
 
-
     protected SCatalog() {
 
     }
-
 
     public Integer getId() {
         return id;

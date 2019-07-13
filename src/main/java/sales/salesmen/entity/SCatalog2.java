@@ -15,6 +15,16 @@ public class SCatalog2 implements Serializable {
     @Column
     private String name;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    SCatalog sCatalog;
+
+    public SCatalog getsCatalog() {
+        return sCatalog;
+    }
+
+    public void setsCatalog(SCatalog sCatalog) {
+        this.sCatalog = sCatalog;
+    }
 
     protected SCatalog2() {
 

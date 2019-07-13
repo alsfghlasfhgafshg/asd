@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>服务管理</title>
+    <script th:src="@{js/admin/serving.js}"></script>
+</head>
+<body>
+<br>
+<button id="addbtn" class="btn btn-primary btn-lg btn-block"
+        style="max-width: 80%;margin:auto" data-toggle="modal" data-target="#addserving">添加服务
+</button>
+<hr>
+
+<div class="container">
+
+    <div class="row justify-content-center">
+        <div class="col-9 justify-content-center">
+            <div class="card " style="width: 90%;">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div class="">
+                            <h5 class="card-title align-self-start">Card title</h5>
+                        </div>
+                        <div>
+                            <a class="align-self-end" href="#">立即预约</a>
+                            <a class="align-self-end" href="#">产品咨询</a>
+                        </div>
+                    </div>
+                    <div class="row" style="max-height: 100px">
+                        <div class="col-4">
+                            <img src="/img/star.png" alt="" style="max-width: 80%;max-height: 100%">
+                        </div>
+                        <div class="col-8">
+                            <div>楼盘名称</div>
+                            <div style="margin-bottom: 6px;max-height: 50px;overflow: hidden">
+                                永久产权期房久产权期房，一居室，28平米永久产权期房，一居室，28平米永久产权期房，一
+                            </div>
+                            <div class="h4">总价 ¥30万起</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-3 justify-content-center align-items-center">
+
+            <button class="button ">修改</button>
+            <button class="button">删除</button>
+        </div>
+    </div>
+    <br>
+
+</div>
+
+
+<div class="modal fade" id="addserving" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">添加服务</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div class="modal-body">
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-3"> 分类</div>
+                        <div class="col-9">
+                            <select name="catalog" id="catalogtagselect" class="form-control">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-3"> 分类2</div>
+                        <div class="col-9">
+                            <select name="catalog2" id="catalogtag2select" class="form-control">
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-3"> 标题</div>
+                        <div class="col-9">
+                            <input type="text" name="title" class="form-control" id="titleinput">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-3"> 副标题</div>
+                        <div class="col-9">
+                            <input type="text" name="subtitle" id="subtitleinput" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-3"> 图片</div>
+                        <div class="col-9">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="picinput" name="pic"
+                                       required>
+                                <label class="custom-file-label" for="picinput">选择图片</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-3"> 介绍</div>
+                        <div class="col-9">
+                            <textarea name="summary" id="summaryinput" rows="3" class="form-control">
+
+                            </textarea>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-3"> 价格</div>
+                        <div class="col-9">
+                            <input type="text" name="price" id="priceinput" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="servingsubmitbtn">提交</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="success" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">添加成功</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="container text-center">
+                    <img th:src="@{img/success.png}" alt="" style="height: 80px;">
+                    <h5>添加成功</h5>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
+

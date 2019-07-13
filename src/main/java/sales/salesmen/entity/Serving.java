@@ -16,6 +16,9 @@ public class Serving implements Serializable {
     private String title;
 
     @Column
+    private String subtitle;
+
+    @Column
     private String pictureuri;
 
     @Column
@@ -24,26 +27,23 @@ public class Serving implements Serializable {
     @Column
     private String price;
 
-    @Column
-    private SCatalog sCatalog;
-
-    @Column
+    @OneToOne
     private SCatalog2 sCatalog2;
 
     public SCatalog2 getsCatalog2() {
         return sCatalog2;
     }
 
+    public String getSubtitle() {
+        return subtitle;
+    }
+
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
+    }
+
     public void setsCatalog2(SCatalog2 sCatalog2) {
         this.sCatalog2 = sCatalog2;
-    }
-
-    public SCatalog getsCatalog() {
-        return sCatalog;
-    }
-
-    public void setsCatalog(SCatalog sCatalog) {
-        this.sCatalog = sCatalog;
     }
 
     public String getPrice() {
@@ -54,18 +54,8 @@ public class Serving implements Serializable {
         this.price = price;
     }
 
-    @Column
-    private CCatalog2 cCatalog2;
 
-    public CCatalog2 getcCatalog2() {
-        return cCatalog2;
-    }
-
-    public void setcCatalog2(CCatalog2 cCatalog2) {
-        this.cCatalog2 = cCatalog2;
-    }
-
-    protected Serving() {
+    public Serving() {
 
     }
 
@@ -92,7 +82,6 @@ public class Serving implements Serializable {
     public void setPictureuri(String pictureuri) {
         this.pictureuri = pictureuri;
     }
-
 
     public String getSummary() {
         return summary;

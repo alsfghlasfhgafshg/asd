@@ -22,8 +22,8 @@ public class AdminController {
         list.add(new Menu("用户管理", "/users"));
         list.add(new Menu("文章管理","/articles"));
         list.add(new Menu("产品管理","/products"));
-        list.add(new Menu("服务管理","/service"));
-        list.add(new Menu("课程管理","/courses"));
+        list.add(new Menu("服务管理","/admins/serving"));
+        list.add(new Menu("课程管理","/admins/courses"));
         list.add(new Menu("轮播图管理","/pages"));
         model.addAttribute("list", list);
         return new ModelAndView("admin/index", "menuList", model);
