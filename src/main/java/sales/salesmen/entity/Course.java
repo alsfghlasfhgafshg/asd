@@ -33,6 +33,17 @@ public class Course implements Serializable {
     @Column
     private CCatalog2 cCatalog2;
 
+    public CCatalog getcCatalog() {
+        return cCatalog;
+    }
+
+    public void setcCatalog(CCatalog cCatalog) {
+        this.cCatalog = cCatalog;
+    }
+
+    @Column
+    private CCatalog cCatalog;
+
     public CCatalog2 getcCatalog2() {
         return cCatalog2;
     }

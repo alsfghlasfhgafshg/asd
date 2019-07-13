@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 //课程分类
 @Entity
-public class Service implements Serializable {
+public class Serving implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,8 +25,26 @@ public class Service implements Serializable {
     private String price;
 
     @Column
+    private SCatalog sCatalog;
+
+    @Column
     private SCatalog2 sCatalog2;
 
+    public SCatalog2 getsCatalog2() {
+        return sCatalog2;
+    }
+
+    public void setsCatalog2(SCatalog2 sCatalog2) {
+        this.sCatalog2 = sCatalog2;
+    }
+
+    public SCatalog getsCatalog() {
+        return sCatalog;
+    }
+
+    public void setsCatalog(SCatalog sCatalog) {
+        this.sCatalog = sCatalog;
+    }
 
     public String getPrice() {
         return price;
@@ -47,7 +65,7 @@ public class Service implements Serializable {
         this.cCatalog2 = cCatalog2;
     }
 
-    protected Service() {
+    protected Serving() {
 
     }
 

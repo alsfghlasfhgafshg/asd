@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 
-//课程分类
+//课程分类2
 @Entity
 public class CCatalog2 implements Serializable {
 
@@ -15,19 +15,8 @@ public class CCatalog2 implements Serializable {
     @Column
     private String name;
 
-    @Column
-    private  CCatalog cCatalog;
-
     protected CCatalog2() {
 
-    }
-
-    public CCatalog getcCatalog() {
-        return cCatalog;
-    }
-
-    public void setcCatalog(CCatalog cCatalog) {
-        this.cCatalog = cCatalog;
     }
 
     public Integer getId() {

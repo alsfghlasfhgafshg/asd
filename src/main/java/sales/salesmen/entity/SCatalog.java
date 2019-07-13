@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 
-//课程分类
+//服务分类
 @Entity
 public class SCatalog implements Serializable {
 
