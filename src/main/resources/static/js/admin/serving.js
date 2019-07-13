@@ -115,5 +115,30 @@ $(function () {
         $("#success").modal('show');
     }
 
+    $(".changebtn").click(function () {
+        var servingid=$(this).attr('data-servingid');
+        console.log(servingid);
+        getserving(servingid)
+    });
+
+
+    function getserving(servingid) {
+        $.ajax({
+            url: "/admins/serving/getscatalogbyid",
+            data:{
+                servingid:servingid
+            },
+            success: function (data) {
+                console.log(data)
+            },
+            error: function () {
+                toastr.error("error");
+            }
+        })
+
+    }
+
+
+
 });
 

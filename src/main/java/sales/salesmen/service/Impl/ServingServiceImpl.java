@@ -56,7 +56,7 @@ public class ServingServiceImpl implements ServingService {
 
     @Override
     public Serving getServingById(Long id) {
-        return servingRepository.getOne(id);
+        return servingRepository.findById(id).get() ;
     }
 
     @Override

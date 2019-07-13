@@ -14,6 +14,7 @@
 
 <div class="container">
 
+
     <div class="row justify-content-center">
         <div class="col-9 justify-content-center">
             <div class="card " style="width: 90%;">
@@ -45,10 +46,61 @@
         </div>
         <div class="col-3 justify-content-center align-items-center">
 
-            <button class="button ">修改</button>
-            <button class="button">删除</button>
+            <button class="button" data-toggle="modal" data-target="#addserving">修改</button>
+            <button class="button" data-toggle="modal" data-target="#addserving">删除</button>
         </div>
     </div>
+
+
+    <!--/*@thymesVar id="servings" type="java.util.List"*/-->
+    <div th:each="serving:${servings}">
+
+        <div class="row justify-content-center" style="margin-bottom: 5px">
+            <div class="col-9 justify-content-center">
+                <div class="card " style="width: 90%;">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div class="">
+                                <h5 class="card-title align-self-start" th:text="${serving.title}"></h5>
+                            </div>
+                            <div>
+                                <a class="align-self-end" href="#">立即预约</a>
+                                <a class="align-self-end" href="#">产品咨询</a>
+                            </div>
+                        </div>
+                        <div class="row" style="max-height: 100px">
+                            <div class="col-4">
+                                <img th:src="${serving.pictureuri}" alt="" style="max-width: 80%;max-height: 100%">
+                            </div>
+                            <div class="col-8">
+                                <div th:text="${serving.subtitle}"></div>
+                                <div style="margin-bottom: 6px;max-height: 50px;overflow: hidden"
+                                     th:text="${serving.summary}">
+                                </div>
+                                <div class="h4" th:text="${serving.price}"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 justify-content-center align-items-center">
+
+                <button class="button changebtn" data-toggle="modal" data-target="#change" id="changebtn"
+                        th:attr="data-servingid=${serving.id}">
+                    修改
+                </button>
+
+
+                <button class="button" data-toggle="modal" data-target="#delete" id="deletebtn"
+                        th:attr="data-servingid=${serving.id}">
+                    删除
+                </button>
+            </div>
+        </div>
+
+    </div>
+
     <br>
 
 </div>
@@ -127,9 +179,7 @@
                     <div class="row">
                         <div class="col-3"> 介绍</div>
                         <div class="col-9">
-                            <textarea name="summary" id="summaryinput" rows="3" class="form-control">
-
-                            </textarea>
+                            <textarea name="summary" id="summaryinput" rows="3" class="form-control"></textarea>
 
                         </div>
                     </div>
@@ -147,7 +197,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
                 <button type="button" class="btn btn-primary" id="servingsubmitbtn">提交</button>
             </div>
         </div>
@@ -173,6 +223,60 @@
                     <h5>添加成功</h5>
 
                 </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">添加成功</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="container ">
+                    <img th:src="@{img/delete.png}" alt="" style="height: 50px;">
+                    <span class="h5" style="line-height: 50px">是否删除</span>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">删除</button>
+                <button type="button" class="btn btn-primary" >提交</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="change" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">添加成功</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
 
             </div>
             <div class="modal-footer">

@@ -50,6 +50,13 @@ public class Admin_servingController {
         return sCatalogService.getAllSCatalog();
     }
 
+    @GetMapping("/getscatalogbyid")
+    public @ResponseBody
+    Serving getoneScatalog(@RequestParam("servingid") long servingid) {
+        return servingService.getServingById(servingid);
+    }
+
+
     @GetMapping("/getscatalog2")
     public @ResponseBody
     List<SCatalog2> getallScatalog2(@RequestParam("scatalogid") int scatalogid) {
