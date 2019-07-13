@@ -2,34 +2,13 @@
     margin-top: 10px;
     margin-bottom: 10px;
 }
-.centerinline{
-    font-size: 28px;
-    margin-top: 30px;
-    margin-bottom: 40px;
-}
-#left{
-    height: 75px;
-    font-size: 35px;
-    padding-top: 1%;
-}
-#right{
-    height: 75px;
-    font-size: 35px;
-    padding-top: 1%;
-}
-#left1{
-    height: 75px;
-    font-size: 35px;
-    padding-top: 1%;
-}
-#right1{
-    height: 75px;
-    font-size: 35px;
-    padding-top: 1%;
-}
-.carousel-inner div{
-    height: 400px;
-}
 .two{
-    margin-bottom: 30px;
+    margin-top: 5px;
+    margin-left: 15px;
+    margin-bottom: 10px;
 }
+.centerinline{
+    font-size: 12px;
+    margin-bottom: 20px;
+}
+p{margin:-3px 0;}

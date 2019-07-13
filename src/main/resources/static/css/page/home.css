@@ -3,31 +3,29 @@
     width:25%;
 }
 #toplun{
-    margin-top: 10px;
+    margin-top: 5px;
     margin-bottom: 10px;
 }
 .centerinline{
-    font-size: 28px;
-    margin-top: 30px;
-    margin-bottom: 40px;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 .four>div {
     margin-left: 10px;
     margin-right: 10px;
 }
 .four{
-    margin-bottom: 30px;
+    margin-bottom: 10px;
+    font-size: 16px;
 }
 .four>div>div {
+    line-height: 45px;
+    height: 45px;
+    padding: 0;
     margin-top: 10px;
-    height: 150px;
-    font-size: 40px;
-    margin-left: 5px;
-    margin-bottom: 20px;
+    margin-left: 1px;
+    margin-bottom: 10px;
 }
-.four>div>div div {
-    margin: 22% 10%;
-}
-.carousel-inner div{
-    height: 400px;
+.centerinline{
+    font-size: 12px;
 }
