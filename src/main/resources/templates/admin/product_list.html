@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <body>
-<script th:src="@{/js/admin/article.js}"></script>
+<script th:src="@{/js/admin/product.js}"></script>
 <div class="container">
     <div class="row">
         <div class="col-lg-4">
             <div class="input-group">
-                <a class="btn btn-primary" id="addArticle" data-toggle="modal" data-target="#flipFlop"  role="button">添加文章</a>
+                <a class="btn btn-primary" id="addProduct" data-toggle="modal" data-target="#flipFlop"  role="button">添加产品</a>
             </div>
         </div>
     </div>
@@ -16,9 +16,13 @@
                 <thead>
                 <tr>
                     <th data-field="id">ID</th>
-                    <th data-field="age">标题</th>
-                    <th data-field="name">分类</th>
-                    <th data-field="authorities">作者</th>
+                    <th data-field="name">产品名</th>
+                    <th data-field="type">类型</th>
+                    <th data-field="scale">规模</th>
+                    <th data-field="startmoney">起投金额</th>
+                    <th data-field="period">投资期限</th>
+                    <th data-field="performance">业绩比较基准</th>
+                    <th data-field="date">起售日期</th>
                     <th data-field="operation">操作</th>
                 </tr>
                 </thead>
@@ -29,34 +33,43 @@
                     <td>测试文章</td>
                     <td>dewitt</td>
                     <td>dewitt</td>
+                    <td>dewitt</td>
+                    <td>dewitt</td>
+                    <td>dewitt</td>
+                    <td>dewitt</td>
+
                     <td>
                         <div>
                             <button class="btn btn-secondary">
-                                <a class="blog-edit-article" data-toggle="modal" data-target="#flipFlop">
+                                <a class="blog-edit-product" data-toggle="modal" data-target="#flipFlop">
                                     编辑
                                 </a></button>
                             <button class="btn btn-secondary">
-                                <a class="blog-delete-article">
+                                <a class="blog-delete-product">
                                     删除
                                 </a></button>
                         </div>
                     </td>
                 </tr>
 
-                <tr th:each="article : ${articleModel.articleList}">
-                    <td th:text="${article.id}"></td>
-                    <td th:text="${article.title}"></td>
-                    <td th:text="${article.aCatalog.name}"></td>
-                    <td th:text="${article.author}"></td>
+                <tr th:each="product : ${productModel.productList}">
+                    <td th:text="${product.id}"></td>
+                    <td th:text="${product.name}"></td>
+                    <td th:text="${product.pCatalog.name}"></td>
+                    <td th:text="${product.scale}"></td>
+                    <td th:text="${product.startmoney}"></td>
+                    <td th:text="${product.invetmentPeriod}"></td>
+                    <td th:text="${product.performance}"></td>
+                    <td th:text="${product.startDate}"></td>
                     <td>
                         <div>
                             <button class="btn btn-secondary">
-                                <a class="blog-edit-article" data-toggle="modal" data-target="#flipFlop"
-                                   data-th-attr="articleId=${article.id}">
+                                <a class="blog-edit-product" data-toggle="modal" data-target="#flipFlop"
+                                   data-th-attr="productId=${product.id}">
                                     编辑
                                 </a></button>
                             <button class="btn btn-secondary">
-                                <a class="blog-delete-article" data-th-attr="articleId=${article.id}">
+                                <a class="blog-delete-product" data-th-attr="productId=${product.id}">
                                     删除
                                 </a></button>
                         </div>
@@ -76,9 +89,9 @@
                     <h4 class="modal-title" id="modalLabel">新增/编辑</h4>
                     <button type="button" class="close" data-dismiss="modal"></button>
                 </div>
-                <div class="modal-body" id="articleFormContainer"></div>
+                <div class="modal-body" id="productFormContainer"></div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary" data-dismiss="modal" type="submit" id="submitEdit">提交</button>
+                    <button class="btn btn-primary" data-dismiss="modal" id="submitEdit">提交</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
