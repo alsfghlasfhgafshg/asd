@@ -1,9 +1,9 @@
 $(function () {
     var _pageSize;
 
-    function getArticles(pageIndex, pageSize) {
+    function getProducts(pageIndex, pageSize) {
         $.ajax({
-            url: "/articles",
+            url: "/products",
             contentType: 'application/json',
             data: {
                 "async": true,
@@ -20,15 +20,15 @@ $(function () {
     };
 
     $.tbpage("#mainContainer", function (pageIndex, pageSize) {
-        getArticles(pageIndex, pageSize);
+        getProducts(pageIndex, pageSize);
         _pageSize = pageSize;
     });
 
-    $("#rightContainer").on("click", "#addArticle", function () {
+    $("#rightContainer").on("click", "#addProduct", function () {
         $.ajax({
-            url: "/articles/add",
+            url: "/products/add",
             success: function (data) {
-                $("#articleFormContainer").html(data);
+                $("#productFormContainer").html(data);
             },
             error: function () {
                 toastr.error("error!");
@@ -36,11 +36,11 @@ $(function () {
         })
     });
 
-    $("#rightContainer").on("click", ".blog-edit-article", function () {
+    $("#rightContainer").on("click", ".blog-edit-product", function () {
         $.ajax({
-            url: "/articles/edit/" + $(this).attr("articleId"),
+            url: "/products/edit/" + $(this).attr("productId"),
             success: function (data) {
-                $("#articleFormContainer").html(data);
+                $("#productFormContainer").html(data);
             },
             error: function () {
                 toastr.error("error!");
@@ -52,26 +52,30 @@ $(function () {
         var csrfToken = $("meta[name='_csrf']").attr("content");
         var csrfHeader = $("meta[name='_csrf_header']").attr("content");
 
-        var editor = window.editor;
-        var bid = $("#articleId").val();
-        var htmlContent = editor.getData();
-        var title = $("#title").val();
-        var author = $("#author").val();
-        var cid = $("#catalog").val();
-        var data= {"id":bid,"title":title,"author":author,"htmlContent":htmlContent,"cid":cid};
+        var  id = $("#productId").val()
+        var  name = $("#name").val();
+        var  scale = $("#scale").val();
+        var  startmoney = $("#startmoney").val();
+        var  invetmentperiod = $("#invetmentperiod").val();
+        var  performance = $("#performance").val();
+        var  startDate = $("#startDate").val();
+        var  pcatalogId = $("#catalog").val();
+
+        da = {"id":id,"name":name,"scale":scale,"startmoney":startmoney,"invetmentperiod":invetmentperiod,
+        "performance":performance,"startDate":startDate,"pcatalogId":pcatalogId};
         $.ajax({
-            url: "/articles",
+            url: "/products",
             type: 'post',
             beforeSend: function (request) {
                 request.setRequestHeader(csrfHeader, csrfToken);
             },
             async:true,
             contentType:"application/json;charset=utf-8",
-            data: JSON.stringify(data),
-            success: function (da) {
-                $('#articleForm')[0].reset();
-                if (da.success) {
-                    getArticles(0, _pageSize);
+            data: JSON.stringify(da),
+            success: function (data) {
+                $('#productForm')[0].reset();
+                if (data.success) {
+                    getProducts(0, _pageSize);
                 } else {
                     toastr.error(data.message);
                 }
@@ -79,20 +83,20 @@ $(function () {
         })
     });
 
-    $("#rightContainer").on("click", ".blog-delete-article", function () {
+    $("#rightContainer").on("click", ".blog-delete-product", function () {
 
         var csrfToken = $("meta[name='_csrf']").attr("content");
         var csrfHeader = $("meta[name='_csrf_header']").attr("content");
 
         $.ajax({
-            url: "/articles/" + $(this).attr("articleId"),
+            url: "/products/" + $(this).attr("productId"),
             type: 'delete',
             beforeSend: function (request) {
                 request.setRequestHeader(csrfHeader, csrfToken);
             },
             success: function (data) {
                 if (data.success) {
-                    getArticles(0, _pageSize);
+                    getProducts(0, _pageSize);
                 } else {
                     toastr.error(data.message);
                 }
