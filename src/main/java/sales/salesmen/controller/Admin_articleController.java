@@ -10,15 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import sales.salesmen.entity.ACatalog;
 import sales.salesmen.entity.Article;
-import sales.salesmen.entity.Authority;
-import sales.salesmen.entity.User;
 import sales.salesmen.service.ACatalogService;
 import sales.salesmen.service.ArticleService;
 import sales.salesmen.vo.Response;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

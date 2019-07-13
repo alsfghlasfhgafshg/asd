@@ -13,8 +13,8 @@ import java.util.UUID;
 @Service
 public class FileService {
 
-    String file_base_path;
-    String filepath_pattern;
+    private String file_base_path;
+    private String filepath_pattern;
 
     @Autowired
     public FileService(@Value("${file_base_path}") String file_upload_base_path, @Value("${filepath_pattern}") String filepath_pattern) {
