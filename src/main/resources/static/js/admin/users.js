@@ -3,7 +3,7 @@ $(function () {
 
     function getUsersByName(pageIndex, pageSize) {
         $.ajax({
-            url: "/users",
+            url: "/admins/users",
             contentType: 'application/json',
             data: {
                 "async": true,
@@ -26,7 +26,7 @@ $(function () {
 
     $("#addUser").click(function () {
         $.ajax({
-            url: "/users/add",
+            url: "/admins/users/add",
             success: function (data) {
                 $("#userFormContainer").html(data);
             }
@@ -35,7 +35,7 @@ $(function () {
 
     $("#rightContainer").on("click", ".blog-edit-user", function () {
         $.ajax({
-            url: "/users/edit/" + $(this).attr("userId"),
+            url: "/admins/users/edit/" + $(this).attr("userId"),
             success: function (data) {
                 $("#userFormContainer").html(data);
             },
@@ -47,7 +47,7 @@ $(function () {
 
     $("#submitEdit").click(function () {
         $.ajax({
-            url: "/users",
+            url: "/admins/users",
             type: 'post',
             data: $('#userForm').serialize(),
             success: function (data) {
@@ -69,7 +69,7 @@ $(function () {
         console.log(csrfHeader)
 
         $.ajax({
-            url: "/users/" + $(this).attr("userId"),
+            url: "/admins/users/" + $(this).attr("userId"),
             type: 'delete',
             beforeSend: function (request) {
                 request.setRequestHeader(csrfHeader, csrfToken);

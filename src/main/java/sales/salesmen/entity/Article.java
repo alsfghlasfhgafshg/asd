@@ -1,5 +1,7 @@
 package sales.salesmen.entity;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
@@ -37,6 +39,9 @@ public class Article implements Serializable {
     @Column
     private Integer commentSize=0;
 
+    @Column
+    private String avatar;
+
     @Column(name = "createtime")
     @org.hibernate.annotations.CreationTimestamp
     private Timestamp createTime;
@@ -51,10 +56,11 @@ public class Article implements Serializable {
         this.id = id;
     }
 
-    public Article(@NotEmpty(message = "作者为空") String author, @NotEmpty(message = "标题为空") String title, @NotEmpty(message = "内容为空") String htmlContent) {
+    public Article(@NotEmpty(message = "作者为空") String author, @NotEmpty(message = "标题为空") String title, @NotEmpty(message = "内容为空") String htmlContent, String avatar) {
         this.author = author;
         this.title = title;
         this.htmlContent = htmlContent;
+        this.avatar = avatar;
     }
 
     public String getAuthor() {
@@ -91,6 +97,14 @@ public class Article implements Serializable {
 
     public List<Comment> getComments() {
         return comments;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public void setComments(List<Comment> comments) {

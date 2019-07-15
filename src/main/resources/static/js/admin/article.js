@@ -3,7 +3,7 @@ $(function () {
 
     function getArticles(pageIndex, pageSize) {
         $.ajax({
-            url: "/articles",
+            url: "/admins/articles",
             contentType: 'application/json',
             data: {
                 "async": true,
@@ -26,7 +26,7 @@ $(function () {
 
     $("#rightContainer").on("click", "#addArticle", function () {
         $.ajax({
-            url: "/articles/add",
+            url: "/admins/articles/add",
             success: function (data) {
                 $("#articleFormContainer").html(data);
             },
@@ -38,7 +38,7 @@ $(function () {
 
     $("#rightContainer").on("click", ".blog-edit-article", function () {
         $.ajax({
-            url: "/articles/edit/" + $(this).attr("articleId"),
+            url: "/admins/articles/edit/" + $(this).attr("articleId"),
             success: function (data) {
                 $("#articleFormContainer").html(data);
             },
@@ -59,15 +59,25 @@ $(function () {
         var author = $("#author").val();
         var cid = $("#catalog").val();
         var data= {"id":bid,"title":title,"author":author,"htmlContent":htmlContent,"cid":cid};
+
+        var formdata = new FormData();
+        formdata.append("id",bid);
+        formdata.append("title",title);
+        formdata.append("author",author);
+        formdata.append("htmlContent",htmlContent);
+        formdata.append("cid",cid);
+        formdata.append("avatar",$("#picinput")[0].files[0],$("#picinput")[0].files[0].name);
+
         $.ajax({
-            url: "/articles",
+            url: "/admins/articles",
             type: 'post',
             beforeSend: function (request) {
                 request.setRequestHeader(csrfHeader, csrfToken);
             },
             async:true,
-            contentType:"application/json;charset=utf-8",
-            data: JSON.stringify(data),
+            processData:false,
+            contentType:false,
+            data: formdata,
             success: function (da) {
                 $('#articleForm')[0].reset();
                 if (da.success) {
@@ -85,7 +95,7 @@ $(function () {
         var csrfHeader = $("meta[name='_csrf_header']").attr("content");
 
         $.ajax({
-            url: "/articles/" + $(this).attr("articleId"),
+            url: "/admins/articles/" + $(this).attr("articleId"),
             type: 'delete',
             beforeSend: function (request) {
                 request.setRequestHeader(csrfHeader, csrfToken);

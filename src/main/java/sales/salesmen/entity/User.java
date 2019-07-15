@@ -26,7 +26,6 @@ public class User implements UserDetails {
     @Column(nullable = false, length = 20, unique = true)
     private String username;
 
-
     @Size(max = 100)
     @Column(length = 100)
     private String password;
@@ -35,7 +34,7 @@ public class User implements UserDetails {
     @Column(nullable = true, length = 50, unique = true)
     private String phonenum;
 
-    @Column(nullable = false)
+    @Column
     @org.hibernate.annotations.CreationTimestamp
     private Timestamp createtime;
 

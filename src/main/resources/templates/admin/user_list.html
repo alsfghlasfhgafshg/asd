@@ -2,13 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <body>
 <div class="container" >
-    <!--<div class="row">-->
-        <!--<div class="col-lg-4">-->
-            <!--<div class="input-group">-->
-                <!--<a class="btn btn-primary" th:href="@{/users/form}" role="button">添加管理员</a>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="input-group">
+                <a class="btn btn-primary" id="addUser" data-toggle="modal" data-target="#flipFlop" role="button">添加用户</a>
+            </div>
+        </div>
+    </div>
     <div id="mainContainer" class="container">
         <div id="mainContainerRepleace" class="row">
             <table class="table table-striped">
@@ -22,25 +22,6 @@
                 </tr>
                 </thead>
                 <tbody>
-
-                <tr>
-                    <td >1</td>
-                    <td >11</td>
-                    <td >dewitt</td>
-                    <td >顾客</td>
-                    <td>
-                        <div>
-                            <button class="btn btn-secondary">
-                                <a class="blog-edit-user" data-toggle="modal" data-target="#flipFlop" >
-                                    编辑
-                                </a></button>
-                            <button class="btn btn-secondary">
-                                <a class="blog-delete-user" >
-                                    删除
-                                </a></button>
-                        </div>
-                    </td>
-                </tr>
 
                 <tr th:each="user : ${userModel.userList}">
                     <td th:text="${user.id}">1</td>

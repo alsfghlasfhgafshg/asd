@@ -1,6 +1,5 @@
 package sales.salesmen.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -9,17 +8,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import sales.salesmen.entity.Article;
 import sales.salesmen.service.ACatalogService;
 import sales.salesmen.service.ArticleService;
+import sales.salesmen.service.FileService;
 import sales.salesmen.vo.Response;
 
 import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/articles")
+@RequestMapping("/admins/articles")
 public class Admin_articleController {
 
     @Autowired
@@ -27,6 +28,9 @@ public class Admin_articleController {
 
     @Autowired
     private ACatalogService aCatalogService;
+
+    @Autowired
+    private FileService fileService;
 
     @GetMapping
     public ModelAndView getArticle(@RequestParam(value = "async",required = false)boolean async,
@@ -51,24 +55,30 @@ public class Admin_articleController {
 
     @GetMapping("/add")
     public ModelAndView addArticle(Model model){
-        model.addAttribute("article",new Article(null,null,null));
+        model.addAttribute("article",new Article(null,null,null,null));
         return new ModelAndView("/admin/add_article","articleModel",model);
     }
 
     @PostMapping
-    public ResponseEntity<Response> saveOrUpdateArticle(@RequestBody JSONObject fastjson) {
+    public ResponseEntity<Response> saveOrUpdateArticle(@RequestParam("id")Long id,
+                                                        @RequestParam("title")String title,
+                                                        @RequestParam("author")String author,
+                                                        @RequestParam("htmlContent")String htmlContent,
+                                                        @RequestParam("cid")Integer cid,
+                                                        @RequestParam("avatar") MultipartFile avatar) {
 
-        Long id = fastjson.getLong("id");
         Article article;
+        String imgpath = fileService.uploadImage(avatar);
         if (id!=null){
-            article = articleService.getArticleById(fastjson.getLong("id")).get();
-            article.setTitle(fastjson.getString("title"));
-            article.setHtmlContent(fastjson.getString("htmlContent"));
-            article.setAuthor(fastjson.getString("author"));
-            article.setaCatalog(aCatalogService.findCatalogById(fastjson.getInteger("cid")).get());
+            article = articleService.getArticleById(id).get();
+            article.setTitle(title);
+            article.setHtmlContent(htmlContent);
+            article.setAuthor(author);
+            article.setaCatalog(aCatalogService.findCatalogById(cid).get());
+            article.setAvatar(imgpath);
         }else {
-            article = new Article(fastjson.getString("author"), fastjson.getString("title"), fastjson.getString("htmlContent"));
-            article.setaCatalog(aCatalogService.findCatalogById(fastjson.getInteger("cid")).get());
+            article = new Article(author, title, htmlContent,imgpath);
+            article.setaCatalog(aCatalogService.findCatalogById(cid).get());
         }
         articleService.saveArticle(article);
         return ResponseEntity.ok().body(new Response(true,"创建文章成功",null));

@@ -24,24 +24,6 @@
                 </thead>
                 <tbody>
 
-                <tr>
-                    <td>-1</td>
-                    <td>测试文章</td>
-                    <td>dewitt</td>
-                    <td>dewitt</td>
-                    <td>
-                        <div>
-                            <button class="btn btn-secondary">
-                                <a class="blog-edit-article" data-toggle="modal" data-target="#flipFlop">
-                                    编辑
-                                </a></button>
-                            <button class="btn btn-secondary">
-                                <a class="blog-delete-article">
-                                    删除
-                                </a></button>
-                        </div>
-                    </td>
-                </tr>
 
                 <tr th:each="article : ${articleModel.articleList}">
                     <td th:text="${article.id}"></td>
