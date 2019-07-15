@@ -12,10 +12,19 @@ public class SCatalog implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    public SCatalog(String name) {
+        this.name = name;
+    }
+
+    public SCatalog(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     @Column
     private String name;
 
-    protected SCatalog() {
+    public SCatalog() {
 
     }
 

@@ -26,8 +26,19 @@ public class SCatalog2 implements Serializable {
         this.sCatalog = sCatalog;
     }
 
-    protected SCatalog2() {
+    public SCatalog2() {
 
+    }
+
+    public SCatalog2(Integer id, String name, SCatalog sCatalog) {
+        this.id = id;
+        this.name = name;
+        this.sCatalog = sCatalog;
+    }
+
+    public SCatalog2(String name, SCatalog sCatalog) {
+        this.name = name;
+        this.sCatalog = sCatalog;
     }
 
     public Integer getId() {

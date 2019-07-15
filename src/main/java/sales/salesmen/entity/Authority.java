@@ -14,6 +14,20 @@ public class Authority implements GrantedAuthority {
     @Column(nullable = false)
     private String name;
 
+    public Authority(Long id, String name, String authorities) {
+        this.id = id;
+        this.name = name;
+        this.authorities = authorities;
+    }
+
+    public Authority(String name, String authorities) {
+        this.name = name;
+        this.authorities = authorities;
+    }
+
+    public Authority() {
+    }
+
     @Column(nullable = false)
     private String authorities;
 
