@@ -30,7 +30,7 @@
 
             <!-- 分类 -->
             <div class="card ">
-                <h5 class="card-header">菜单</h5>
+                <h5 class="card-header" id="titleid">菜单</h5>
 
                 <ul class="list-group blog-menu" th:each="menu:${menuList.list}">
                     <a href="javascript:void(0)" class="list-group-item" th:title="${menu.name}" th:text="${menu.name}" th:attr="url=${menu.url}">
