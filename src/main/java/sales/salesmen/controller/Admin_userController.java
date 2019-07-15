@@ -5,7 +5,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,7 +14,6 @@ import sales.salesmen.service.AuthorityService;
 import sales.salesmen.service.UserService;
 import sales.salesmen.vo.Response;
 
-import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -41,14 +39,14 @@ public class Admin_userController {
         List<User> list = page.getContent();
         model.addAttribute("page",page);
         model.addAttribute("userList",list);
-        return new ModelAndView(async?"admin/list :: #mainContainerRepleace" : "admin/list","userModel",model);
+        return new ModelAndView(async?"admin/user_list :: #mainContainerRepleace" : "admin/user_list","userModel",model);
     }
 
     @GetMapping("/edit/{id}")
     public ModelAndView modifyForm(@PathVariable("id")Long id, Model model){
         Optional<User> user = userService.getUserById(id);
         model.addAttribute("user",user.get());
-        return new ModelAndView("admin/edit","userModel",model);
+        return new ModelAndView("admin/edit_user","userModel",model);
     }
 
     @PostMapping
@@ -57,19 +55,21 @@ public class Admin_userController {
         if (disabled.equals("是")){
             user.setDisabled(true);
         }
-        User presentUser=null;
-        Optional<User> origionalUser = userService.getUserById(user.getId());
-        if (origionalUser.isPresent()){
-            presentUser = origionalUser.get();
-            user.setCreatetime(presentUser.getCreatetime());
-            user.setPassword(presentUser.getPassword());
-        }
+
         List<Authority> list = new ArrayList<>();
         list.add(authorityService.getAuthorityById(authorityId).get());
         user.setAuthorities(list);
-
         try{
-            userService.SaveOrUpdateUser(user);
+            if (user.getId()==null){
+                user.setEncodePassword(user.getPassword());
+                userService.SaveOrUpdateUser(user);
+            }else {
+                User optionalUser = userService.getUserById(user.getId()).get();
+                optionalUser.setAuthorities(list);
+                optionalUser.setDisabled(user.isDisabled());
+                optionalUser.setPhonenum(user.getPhonenum());
+                userService.SaveOrUpdateUser(optionalUser);
+            }
         }catch (Exception e){
             return ResponseEntity.ok().body(new Response(false, e.getMessage()));
         }
@@ -84,5 +84,11 @@ public class Admin_userController {
             return ResponseEntity.ok().body(new Response(false,e.getMessage()));
         }
         return ResponseEntity.ok().body(new Response(true,"删除成功!"));
+    }
+
+    @GetMapping("/add")
+    public ModelAndView addUser(Model model){
+        model.addAttribute("user",new User(null,null,null));
+        return new ModelAndView("/admin/add_user","userModel",model);
     }
 }
