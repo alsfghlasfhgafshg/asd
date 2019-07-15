@@ -130,7 +130,7 @@ $(function () {
                 },
                 success: function (data) {
                     if (data.error == 0) {
-                        showsuccess(successmsg)
+                        showsuccess(successmsg, true)
                     }
                 },
                 error: function () {
@@ -142,7 +142,7 @@ $(function () {
         });
 
     //显示成功
-    function showsuccess(successmsg) {
+    function showsuccess(successmsg, refreshpage) {
         clearinput()
 
         $("#succesmsg").text(successmsg);
@@ -150,7 +150,25 @@ $(function () {
         $("#addserving").modal('hide');
 
         $("#success").modal('show');
+        if (refreshpage == true) {
+            $("#closesuccess").data("refreshpage", true)
+        }
     }
+
+    //关闭成功按钮
+    $("#closesuccess").click(function () {
+        $("#success").modal('hide');
+
+        //刷新页面
+        if ($("#closesuccess").data()["refreshpage"] == true) {
+            showright($("#titleid").data()["rightContainerurl"])
+
+            //隐藏所有modal
+            $('.modal').modal('hide') // closes all active pop ups.
+            $('.modal-backdrop').remove()
+
+        }
+    });
 
     //修改按钮
     $(".changebtn").click(function (e) {
@@ -185,6 +203,10 @@ $(function () {
 
                 if (data.error == 0) {
                     showsuccess("删除成功")
+
+                    var servinghtmlid = "#serving" + servingid
+                    console.log(servinghtmlid)
+                    $("#serving" + servingid).remove()
                 }
             },
             error: function () {
