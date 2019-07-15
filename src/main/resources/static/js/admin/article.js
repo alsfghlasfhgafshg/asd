@@ -59,6 +59,15 @@ $(function () {
         var author = $("#author").val();
         var cid = $("#catalog").val();
         var data= {"id":bid,"title":title,"author":author,"htmlContent":htmlContent,"cid":cid};
+
+        var formdata = new FormData();
+        formdata.append("id",bid);
+        formdata.append("title",title);
+        formdata.append("author",author);
+        formdata.append("htmlContent",htmlContent);
+        formdata.append("cid",cid);
+        formdata.append("avatar",$("#picinput")[0].files[0],$("#picinput")[0].files[0].name);
+
         $.ajax({
             url: "/admins/articles",
             type: 'post',
@@ -66,8 +75,9 @@ $(function () {
                 request.setRequestHeader(csrfHeader, csrfToken);
             },
             async:true,
-            contentType:"application/json;charset=utf-8",
-            data: JSON.stringify(data),
+            processData:false,
+            contentType:false,
+            data: formdata,
             success: function (da) {
                 $('#articleForm')[0].reset();
                 if (da.success) {
