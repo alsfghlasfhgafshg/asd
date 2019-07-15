@@ -3,7 +3,7 @@ $(function () {
 
     function getProducts(pageIndex, pageSize) {
         $.ajax({
-            url: "/products",
+            url: "/admins/products",
             contentType: 'application/json',
             data: {
                 "async": true,
@@ -26,7 +26,7 @@ $(function () {
 
     $("#rightContainer").on("click", "#addProduct", function () {
         $.ajax({
-            url: "/products/add",
+            url: "/admins/products/add",
             success: function (data) {
                 $("#productFormContainer").html(data);
             },
@@ -38,7 +38,7 @@ $(function () {
 
     $("#rightContainer").on("click", ".blog-edit-product", function () {
         $.ajax({
-            url: "/products/edit/" + $(this).attr("productId"),
+            url: "/admins/products/edit/" + $(this).attr("productId"),
             success: function (data) {
                 $("#productFormContainer").html(data);
             },
@@ -64,7 +64,7 @@ $(function () {
         da = {"id":id,"name":name,"scale":scale,"startmoney":startmoney,"invetmentperiod":invetmentperiod,
         "performance":performance,"startDate":startDate,"pcatalogId":pcatalogId};
         $.ajax({
-            url: "/products",
+            url: "/admins/products",
             type: 'post',
             beforeSend: function (request) {
                 request.setRequestHeader(csrfHeader, csrfToken);
@@ -89,7 +89,7 @@ $(function () {
         var csrfHeader = $("meta[name='_csrf_header']").attr("content");
 
         $.ajax({
-            url: "/products/" + $(this).attr("productId"),
+            url: "/admins/products/" + $(this).attr("productId"),
             type: 'delete',
             beforeSend: function (request) {
                 request.setRequestHeader(csrfHeader, csrfToken);

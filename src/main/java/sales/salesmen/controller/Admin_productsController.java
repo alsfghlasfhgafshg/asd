@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/products")
+@RequestMapping("/admins/products")
 public class Admin_productsController {
     @Autowired
     private ProductsService productsService;

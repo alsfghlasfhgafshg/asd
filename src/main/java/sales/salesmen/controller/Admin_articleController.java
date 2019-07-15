@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/articles")
+@RequestMapping("/admins/articles")
 public class Admin_articleController {
 
     @Autowired
