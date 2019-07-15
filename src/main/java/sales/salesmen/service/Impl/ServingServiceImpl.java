@@ -12,6 +12,9 @@ import sales.salesmen.service.FileService;
 import sales.salesmen.service.SCatalogService;
 import sales.salesmen.service.ServingService;
 
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
 @Service
 public class ServingServiceImpl implements ServingService {
     @Autowired
@@ -55,8 +58,20 @@ public class ServingServiceImpl implements ServingService {
     }
 
     @Override
+    public boolean removeServing(Long servingid) {
+        Optional<Serving> serving = servingRepository.findById(servingid);
+
+        try {
+            servingRepository.delete(serving.get());
+            return true;
+        }catch (NoSuchElementException e){
+            return false;
+        }
+    }
+
+    @Override
     public Serving getServingById(Long id) {
-        return servingRepository.findById(id).get() ;
+        return servingRepository.findById(id).get();
     }
 
     @Override

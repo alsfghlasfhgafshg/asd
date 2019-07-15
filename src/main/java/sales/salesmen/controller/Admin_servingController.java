@@ -83,8 +83,20 @@ public class Admin_servingController {
         servingService.saveServing(catalog2id, title, subtitle, file, summary, price);
         responejson.put("error", 0);
         return responejson;
-
     }
 
+    @PostMapping("/delete")
+    public @ResponseBody
+    JSONObject deleteServing(@RequestParam("servingid") long servingid) {
+        JSONObject responsejson = new JSONObject();
 
+        if (servingService.removeServing(servingid) == true) {
+            responsejson.put("error", 0);
+            return responsejson;
+        } else {
+            responsejson.put("error", 1);
+            responsejson.put("msg", "服务不存在");
+            return responsejson;
+        }
+    }
 }

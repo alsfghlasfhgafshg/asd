@@ -100,7 +100,7 @@ $(function () {
                 success: function (data) {
 
                     if (data.error == 0) {
-                        showsuccess()
+                        showsuccess("添加成功")
                     }
                 },
                 error: function () {
@@ -110,23 +110,65 @@ $(function () {
         })
 
 
-    function showsuccess() {
+    function showsuccess(successmsg) {
+
+        $("#succesmsg").text(successmsg)
+        $("#delete").modal('hide');
         $("#addserving").modal('hide');
         $("#success").modal('show');
     }
 
-    $(".changebtn").click(function () {
-        var servingid=$(this).attr('data-servingid');
-        console.log(servingid);
-        getserving(servingid)
+    $(".changebtn").click(function (e) {
+        console.log(e.currentTarget.dataset.servingid)
+
+    });
+
+    $("#confirmdelete").click(function () {
+        var servingid = $("#confirmdelete").data()["servingid"]
+        console.log(servingid)
+
+        var formdata = new FormData()
+        formdata.append("servingid", servingid)
+
+
+        var csrfToken = $("meta[name='_csrf']").attr("content");
+        var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+
+        $.ajax({
+            url: "/admins/serving/delete",
+            type: 'post',
+            data: formdata,
+            processData: false,
+            contentType: false,
+            beforeSend: function (request) {
+                request.setRequestHeader(csrfHeader, csrfToken);
+            },
+            success: function (data) {
+                console.log(data)
+                if (data.error == 0) {
+                    showsuccess("删除成功")
+                }
+            },
+            error: function () {
+                toastr.error("error!");
+            }
+        });
+
+
+    });
+
+    $(".deletebtn").click(function (e) {
+        console.log(e.currentTarget.dataset.servingid)
+        $("#confirmdelete").data("servingid", e.currentTarget.dataset.servingid)
+
     });
 
 
     function getserving(servingid) {
         $.ajax({
             url: "/admins/serving/getscatalogbyid",
-            data:{
-                servingid:servingid
+            data: {
+                servingid: servingid
             },
             success: function (data) {
                 console.log(data)
@@ -137,7 +179,6 @@ $(function () {
         })
 
     }
-
 
 
 });

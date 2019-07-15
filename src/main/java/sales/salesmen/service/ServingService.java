@@ -18,6 +18,8 @@ public interface ServingService {
 
     boolean removeServing(Serving serving);
 
+    boolean removeServing(Long servingid);
+
     Serving getServingById(Long id);
 
     Page<Serving> getServingByPage(Pageable pageable);
