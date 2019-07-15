@@ -74,7 +74,7 @@ public class Admin_servingController {
     JSONObject addaddserving(@RequestParam("catalog2id") int catalog2id,
                              @RequestParam("title") String title,
                              @RequestParam("subtitle") String subtitle,
-                             @RequestParam("pic") MultipartFile file,
+                             @RequestParam(value = "pic",required = false) MultipartFile file,
                              @RequestParam("summary") String summary,
                              @RequestParam("price") String price) {
 
@@ -99,4 +99,33 @@ public class Admin_servingController {
             return responsejson;
         }
     }
+
+    @GetMapping("/getserving")
+    public @ResponseBody
+    String getserving(@RequestParam("servingid") long servingid) {
+        Serving serving = servingService.getServingById(servingid);
+        if (serving.getPrice().startsWith("价格 ：")) {
+            serving.setPrice(serving.getPrice().substring(4));
+        }
+        return JSONObject.toJSONString(serving);
+    }
+
+    @PostMapping("/changeserving")
+    public @ResponseBody
+    JSONObject changeserving(@RequestParam("servingid") long servingid,
+                             @RequestParam("catalog2id") int catalog2id,
+                             @RequestParam("title") String title,
+                             @RequestParam("subtitle") String subtitle,
+                             @RequestParam(value = "pic", required = false) MultipartFile file,
+                             @RequestParam("summary") String summary,
+                             @RequestParam("price") String price) {
+
+        JSONObject responejson = new JSONObject();
+
+        servingService.updateServing(servingid, catalog2id, title, subtitle, file, summary, price);
+        responejson.put("error", 0);
+        return responejson;
+    }
+
+
 }

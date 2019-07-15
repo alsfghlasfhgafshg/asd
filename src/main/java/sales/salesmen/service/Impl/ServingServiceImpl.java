@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import sales.salesmen.entity.SCatalog2;
 import sales.salesmen.entity.Serving;
@@ -32,6 +33,29 @@ public class ServingServiceImpl implements ServingService {
     }
 
     @Override
+    @Transactional
+    public Serving updateServing(long servingid, int catalog2id, String title, String subtitle, MultipartFile file, String summary, String price) {
+        Serving serving = new Serving();
+        serving.setId(servingid);
+        SCatalog2 sCatalog2 = sCatalogService.getSCatalog2(catalog2id);
+        serving.setsCatalog2(sCatalog2);
+        serving.setSummary(summary);
+        serving.setPrice("价格 ：" + price);
+
+        if (file != null) {
+            String pic = fileService.uploadImage(file);
+            serving.setPictureuri(pic);
+        } else {
+            serving.setPictureuri(servingRepository.getOne(servingid).getPictureuri());
+        }
+
+        serving.setTitle(title);
+        serving.setSubtitle(subtitle);
+
+        return saveServing(serving);
+    }
+
+    @Override
     public Serving saveServing(int catalog2id, String title, String subtitle, MultipartFile file, String summary, String price) {
 
         Serving serving = new Serving();
@@ -39,10 +63,15 @@ public class ServingServiceImpl implements ServingService {
         serving.setsCatalog2(sCatalog2);
         serving.setSummary(summary);
         serving.setPrice("价格 ：" + price);
-        String pic = fileService.uploadImage(file);
+        if (file != null) {
+            String pic = fileService.uploadImage(file);
+            serving.setPictureuri(pic);
+        } else {
+            serving.setPictureuri("/img/defaultserving.png");
+        }
         serving.setTitle(title);
         serving.setSubtitle(subtitle);
-        serving.setPictureuri(pic);
+
 
         return saveServing(serving);
     }
@@ -64,7 +93,7 @@ public class ServingServiceImpl implements ServingService {
         try {
             servingRepository.delete(serving.get());
             return true;
-        }catch (NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             return false;
         }
     }

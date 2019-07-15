@@ -86,7 +86,7 @@
             </div>
             <div class="col-3 justify-content-center align-items-center">
 
-                <button class="button changebtn" data-toggle="modal" data-target="#change" id="changebtn"
+                <button class="button changebtn" data-toggle="modal" data-target="#addserving" id="changebtn"
                         th:attr="data-servingid=${serving.id}">
                     修改
                 </button>
@@ -112,7 +112,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">添加服务</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle" >添加服务</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -120,6 +120,7 @@
 
 
             <div class="modal-body">
+                <input type="hidden" id="servingid">
 
                 <div class="container">
                     <div class="row">
@@ -167,8 +168,7 @@
                         <div class="col-3"> 图片</div>
                         <div class="col-9">
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="picinput" name="pic"
-                                       required>
+                                <input type="file" class="custom-file-input" id="picinput" name="pic">
                                 <label class="custom-file-label" for="picinput">选择图片</label>
                             </div>
                         </div>
@@ -239,7 +239,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" >删除</h5>
+                <h5 class="modal-title">删除</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

@@ -1,19 +1,24 @@
 $(function () {
 
-    function getscatalog() {
+    //获得catalog
+    function getscatalog(scatalogid, scatalog2id) {
         $.ajax({
             url: "/admins/serving/getscatalog",
             success: function (data) {
-                console.log(data)
+                $("#catalogtagselect").empty()
                 data.forEach(function (item) {
                     var tempoption = document.createElement("option")
                     tempoption.setAttribute("value", item.id)
                     tempoption.innerText = item.name
                     $("#catalogtagselect").prepend(tempoption);
-                })
-
-                var catalogid = $("#catalogtagselect").val()
-                getcatalog2(catalogid)
+                });
+                if (scatalogid == null) {
+                    var catalogid = $("#catalogtagselect").val();
+                    getcatalog2(catalogid)
+                } else {
+                    $("#catalogtagselect").val(scatalogid);
+                    getcatalog2(scatalogid, scatalog2id)
+                }
             },
             error: function () {
                 toastr.error("error");
@@ -21,7 +26,8 @@ $(function () {
         })
     }
 
-    function getcatalog2(catalogid) {
+    //获得catalog2
+    function getcatalog2(catalogid, scatalog2id) {
 
         $.ajax({
             url: "/admins/serving/getscatalog2",
@@ -29,7 +35,7 @@ $(function () {
                 scatalogid: catalogid
             },
             success: function (data) {
-                console.log(data)
+                $("#catalogtag2select").empty()
                 data.forEach(function (item) {
 
                     var tempoption = document.createElement("option")
@@ -38,6 +44,9 @@ $(function () {
 
                     $("#catalogtag2select").prepend(tempoption);
                 })
+                if (scatalog2id != null) {
+                    $("#catalogtag2select").val(scatalog2id);
+                }
             },
             error: function () {
                 toastr.error("error");
@@ -46,10 +55,13 @@ $(function () {
 
     }
 
+    //添加按钮
     $("#addbtn").click(function () {
+        $("#exampleModalLongTitle").text("添加服务")
+        $("#servingsubmitbtn").data("ischange", false)
         getscatalog()
-
     });
+
 
     $("#catalogtagselect").change(function () {
         var catalogid = $("#catalogtagselect").val()
@@ -57,9 +69,11 @@ $(function () {
         getcatalog2(catalogid)
     })
 
+    //添加提交按钮
     $("#servingsubmitbtn").click(
         function submitserving() {
 
+            var servingid = $("#servingid").val();
             var catalog2id = $("#catalogtag2select").val();
             var title = $("#titleinput").val();
             var subtitle = $("#subtitleinput").val();
@@ -86,10 +100,27 @@ $(function () {
             formdata.append("subtitle", subtitle)
             formdata.append("summary", summary)
             formdata.append("price", price)
-            formdata.append("pic", $("#picinput")[0].files[0], $("#picinput")[0].files[0].name)
+            var filename;
+            if ($("#picinput")[0].files[0] != null) {
+                filename = $("#picinput")[0].files[0].name
+                formdata.append("pic", $("#picinput")[0].files[0], filename)
+            }
+
+            var url;
+            var successmsg;
+
+            if ($("#servingsubmitbtn").data()["ischange"] == false) {
+                url = "/admins/serving/addserving";
+                successmsg = "添加成功";
+
+            } else if ($("#servingsubmitbtn").data()["ischange"] == true) {
+                formdata.append("servingid", servingid);
+                url = "/admins/serving/changeserving";
+                successmsg = "修改成功";
+            }
 
             $.ajax({
-                url: "/admins/serving/addserving",
+                url: url,
                 type: 'post',
                 data: formdata,
                 processData: false,
@@ -98,37 +129,44 @@ $(function () {
                     request.setRequestHeader(csrfHeader, csrfToken);
                 },
                 success: function (data) {
-
                     if (data.error == 0) {
-                        showsuccess("添加成功")
+                        showsuccess(successmsg)
                     }
                 },
                 error: function () {
                     toastr.error("error!");
                 }
             });
-        })
 
 
+        });
+
+    //显示成功
     function showsuccess(successmsg) {
+        clearinput()
 
-        $("#succesmsg").text(successmsg)
+        $("#succesmsg").text(successmsg);
         $("#delete").modal('hide');
         $("#addserving").modal('hide');
+
         $("#success").modal('show');
     }
 
+    //修改按钮
     $(".changebtn").click(function (e) {
-        console.log(e.currentTarget.dataset.servingid)
-
+        console.log(e.currentTarget.dataset.servingid);
+        $("#exampleModalLongTitle").text("修改服务")
+        $("#servingsubmitbtn").data("ischange", true);
+        getserving(e.currentTarget.dataset.servingid)
     });
 
+    //确认删除
     $("#confirmdelete").click(function () {
-        var servingid = $("#confirmdelete").data()["servingid"]
-        console.log(servingid)
+        var servingid = $("#confirmdelete").data()["servingid"];
 
-        var formdata = new FormData()
-        formdata.append("servingid", servingid)
+
+        var formdata = new FormData();
+        formdata.append("servingid", servingid);
 
 
         var csrfToken = $("meta[name='_csrf']").attr("content");
@@ -144,7 +182,7 @@ $(function () {
                 request.setRequestHeader(csrfHeader, csrfToken);
             },
             success: function (data) {
-                console.log(data)
+
                 if (data.error == 0) {
                     showsuccess("删除成功")
                 }
@@ -157,29 +195,48 @@ $(function () {
 
     });
 
+    //删除按钮
     $(".deletebtn").click(function (e) {
-        console.log(e.currentTarget.dataset.servingid)
+
         $("#confirmdelete").data("servingid", e.currentTarget.dataset.servingid)
 
     });
 
 
+    //获得serving
     function getserving(servingid) {
         $.ajax({
-            url: "/admins/serving/getscatalogbyid",
+            url: "/admins/serving/getserving",
             data: {
                 servingid: servingid
             },
             success: function (data) {
-                console.log(data)
+                var json = JSON.parse(data);
+
+                $("#servingid").val(json.id);
+                $("#titleinput").val(json.title);
+                $("#subtitleinput").val(json.subtitle);
+                $("#summaryinput").val(json.summary);
+                $("#priceinput").val(json.price);
+                getscatalog(json.sCatalog2.sCatalog.id, json.sCatalog2.id);
+
             },
             error: function () {
                 toastr.error("error");
             }
         })
-
     }
 
+    function clearinput() {
+        $("#catalogtag2select").empty()
+        $("#catalogtagselect").empty()
 
+        $("#servingid").val("");
+        $("#titleinput").val("");
+        $("#subtitleinput").val("");
+        $("#summaryinput").val("");
+        $("#priceinput").val("");
+        $("#picinput").val(null);
+    }
 });
 

@@ -12,6 +12,10 @@ import java.util.Optional;
 public interface ServingService {
     Serving saveServing(Serving serving);
 
+    Serving updateServing(long servingid, int catalog2id, String title,
+                          String subtitle, MultipartFile file,
+                          String summary, String price);
+
     Serving saveServing(int catalog2id, String title,
                         String subtitle, MultipartFile file,
                         String summary, String price);
