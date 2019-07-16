@@ -85,4 +85,14 @@ public class FileService {
         return uploadFile(file, "/audio");
     }
 
+    //上传文档
+    public String uploadDoc(MultipartFile file) {
+        return uploadFile(file, "/doc");
+    }
+
+    //上传其他
+    public String uploadOther(MultipartFile file) {
+        return uploadFile(file, "/other");
+    }
+
 }

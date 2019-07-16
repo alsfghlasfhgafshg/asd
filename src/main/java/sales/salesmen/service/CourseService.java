@@ -34,16 +34,31 @@ public class CourseService {
     }
 
 
+    public String uploadsrc(int catalogid, MultipartFile src) {
+        String srcuri;
+        CCatalog cCatalog = cCatalogRepository.getOne(catalogid);
+        if (cCatalog.getName().equals("视频课程")) {
+            srcuri = fileService.uploadVideo(src);
+        } else if (cCatalog.getName().equals("音频课程")) {
+            srcuri = fileService.uploadAudio(src);
+        } else if (cCatalog.getName().equals("文档课程")) {
+            srcuri = fileService.uploadDoc(src);
+        } else {
+            srcuri = fileService.uploadOther(src);
+        }
+        return srcuri;
+    }
+
     @Transactional
     public boolean saveOrUpdate(Long courseid, int catalogid, int catalog2id, String title, String teacher,
                                 MultipartFile pic, MultipartFile src, String summary) {
+        CCatalog cCatalog = cCatalogRepository.getOne(catalogid);
 
         if (courseid == null) {
             Course course;
             String picuri = fileService.uploadImage(pic);
-            String srcuri = fileService.uploadImage(src);
+            String srcuri = uploadsrc(catalogid, src);
 
-            CCatalog cCatalog = cCatalogRepository.getOne(catalogid);
             CCatalog2 cCatalog2 = cCatalog2Repository.getOne(catalog2id);
             course = new Course(courseid, title, picuri, teacher, summary, 0, 0, srcuri, cCatalog, cCatalog2);
             courseRepository.save(course);
@@ -58,7 +73,7 @@ public class CourseService {
                     course.setPictureuri(picuri);
                 }
                 if (src != null) {
-                    String srcuri = fileService.uploadImage(src);
+                    String srcuri = uploadsrc(catalogid, src);
                     course.setSrcuri(srcuri);
                 }
                 course.setTeacher(teacher);
@@ -78,7 +93,6 @@ public class CourseService {
         courseRepository.deleteById(courseid);
         return true;
     }
-
 
 
     public Course getCourseById(long id) {
