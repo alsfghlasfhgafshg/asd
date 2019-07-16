@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import sales.salesmen.entity.ACatalog;
 import sales.salesmen.entity.Article;
 import sales.salesmen.entity.Comment;
 import sales.salesmen.entity.User;
@@ -53,5 +54,10 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Page<Article> listAllArticle(Pageable pageable) {
         return articleRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Article> listByACatalog(ACatalog aCatalog, Pageable pageable) {
+        return articleRepository.findAllByACatalog(aCatalog,pageable);
     }
 }

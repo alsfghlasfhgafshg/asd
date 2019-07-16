@@ -1,6 +1,6 @@
 $(function() {
 
-    var _pageSize; // 存储用于搜索
+    var _pageSize=10; // 存储用于搜索
 
     function getArticlesByCatalog(pageIndex, pageSize) {
         $.ajax({
@@ -24,7 +24,7 @@ $(function() {
     var catalogId;
 
     // 根据分类查询
-    $(".blog-content-container").on("click",".blog-query-by-catalog", function () {
+    $(".catalog-content-container").on("click",".article-query-by-catalog", function () {
         catalogId = $(this).attr('catalogId');
         getArticlesByCatalog(0, _pageSize);
     });

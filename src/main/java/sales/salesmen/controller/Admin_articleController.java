@@ -65,10 +65,13 @@ public class Admin_articleController {
                                                         @RequestParam("author")String author,
                                                         @RequestParam("htmlContent")String htmlContent,
                                                         @RequestParam("cid")Integer cid,
-                                                        @RequestParam("avatar") MultipartFile avatar) {
+                                                        @RequestParam(value = "avatar",required = false) MultipartFile avatar) {
 
         Article article;
-        String imgpath = fileService.uploadImage(avatar);
+        String imgpath;
+        if (avatar!=null) {
+            imgpath = fileService.uploadImage(avatar);
+        }else imgpath = null;
         if (id!=null){
             article = articleService.getArticleById(id).get();
             article.setTitle(title);
