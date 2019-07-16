@@ -11,8 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import sales.salesmen.entity.ACatalog;
 import sales.salesmen.entity.Article;
 import sales.salesmen.entity.User;
+import sales.salesmen.service.ACatalogService;
 import sales.salesmen.service.ArticleService;
 import sales.salesmen.utils.TimeCompareUtil;
 
@@ -26,25 +28,40 @@ public class HomeController {
     @Autowired
     private ArticleService articleService;
 
+    @Autowired
+    private ACatalogService aCatalogService;
+
     @GetMapping("/")
     public String index(){
         return "index";
     }
 
     @GetMapping("/home")
-    public ModelAndView home(@RequestParam(value = "pageIndex",required = false,defaultValue = "0")int pageIndex,
+    public ModelAndView home(@RequestParam(value = "async",required = false)boolean async,
+                             @RequestParam(value = "pageIndex",required = false,defaultValue = "0")int pageIndex,
                              @RequestParam(value = "pageSize",required = false,defaultValue = "10")int pageSize,
+                             @RequestParam(value = "catalog",required = false)Integer catalog,
                              Model model){
-        Pageable pageable = PageRequest.of(pageIndex,pageSize);
-        Page<Article> page = articleService.listAllArticle(pageable);
-        List<Article> list = page.getContent();
+        Page<Article> page;
+        List<Article> list;
+        if (catalog!=null&&catalog>0){
+            ACatalog aCatalog = aCatalogService.findCatalogById(catalog).get();
+            Pageable pageable = PageRequest.of(pageIndex,pageSize);
+            page = articleService.listByACatalog(aCatalog,pageable);
+            list = page.getContent();
+        }
+        else {
+            Pageable pageable = PageRequest.of(pageIndex, pageSize);
+            page = articleService.listAllArticle(pageable);
+            list = page.getContent();
+        }
         Date date = new Date();
         TimeCompareUtil timeCompareUtil = new TimeCompareUtil();
         for (Article article:list){
             article.setTimeDifference(timeCompareUtil.timeDifference(date,article.getCreateTime()));
         }
         model.addAttribute("articleList",list);
-        return new ModelAndView("page/home","articleModel",model);
+        return new ModelAndView(async?"page/home :: #articless" : "page/home","articleModel",model);
     }
 
     @GetMapping("/myself")

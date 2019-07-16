@@ -11,6 +11,7 @@
     <link rel="stylesheet" th:href="@{/lib/bootstrap/css/bootstrap.css}">
     <link rel="stylesheet" th:href="@{/css/page/home.css}">
     <script type="application/javascript" th:src="@{/lib/mui/js/mui.js}"></script>
+    <script type="application/javascript" th:src="@{/js/home/home.js}"></script>
 </head>
 <body>
 <div id="customer" style="display: none">
@@ -90,13 +91,13 @@
         </div>
     </div>
 
-    <div class="centerinline">
+    <div class="centerinline catalog-content-container">
         <ul class="nav justify-content-center">
             <li class="nav-item">
-                <span class="nav-link" catalog="1" href="#">基金</span>
+                <span class="nav-link article-query-by-catalog" catalogId="1">基金</span>
             </li>
             <li class="nav-item">
-                <span class="nav-link" catalog="2" href="#">股票</span>
+                <span class="nav-link article-query-by-catalog" catalogId="2">股票</span>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">海外资产配置</a>
