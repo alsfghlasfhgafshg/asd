@@ -59,6 +59,9 @@ $(function () {
         var author = $("#author").val();
         var cid = $("#catalog").val();
         var data= {"id":bid,"title":title,"author":author,"htmlContent":htmlContent,"cid":cid};
+        var filename;
+
+
 
         var formdata = new FormData();
         formdata.append("id",bid);
@@ -66,7 +69,11 @@ $(function () {
         formdata.append("author",author);
         formdata.append("htmlContent",htmlContent);
         formdata.append("cid",cid);
-        formdata.append("avatar",$("#picinput")[0].files[0],$("#picinput")[0].files[0].name);
+
+        if ($("#picinput")[0].files[0]!=null){
+            filename = $("#picinput")[0].files[0].name;
+            formdata.append("avatar",$("#picinput")[0].files[0],filename);
+        }
 
         $.ajax({
             url: "/admins/articles",

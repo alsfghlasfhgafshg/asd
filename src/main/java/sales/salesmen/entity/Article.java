@@ -27,7 +27,6 @@ public class Article implements Serializable {
     @Column
     private String htmlContent;
 
-    @Column
     private String timeDifference;
 
     @OneToOne(cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
