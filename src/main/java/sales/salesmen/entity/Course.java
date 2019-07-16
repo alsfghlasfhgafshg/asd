@@ -31,7 +31,40 @@ public class Course implements Serializable {
     private int sumstar;
 
     @Column
+    private String srcuri;
+
+    @OneToOne
+    private CCatalog cCatalog;
+
+    @OneToOne
     private CCatalog2 cCatalog2;
+
+    public Course() {
+
+    }
+
+    public Course(Long courseid,String title, String pictureuri, String teacher,
+                  String summary, int sumplay, int sumstar,
+                  String srcuri, CCatalog cCatalog, CCatalog2 cCatalog2) {
+        this.id=courseid;
+        this.title = title;
+        this.pictureuri = pictureuri;
+        this.teacher = teacher;
+        this.summary = summary;
+        this.sumplay = sumplay;
+        this.sumstar = sumstar;
+        this.srcuri = srcuri;
+        this.cCatalog = cCatalog;
+        this.cCatalog2 = cCatalog2;
+    }
+
+    public String getSrcuri() {
+        return srcuri;
+    }
+
+    public void setSrcuri(String srcuri) {
+        this.srcuri = srcuri;
+    }
 
     public CCatalog getcCatalog() {
         return cCatalog;
@@ -41,19 +74,12 @@ public class Course implements Serializable {
         this.cCatalog = cCatalog;
     }
 
-    @Column
-    private CCatalog cCatalog;
-
     public CCatalog2 getcCatalog2() {
         return cCatalog2;
     }
 
     public void setcCatalog2(CCatalog2 cCatalog2) {
         this.cCatalog2 = cCatalog2;
-    }
-
-    protected Course() {
-
     }
 
     public Long getId() {

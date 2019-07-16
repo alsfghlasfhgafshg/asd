@@ -13,12 +13,8 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.ContextStartedEvent;
 import org.springframework.context.event.ContextStoppedEvent;
 import org.springframework.stereotype.Component;
-import sales.salesmen.entity.Authority;
-import sales.salesmen.entity.SCatalog;
-import sales.salesmen.entity.SCatalog2;
-import sales.salesmen.repository.AuthorityRepository;
-import sales.salesmen.repository.SCatalog2Repository;
-import sales.salesmen.repository.SCatalogRepository;
+import sales.salesmen.entity.*;
+import sales.salesmen.repository.*;
 
 
 public class AppListener implements ApplicationListener {
@@ -33,6 +29,12 @@ public class AppListener implements ApplicationListener {
 
     @Autowired
     SCatalog2Repository sCatalog2Repository;
+
+    @Autowired
+    CCatalogRepository cCatalogRepository;
+
+    @Autowired
+    CCatalog2Repository cCatalog2Repository;
 
 
     @Override
@@ -78,6 +80,27 @@ public class AppListener implements ApplicationListener {
             sCatalog2Repository.save(new SCatalog2(3, "美国房产", touzizhiye));
 
 
+            CCatalog shipinkecheng = new CCatalog(1, "视频课程");
+            CCatalog yinpinkecheng = new CCatalog(2, "音频课程");
+            CCatalog wendangkecheng = new CCatalog(3, "文档课程");
+            CCatalog waibulianjie = new CCatalog(4, "外部链接");
+
+            CCatalog2 jijin = new CCatalog2(1, "基金");
+            CCatalog2 gupiao = new CCatalog2(2, "股票");
+            CCatalog2 haiwaizichanpeizhi = new CCatalog2(3, "海外资产配置");
+            CCatalog2 xilieke = new CCatalog2(4, "系列课");
+            CCatalog2 qita = new CCatalog2(5, "其他");
+
+            cCatalogRepository.save(shipinkecheng);
+            cCatalogRepository.save(yinpinkecheng);
+            cCatalogRepository.save(wendangkecheng);
+            cCatalogRepository.save(waibulianjie);
+
+            cCatalog2Repository.save(jijin);
+            cCatalog2Repository.save(gupiao);
+            cCatalog2Repository.save(haiwaizichanpeizhi);
+            cCatalog2Repository.save(xilieke);
+            cCatalog2Repository.save(qita);
         }
 
     }

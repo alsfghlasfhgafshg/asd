@@ -19,6 +19,15 @@ public class CCatalog2 implements Serializable {
 
     }
 
+    public CCatalog2(String name) {
+        this.name = name;
+    }
+
+    public CCatalog2(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public Integer getId() {
         return id;
     }

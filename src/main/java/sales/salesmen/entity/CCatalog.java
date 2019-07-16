@@ -15,20 +15,17 @@ public class CCatalog implements Serializable {
     @Column
     private String name;
 
-    @OneToOne
-    private Authority authority;
+    public CCatalog(String name) {
+        this.name = name;
+    }
 
+    public CCatalog(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     protected CCatalog() {
 
-    }
-
-    public Authority getAuthority() {
-        return authority;
-    }
-
-    public void setAuthority(Authority authority) {
-        this.authority = authority;
     }
 
     public Integer getId() {

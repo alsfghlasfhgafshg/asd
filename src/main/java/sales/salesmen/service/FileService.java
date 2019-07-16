@@ -58,7 +58,7 @@ public class FileService {
 
         File tempFile = new File(pathname);
         File path = tempFile.getParentFile();
-        boolean a= path.mkdirs();
+        boolean a = path.mkdirs();
 
         try {
             file.transferTo(tempFile);
@@ -75,5 +75,14 @@ public class FileService {
         return uploadFile(file, "/img");
     }
 
+    //上传视频
+    public String uploadVideo(MultipartFile file) {
+        return uploadFile(file, "/video");
+    }
+
+    //上传音频
+    public String uploadAudio(MultipartFile file) {
+        return uploadFile(file, "/audio");
+    }
 
 }
