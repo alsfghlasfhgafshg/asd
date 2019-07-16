@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -33,15 +33,14 @@
                 <h5 class="card-header" id="titleid">菜单</h5>
 
                 <ul class="list-group blog-menu" th:each="menu:${menuList.list}">
-                    <a href="javascript:void(0)" class="list-group-item" th:title="${menu.name}" th:text="${menu.name}" th:attr="url=${menu.url}">
-                        用户管理
+                    <a href="javascript:void(0)" class="list-group-item" th:title="${menu.name}"
+                       th:text="${menu.name}" th:attr="url=${menu.url}" th:id="${menu.elementid}">
                     </a>
 
                 </ul>
             </div>
 
         </div>
-
 
 
         <!-- 右侧栏目 -->
@@ -51,7 +50,7 @@
             <div class="card" id="rightContainer" style="width: 950px">
             </div>
         </div>
-    <!-- /.row -->
+        <!-- /.row -->
     </div>
 </div>
 <!-- /.container -->
