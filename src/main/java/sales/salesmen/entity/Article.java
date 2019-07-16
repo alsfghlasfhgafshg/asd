@@ -1,6 +1,5 @@
 package sales.salesmen.entity;
 
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -28,7 +27,10 @@ public class Article implements Serializable {
     @Column
     private String htmlContent;
 
-    @OneToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
+    @Column
+    private String timeDifference;
+
+    @OneToOne(cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
     @JoinColumn(name = "acatalog_id")
     private ACatalog aCatalog;
 
@@ -126,6 +128,14 @@ public class Article implements Serializable {
 
     public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
+    }
+
+    public String getTimeDifference() {
+        return timeDifference;
+    }
+
+    public void setTimeDifference(String timeDifference) {
+        this.timeDifference = timeDifference;
     }
 
     public void addComment(Comment comment){

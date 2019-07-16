@@ -4,12 +4,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>首页</title>
+    <script type="application/javascript" th:src="@{/js/jquery.js}"></script>
     <link rel="stylesheet" th:href="@{/css/weui/weui.css}">
     <link rel="stylesheet" th:href="@{/lib/layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/lib/mui/css/mui.css}">
     <link rel="stylesheet" th:href="@{/lib/bootstrap/css/bootstrap.css}">
     <link rel="stylesheet" th:href="@{/css/page/home.css}">
-    <link th:href="@{/lib/layui/layui.js}">
-    <script type="application/javascript" th:src="@{/js/jquery.js}"></script>
+    <script type="application/javascript" th:src="@{/lib/mui/js/mui.js}"></script>
 </head>
 <body>
 <div id="customer" style="display: none">
@@ -48,24 +49,32 @@
     </div>
 </div>
 <div id="sales">
-    <div id="toplun">
-        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-            </ol>
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="..." class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item">
-                    <img src="..." class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item">
-                    <img src="..." class="d-block w-100" alt="...">
-                </div>
-            </div>
+    <!--<div id="toplun">-->
+        <!--<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">-->
+            <!--<ol class="carousel-indicators">-->
+                <!--<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>-->
+                <!--<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>-->
+                <!--<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>-->
+            <!--</ol>-->
+            <!--<div class="carousel-inner">-->
+                <!--<div class="carousel-item active">-->
+                    <!--<img src="..." class="d-block w-100" alt="...">-->
+                <!--</div>-->
+                <!--<div class="carousel-item">-->
+                    <!--<img src="..." class="d-block w-100" alt="...">-->
+                <!--</div>-->
+                <!--<div class="carousel-item">-->
+                    <!--<img src="..." class="d-block w-100" alt="...">-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <div class="mui-slider">
+        <div class="mui-slider-group">
+            <div class="mui-slider-item"><a href="#"><img src="1.jpg" /></a></div>
+            <div class="mui-slider-item"><a href="#"><img src="2.jpg" /></a></div>
+            <div class="mui-slider-item"><a href="#"><img src="3.jpg" /></a></div>
+            <div class="mui-slider-item"><a href="#"><img src="4.jpg" /></a></div>
         </div>
     </div>
     <div class="four">
@@ -84,10 +93,10 @@
     <div class="centerinline">
         <ul class="nav justify-content-center">
             <li class="nav-item">
-                <a class="nav-link" href="#">基金</a>
+                <span class="nav-link" catalog="1" href="#">基金</span>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">股票</a>
+                <span class="nav-link" catalog="2" href="#">股票</span>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">海外资产配置</a>
@@ -101,17 +110,17 @@
         </ul>
     </div>
     <div id="articless">
-        <div class="card mb-3">
+        <div class="card" th:each="article:${articleModel.articleList}">
             <div class="row no-gutters">
-                <div class="col-md-4">
-                    <img src="..." class="card-img" alt="haha">
+                <div class="col-4">
+                    <img src="..." th:src="${article.avatar}" class="card-img">
                 </div>
-                <div class="col-md-8">
+                <div class="col-8">
                     <div class="card-body">
-                        <h5 class="card-title">1990年崩溃的日本经济，给了投资人多少教训？深度数据大揭秘，不得不看</h5>
+                        <h6 class="card-title text-dark" th:text="${article.title}">1990年崩溃的日本经济，给了投资人多少教训？深度数据大揭秘，不得不看</h6>
                         <br>
                         <p class="card-text">
-                            <small class="text-muted">大龙 15评论 10分钟前</small>
+                            <small class="text-muted">[[${article.author}]] &nbsp;[[${article.commentSize}]]评论 &nbsp;[[${article.timeDifference}]]</small>
                         </p>
                     </div>
                 </div>

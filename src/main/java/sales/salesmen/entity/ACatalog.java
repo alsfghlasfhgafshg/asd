@@ -7,6 +7,8 @@ import java.io.Serializable;
 @Entity
 public class ACatalog implements Serializable {
 
+    private static final long SerialVersionUID=1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
