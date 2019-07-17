@@ -11,5 +11,4 @@ public interface CommentService {
     Optional<Comment> findCommentById(Long id);
     Comment saveComment(Comment comment);
     void removeCommentById(Long id);
-    Page<Comment> listAllCommentByArticleId(Long id, Pageable pageable);
 }

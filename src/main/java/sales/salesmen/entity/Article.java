@@ -33,7 +33,7 @@ public class Article implements Serializable {
     @JoinColumn(name = "acatalog_id")
     private ACatalog aCatalog;
 
-    @OneToMany(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(name = "article_comment",joinColumns = @JoinColumn(name = "article_id",referencedColumnName = "id"))
     private List<Comment> comments;
 

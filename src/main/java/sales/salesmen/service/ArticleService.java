@@ -15,4 +15,5 @@ public interface ArticleService {
     Article createComment(Long articleId,String content);
     Page<Article> listAllArticle(Pageable pageable);
     Page<Article> listByACatalog(ACatalog aCatalog,Pageable pageable);
+    void removeComment(Long articleId,Long commentId);
 }

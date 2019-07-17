@@ -17,14 +17,19 @@ import javax.servlet.annotation.ServletSecurity;
 import java.util.Optional;
 
 @Service
-public class ArticleServiceImpl implements ArticleService {
+public class ArticleServiceImpl implements ArticleService{
 
     @Autowired
     private ArticleRepository articleRepository;
 
     @Override
     public Article saveArticle(Article article) {
-        Article rarticle = articleRepository.save(article);
+        Article rarticle=null;
+        try {
+            rarticle = articleRepository.save(article);
+        }catch (Exception e){
+            System.out.println(e.toString());
+        }
         return rarticle;
     }
 
@@ -48,7 +53,7 @@ public class ArticleServiceImpl implements ArticleService {
             Comment comment = new Comment(content,user);
             origionalArticle.addComment(comment);
         }
-        return origionalArticle;
+        return this.saveArticle(origionalArticle);
     }
 
     @Override
@@ -59,5 +64,15 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Page<Article> listByACatalog(ACatalog aCatalog, Pageable pageable) {
         return articleRepository.findAllByACatalog(aCatalog,pageable);
+    }
+
+    @Override
+    public void removeComment(Long articleId, Long commentId) {
+        Optional<Article> optionalArticle = articleRepository.findById(articleId);
+        if (optionalArticle.isPresent()){
+            Article origionalArticle = optionalArticle.get();
+            origionalArticle.removeComment(commentId);
+            this.saveArticle(origionalArticle);
+        }
     }
 }
