@@ -89,10 +89,6 @@ public class HomeController {
         return "page/productservice";
     }
 
-    @GetMapping("/course")
-    public String course(){
-        return "page/course";
-    }
 
 
 }

@@ -2,6 +2,8 @@ package sales.salesmen.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,10 +15,16 @@ import sales.salesmen.repository.CCatalog2Repository;
 import sales.salesmen.repository.CCatalogRepository;
 import sales.salesmen.repository.CourseRepository;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 @Service
 public class CourseService {
+
+
+    @Value("${pageSize}")
+    int pageSize;
+
     @Autowired
     FileService fileService;
 
@@ -87,6 +95,11 @@ public class CourseService {
                 return false;
             }
         }
+    }
+
+    public List<Course> getAllCourseByccatalog12(int ccatalog, int ccatalog2, int page) {
+        PageRequest pageRequest = PageRequest.of(page, this.pageSize);
+        return courseRepository.findAllByCCatalogAndAndCCatalog2(pageRequest, cCatalogRepository.findById(ccatalog).get(), cCatalog2Repository.findById(ccatalog2).get()).getContent();
     }
 
     public boolean deleteCourse(Long courseid) {
