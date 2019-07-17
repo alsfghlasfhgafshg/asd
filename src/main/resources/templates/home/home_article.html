@@ -8,13 +8,17 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
     <script th:src="@{/js/jquery.js}"></script>
     <script th:src="@{/lib/bootstrap/js/bootstrap.js}"></script>
+    <script th:src="@{/js/toastr.min.js}"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/lib/bootstrap/css/bootstrap.min.css}">
 </head>
 <body>
 <!-- Page Content -->
-<div class="container blog-content-container">
+<div class="container article-content-container">
 
     <div class="row">
 
@@ -42,12 +46,32 @@
 
                 <div class="card-block">
                     <h5>评论：</h5>
-                    <div class="row">
+                    <div class="row" id="content">
                         <div class="col-lg-12">
                             <textarea class="blog-textarea" id="commentContent" placeholder="说说你的看法"></textarea>
                         </div>
                     </div>
-                    <button id="submitContent" class="btn btn-primary float-right">发表评论</button>
+                    <button class="btn btn-primary float-right submitcontent">发表评论</button>
+                </div>
+
+                <div class="card-block" id="mainContainer">
+                    <div class="row" id="mainContainerRepleace" th:each="comment,commentStat:${comments}"
+                         th:object="${comment}">
+                        <h2 class="card-title col-lg-1 col-md-2">
+							<span>
+			                    <img th:src="*{user.avatar}==null?'/img/github.svg':*{user.avatar}" class="blog-avatar-50">
+					        </span>
+                        </h2>
+                        <div class="card-text col-lg-11 col-md-10">
+                            <span class="card-link" th:text="*{user.username}">dewitt</span>
+                            [[${commentStat.index}+1]]楼
+                            [[${#dates.format(comment.createTime,'yyyy-MM-dd HH:mm')}]]
+                            <a href="javascript:void(0)" class="article-delete-comment" th:if="${commentOwner} eq *{user.username}"
+                               th:attr="commentId=*{id}">删除</a>
+                            <p th:text="*{content}">不错哦，顶起！</p>
+                        </div>
+                    </div>
+
                 </div>
 
             </div>
@@ -60,6 +84,9 @@
 </div>
 <!-- /.container -->
 
-
+<script>
+    var articleId = [[${articleModel.id}]];
+</script>
+<script th:src="@{/js/home/comment.js}"></script>
 </body>
 </html>

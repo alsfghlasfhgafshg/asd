@@ -24,8 +24,7 @@ public class Comment implements Serializable {
     @org.hibernate.annotations.CreationTimestamp
     private Timestamp createTime;
 
-    protected Comment() {
-    }
+    protected Comment() {}
 
     public Comment(@NotEmpty(message = "评论内容为空") String content, User user) {
         this.content = content;
