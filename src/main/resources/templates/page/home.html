@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -14,42 +15,45 @@
     <script type="application/javascript" th:src="@{/js/home/home.js}"></script>
 </head>
 <body>
-<div id="customer" style="display: none">
+<div sec:authorize="hasRole('ROLE_USER')" id="customer">
     <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
-        <ul class="layui-tab-title">
-            <li class="layui-this">金融话题</li>
-            <li>投资技能</li>
-            <li>大咖观点</li>
-            <li>市场活动</li>
+        <ul class="layui-tab-title catalog-content-container">
+            <li class="layui-this article-query-by-catalog" catalogId="6">金融话题</li>
+            <li class="article-query-by-catalog" catalogId="7">投资技能</li>
+            <li class="article-query-by-catalog" catalogId="8">大咖观点</li>
+            <li class="article-query-by-catalog" catalogId="9">市场活动</li>
         </ul>
         <div class="layui-tab-content">
             <div class="layui-tab-item layui-show">
                 <div id="articles">
-                    <div class="card mb-3">
-                        <div class="row no-gutters">
-                            <div class="col-md-4">
-                                <img th:src="@{/lib/layui/images/face/0.gif}" class="card-img" alt="haha">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h1 class="card-title">1990年崩溃的日本经济，给了投资人多少教训？深度数据大揭秘，不得不看</h1>
-                                    <br><br>
-                                    <p class="card-text">
-                                        <small class="text-muted">大龙 15评论 10分钟前</small>
-                                    </p>
+                    <div class="card" th:each="article:${articleModel.articleList}">
+                        <a th:href="'/home/article/'+${article.id}">
+                            <div class="row no-gutters">
+                                <div th:if="${article.avatar}!=null" class="col-4">
+                                    <img src="..." th:src="${article.avatar}" class="card-img">
+                                </div>
+                                <div class="col-8">
+                                    <div class="card-body">
+                                        <h6 class="card-title text-dark" th:text="${article.title}">1990年崩溃的日本经济，给了投资人多少教训？深度数据大揭秘，不得不看</h6>
+                                        <br>
+                                        <p class="card-text">
+                                            <small class="text-muted">[[${article.author}]] &nbsp;[[${article.commentSize}]]评论 &nbsp;[[${article.timeDifference}]]</small>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="layui-tab-item">内容2</div>
-            <div class="layui-tab-item">内容3</div>
-            <div class="layui-tab-item">内容4</div>
+            <!--<div class="layui-tab-item">内容2</div>-->
+            <!--<div class="layui-tab-item">内容3</div>-->
+            <!--<div class="layui-tab-item">内容4</div>-->
         </div>
     </div>
 </div>
-<div id="sales">
+
+<div id="sales" sec:authorize="hasRole('ROLE_SALES')">
     <div class="mui-slider">
         <div class="mui-slider-group">
             <div class="mui-slider-item"><a href="#"><img src="1.jpg" /></a></div>

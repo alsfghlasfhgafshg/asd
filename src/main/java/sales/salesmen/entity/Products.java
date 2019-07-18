@@ -20,6 +20,9 @@ public class Products implements Serializable {
     private PCatalog pCatalog;
 
     @Column
+    private String type;
+
+    @Column
     private  String  scale;
 
     @Column
@@ -36,13 +39,14 @@ public class Products implements Serializable {
 
     protected Products() {}
 
-    public Products(@NotEmpty(message = "产品名为空") String name, String scale, String startmoney, String invetmentPeriod, String performance, String startDate) {
+    public Products(@NotEmpty(message = "产品名为空") String name, String scale, String startmoney, String invetmentPeriod, String performance, String startDate,String type) {
         this.name = name;
         this.scale = scale;
         this.startmoney = startmoney;
         this.invetmentPeriod = invetmentPeriod;
         this.performance = performance;
         this.startDate = startDate;
+        this.type = type;
     }
 
     public Long getId() {
@@ -59,6 +63,14 @@ public class Products implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public PCatalog getpCatalog() {
