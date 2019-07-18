@@ -109,7 +109,7 @@ public class HomeController {
             list = page.getContent();
         }
         model.addAttribute("list",list);
-        return new ModelAndView(async?"page/productservice :: #productContainer":"page/productservice","productModel",model);
+        return new ModelAndView(async?"home/home_productservice :: #productContainer":"home/home_productservice","productModel",model);
     }
 
 
