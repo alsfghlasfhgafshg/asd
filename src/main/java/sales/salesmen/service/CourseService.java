@@ -1,6 +1,7 @@
 package sales.salesmen.service;
 
 
+import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
@@ -11,9 +12,11 @@ import org.springframework.web.multipart.MultipartFile;
 import sales.salesmen.entity.CCatalog;
 import sales.salesmen.entity.CCatalog2;
 import sales.salesmen.entity.Course;
+import sales.salesmen.entity.User;
 import sales.salesmen.repository.CCatalog2Repository;
 import sales.salesmen.repository.CCatalogRepository;
 import sales.salesmen.repository.CourseRepository;
+import sales.salesmen.repository.UserCourseStarRespository;
 
 import java.awt.print.Pageable;
 import java.util.List;
@@ -36,6 +39,9 @@ public class CourseService {
 
     @Autowired
     CCatalog2Repository cCatalog2Repository;
+
+    @Autowired
+    UserCourseStarRespository userCourseStarRespository;
 
     public Course saveOrUpdate(Course course) {
         return null;
@@ -124,5 +130,20 @@ public class CourseService {
         return courseRepository.findAll();
     }
 
+    public boolean isStar(long courseid, long userid) {
+        if (userCourseStarRespository.isStarCourse(courseid, userid) == 0) {
+            return false;
+        }
+        return true;
+    }
 
+    public boolean statCourse(long courseid, long userid) {
+        userCourseStarRespository.starCourse(courseid, userid);
+        return true;
+    }
+
+    public boolean disStarCourse(long courseid, long userid) {
+        userCourseStarRespository.disStarCourse(courseid, userid);
+        return true;
+    }
 }

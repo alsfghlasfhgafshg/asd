@@ -38,6 +38,7 @@ dependencies {
     compile group: 'es.nitaur.markdown', name: 'txtmark', version: '0.16'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: '2.0.0.RELEASE'
 
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.0'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'de.codecentric:spring-boot-admin-starter-client'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'

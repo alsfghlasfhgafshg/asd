@@ -2,6 +2,7 @@ package sales.salesmen.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 
 //课程分类
@@ -39,14 +40,25 @@ public class Course implements Serializable {
     @OneToOne
     private CCatalog2 cCatalog2;
 
+    @OneToMany
+    private List<User> users;
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
     public Course() {
 
     }
 
-    public Course(Long courseid,String title, String pictureuri, String teacher,
+    public Course(Long courseid, String title, String pictureuri, String teacher,
                   String summary, int sumplay, int sumstar,
                   String srcuri, CCatalog cCatalog, CCatalog2 cCatalog2) {
-        this.id=courseid;
+        this.id = courseid;
         this.title = title;
         this.pictureuri = pictureuri;
         this.teacher = teacher;
