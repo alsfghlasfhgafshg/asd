@@ -86,7 +86,7 @@
             </ul>
             <ul v-for="item in items">
 
-                <div class="container">
+                <div class="container" v-bind:courseid="item.id">
                     <div class="card mb-3" id="courseitem">
                         <div class="d-flex align-items-center row no-gutters">
                             <div class="col-4" style="padding-left: 5px">
@@ -94,7 +94,9 @@
                             </div>
                             <div class="col-8">
                                 <div class="card-body">
-                                    <h5 class="card-title" id="coursetitle" style="color: black ">{{item.title}}</h5>
+                                    <a class="h5 card-title" id="coursetitle"
+                                       style="color: black;text-decoration: underline "
+                                       v-bind:href="'/course/'+item.id" >{{item.title}}</a>
                                     <p class="card-text text-muted">
                                         <small id="coursesummary">{{item.summary}}</small>
                                     </p>
@@ -102,7 +104,8 @@
                                         <small id="courseteacher">{{item.teacher}}</small>
                                     </p>
                                     <p class="card-text text-right">
-                                        <small class="text-muted">播放量：<span id="coursesumplay">{{item.sumplay}}</span>
+                                        <small class="text-muted">播放量：<span
+                                                id="coursesumplay">{{item.sumplay}}</span>
                                             &nbsp;&nbsp;收藏量：<span id="coursesumstar">{{item.sumstar}}</span></small>
                                     </p>
                                 </div>
@@ -110,6 +113,7 @@
                         </div>
                     </div>
                 </div>
+
             </ul>
         </div>
 

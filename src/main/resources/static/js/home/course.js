@@ -83,7 +83,7 @@ $(function () {
         } else if (this.id == "waibulianjie") {
             ccatalog = 4;
         }
-        activecccatalog("#"+this.id)
+        activecccatalog("#" + this.id)
         cleardata()
         mui('#pullRefresh').pullRefresh().refresh(true);
         getapage(page, ccatalog, ccatalog2, mmui)
@@ -105,6 +105,11 @@ $(function () {
             el: '#coursecontainer',
             data: {
                 items: []
+            },methods:{
+                tocourse:function (event) {
+                    console.log(event)
+
+                }
             }
         });
         activecccatalog("#shipinkecheng")
@@ -129,6 +134,10 @@ $(function () {
                 }
             }
         }
+    });
+
+    mui('body').on('tap','a',function(){
+        document.location.href=this.href;
     });
 
 });
