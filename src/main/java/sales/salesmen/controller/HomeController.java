@@ -11,11 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import sales.salesmen.entity.ACatalog;
-import sales.salesmen.entity.Article;
-import sales.salesmen.entity.User;
+import sales.salesmen.entity.*;
 import sales.salesmen.service.ACatalogService;
 import sales.salesmen.service.ArticleService;
+import sales.salesmen.service.PCatalogService;
+import sales.salesmen.service.ProductsService;
 import sales.salesmen.utils.TimeCompareUtil;
 
 import java.security.Principal;
@@ -30,6 +30,12 @@ public class HomeController {
 
     @Autowired
     private ACatalogService aCatalogService;
+
+    @Autowired
+    private PCatalogService pCatalogService;
+
+    @Autowired
+    private ProductsService productsService;
 
     @GetMapping("/")
     public String index(){
@@ -85,10 +91,26 @@ public class HomeController {
     }
 
     @GetMapping("/productservice")
-    public String productservice(){
-        return "page/productservice";
+    public ModelAndView productservice(@RequestParam(value = "async",required = false)boolean async,
+                                       @RequestParam(value = "pageIndex",required = false,defaultValue = "0")int pageIndex,
+                                       @RequestParam(value = "pageSize",required = false,defaultValue = "10")int pageSize,
+                                       @RequestParam(value = "catalog",required = false)Integer catalog,
+                                       Model model) {
+        Page<Products> page;
+        List<Products> list;
+        Pageable pageable = PageRequest.of(pageIndex,pageSize);
+        if (catalog!=null&&catalog>0){//如果有分类
+            PCatalog pCatalog = pCatalogService.findCatalogById(catalog).get();
+            page = productsService.listAllByPcatalog(pCatalog,pageable);
+            list = page.getContent();
+        }
+        else {//没分类的时候
+            page = productsService.listProducts(pageable);
+            list = page.getContent();
+        }
+        model.addAttribute("list",list);
+        return new ModelAndView(async?"home/home_productservice :: #productContainer":"home/home_productservice","productModel",model);
     }
-
 
 
 }

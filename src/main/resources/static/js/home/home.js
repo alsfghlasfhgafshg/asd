@@ -14,6 +14,7 @@ $(function() {
             },
             success: function(data){
                 $("#articless").html(data);
+                $("#articles").html(data);
             },
             error : function() {
                 toastr.error("error!");

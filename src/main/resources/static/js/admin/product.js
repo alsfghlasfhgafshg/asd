@@ -60,9 +60,10 @@ $(function () {
         var  performance = $("#performance").val();
         var  startDate = $("#startDate").val();
         var  pcatalogId = $("#catalog").val();
+        var  type = $("#type").val();
 
         da = {"id":id,"name":name,"scale":scale,"startmoney":startmoney,"invetmentperiod":invetmentperiod,
-        "performance":performance,"startDate":startDate,"pcatalogId":pcatalogId};
+        "performance":performance,"startDate":startDate,"pcatalogId":pcatalogId,"type":type};
         $.ajax({
             url: "/admins/products",
             type: 'post',

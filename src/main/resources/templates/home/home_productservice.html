@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" th:href="@{/lib/bootstrap/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/page/productservice.css}">
+    <script th:src="@{/js/jquery-3.1.1.min.js}"></script>
+    <script th:src="@{/lib/bootstrap/js/bootstrap.js}"></script>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="row">
+        <ul class="nav nav-pills mb-3">
+            <li class="nav-item">
+                <a class="nav-link active" id="pills-product-tab" data-toggle="pill" href="#pills-product" role="tab" aria-controls="pills-product" aria-selected="true">
+        <div>
+            <div class="text-center">
+                <span style="font-size: 30px">产品</span>
+            </div>
+        </div></a>
+            </li>
+            <li class="nav-item"><a class="nav-link" id="pills-serving-tab" data-toggle="pill" href="#pills-serving" role="tab" aria-controls="pills-serving" aria-selected="false">
+        <div>
+            <div class="text-center">
+                <span style="font-size: 30px">服务</span>
+            </div>
+        </div></a>
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+<div class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade show active" id="pills-product" role="tabpanel" aria-labelledby="pills-product-tab">
+        <div class="col-9 justify-content-center">
+            <div class="card" th:each="product:${productModel.list}" id="#productContainer" style="width: 137%; margin-bottom: 10px;">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between" style="border: 0px solid transparent">
+                        <table>
+                            <tr>
+                                <th class="font-weight-bold" th:text="${product.name}">励恒1号基金</th>
+                                <th class="little font-weight-normal">立即预约</th>
+                                <th  class="little font-weight-normal">产品咨询</th>
+                            </tr>
+                            <tbody>
+                            <tr>
+                                <th th:text="${product.type}">Mark</th>
+                                <th th:text="${product.scale}">Otto</th>
+                                <th th:text="${product.startmoney}">@mdo</th>
+                            </tr>
+                            <tr>
+                                <td class="little">产品类型</td>
+                                <td class="little">产品规模</td>
+                                <td class="little">起投金额</td>
+                            </tr>
+                            <tr>
+                                <th th:text="${product.invetmentPeriod}">Larry</th>
+                                <th th:text="${product.performance}">the Bird</th>
+                                <th th:text="${product.startDate}">@twitter</th>
+                            </tr>
+                            <tr>
+                                <td class="little">投资期限</td>
+                                <td class="little">业绩比较基准</td>
+                                <td class="little">起售日期</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="pills-serving" role="tabpanel" aria-labelledby="pills-serving-tab">asad</div>
+</div>
+
+</body>
+</html>

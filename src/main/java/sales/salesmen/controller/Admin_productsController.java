@@ -44,7 +44,7 @@ public class Admin_productsController {
 
     @GetMapping("/add")
     public ModelAndView addArticle(Model model){
-        model.addAttribute("product",new Products(null,null,null,null,null,null));
+        model.addAttribute("product",new Products(null,null,null,null,null,null,null));
         return new ModelAndView("/admin/add_product","productModel",model);
     }
 
@@ -61,6 +61,7 @@ public class Admin_productsController {
             products.setInvetmentPeriod(fastjson.getString("invetmentperiod"));
             products.setPerformance(fastjson.getString("performance"));
             products.setStartDate(sdf1.format(fastjson.getDate("startDate")));
+            products.setType(fastjson.getString("type"));
             products.setpCatalog(pCatalogService.findCatalogById(fastjson.getInteger("pcatalogId")).get());
         }else {
             products = new Products(fastjson.getString("name"),
@@ -68,7 +69,8 @@ public class Admin_productsController {
                     fastjson.getString("startmoney"),
                     fastjson.getString("invetmentperiod"),
                     fastjson.getString("performance"),
-                    sdf1.format(fastjson.getDate("startDate")));
+                    sdf1.format(fastjson.getDate("startDate")),
+                    fastjson.getString("type"));
             products.setpCatalog(pCatalogService.findCatalogById(fastjson.getInteger("pcatalogId")).get());
         }
         productsService.saveProducts(products);
