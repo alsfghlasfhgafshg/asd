@@ -9,11 +9,27 @@
     <title>index</title>
     <link rel="stylesheet" th:href="@{/css/weui/weui.css}">
     <script th:src="@{/js/jquery.js}"></script>
+    <script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/jquery-weui.min.js"></script>
 </head>
 <body>
 
 
 <div class="weui-tab" style="position: absolute;bottom:0px;width: 100%">
+    <div class="weui-search-bar" id="searchBar">
+        <form class="weui-search-bar__form" onkeydown="if(event.keyCode==13) return false;">
+            <div class="weui-search-bar__box">
+                <i class="weui-icon-search"></i>
+                <input type="search" class="weui-search-bar__input" id="searchInput"  placeholder="搜索"
+                       required="">
+                <a href="javascript:clear()" class="weui-icon-clear" id="searchClear"></a>
+            </div>
+            <label class="weui-search-bar__label" id="searchText">
+                <i class="weui-icon-search"></i>
+                <span>请输入你想要查看的关键字</span>
+            </label>
+        </form>
+        <a href="javascript:cancel()" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
+    </div>
     <!--搜索框-->
 
 
@@ -124,6 +140,35 @@
     // 显示home
     showhome()
 
+</script>
+<script>
+    $('#searchInput').bind('input propertychange', function() {
+        var text = $("#searchInput").val();
+        var reg = new RegExp("[\\u4E00-\\u9FFF]+", "g");
+        if (reg.test(text)) {
+            $('.weui-cell').each(function () {
+                var $self = $(this);
+                var flag = $self.text().search(text)
+                if (flag > -1) {
+                    $self.css("display", "");
+
+                } else {
+                    $self.css("display", "none");
+
+                }
+            });
+        }
+    });
+
+    function cancel(){
+        $('.weui-cell').css("display","")
+
+    }
+
+    function clear(){
+        $('#searchInput').val('')
+        $('.weui-cell').css("display", "")
+    }
 </script>
 </body>
 </html>
