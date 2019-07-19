@@ -60,17 +60,6 @@
         var nowscatalog2;
         var nowpage = 0;
 
-
-        $(".tabchangebtn").click(function () {
-            console.log(this.dataset.tab);
-
-            if (this.dataset.tab == "serving") {
-
-
-            }
-        });
-
-
         var scataloglist = new Vue({
             el: '#scataloglist',
             data: {
@@ -121,7 +110,6 @@
                     if (scatalog2id != null) {
                         $("#catalogtag2select").val(scatalog2id);
                     }
-                    console.log("scatalog2id" + scatalog2id);
                     if (data[0] != null) {
                         getserving(data[0].id, nowpage)
                     } else {
@@ -160,7 +148,6 @@
 
 
         $("body").on("click", ".scatalog1btn", function () {
-            console.log(this)
             var scatalogid = this.dataset.itemid;
             nowscatalog1 = scatalogid;
             activescatalog1(scatalogid)
@@ -171,8 +158,6 @@
 
         $("body").on("change", "#catalogtag2select", function () {
             nowpage = 0;
-            console.log(this)
-            console.log(this.value)
             getserving(this.value, nowpage)
 
         });
@@ -193,11 +178,22 @@
             getscatalog()
             getcatalog2(1)
 
+            nowpage=0;
             nowscatalog1 = 1;
             nowscatalog2 = 1;
         }
 
-        init()
+
+        $(".tabchangebtn").click(function () {
+
+            if (this.dataset.tab == "serving") {
+
+                init()
+
+            }
+        });
+
+
 
 
     </script>
