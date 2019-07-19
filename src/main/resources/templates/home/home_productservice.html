@@ -37,10 +37,31 @@
 
 </div>
 
+<div class="centerinline catalog-content-container">
+    <ul class="nav justify-content-center">
+        <li class="nav-item">
+            <span class="nav-link product-query-by-catalog" catalogId="1">私募基金</span>
+        </li>
+        <li class="nav-item">
+            <span class="nav-link product-query-by-catalog" catalogId="2">公墓基金</span>
+        </li>
+        <li class="nav-item">
+            <span class="nav-link product-query-by-catalog"  catalogId="3" >现金管理</span>
+        </li>
+        <li class="nav-item">
+            <span class="nav-link product-query-by-catalog" catalogId="4" >类固收</span>
+        </li>
+        <li class="nav-item">
+            <span class="nav-link product-query-by-catalog" catalogId="5" >其他</span>
+        </li>
+    </ul>
+</div>
+
+
 <div class="tab-content" id="pills-tabContent">
     <div class="tab-pane fade show active" id="pills-product" role="tabpanel" aria-labelledby="pills-product-tab">
-        <div class="col-9 justify-content-center">
-            <div class="card" th:each="product:${productModel.list}" id="#productContainer" style="width: 137%; margin-bottom: 10px;">
+        <div class="col-9 justify-content-center" >
+            <div class="card" th:each="product:${productModel.list}" id="productContainer"  style="width: 137%; margin-bottom: 10px;">
                 <div class="card-body">
                     <div class="d-flex justify-content-between" style="border: 0px solid transparent">
                         <table>
@@ -81,6 +102,6 @@
     </div>
     <div class="tab-pane fade" id="pills-serving" role="tabpanel" aria-labelledby="pills-serving-tab">asad</div>
 </div>
-
+<script type="application/javascript" th:src="@{/js/home/productservice.js}"></script>
 </body>
 </html>
