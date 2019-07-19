@@ -47,7 +47,7 @@ public class UserController {
     @GetMapping("/login")
     public String login(HttpServletRequest request, Model model) {
         String redirectto = request.getHeader("Referer");
-        if (redirectto == null) {
+        if (redirectto == null || redirectto.startsWith("/register") || redirectto.startsWith("/login")) {
             redirectto = "/home";
         }
 
