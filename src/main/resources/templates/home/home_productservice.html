@@ -46,42 +46,38 @@
 
 </div>
 
+<div class="centerinline catalog-content-container">
+    <ul class="nav justify-content-center">
+        <li class="nav-item">
+            <span class="nav-link product-query-by-catalog" catalogId="1">私募基金</span>
+        </li>
+        <li class="nav-item">
+            <span class="nav-link product-query-by-catalog" catalogId="2">公墓基金</span>
+        </li>
+        <li class="nav-item">
+            <span class="nav-link product-query-by-catalog"  catalogId="3" >现金管理</span>
+        </li>
+        <li class="nav-item">
+            <span class="nav-link product-query-by-catalog" catalogId="4" >类固收</span>
+        </li>
+        <li class="nav-item">
+            <span class="nav-link product-query-by-catalog" catalogId="5" >其他</span>
+        </li>
+    </ul>
+</div>
+
 
 <div class="tab-content" id="pills-tabContent">
     <div class="tab-pane fade show active" id="pills-product" role="tabpanel" aria-labelledby="pills-product-tab">
-
-
-        <div class="centerinline catalog-content-container">
-            <ul class="nav justify-content-center">
-                <li class="nav-item">
-                    <span class="nav-link product-query-by-catalog" catalogId="1">私募基金</span>
-                </li>
-                <li class="nav-item">
-                    <span class="nav-link product-query-by-catalog" catalogId="2">公墓基金</span>
-                </li>
-                <li class="nav-item">
-                    <span class="nav-link product-query-by-catalog" catalogId="3">现金管理</span>
-                </li>
-                <li class="nav-item">
-                    <span class="nav-link product-query-by-catalog" catalogId="4">类固收</span>
-                </li>
-                <li class="nav-item">
-                    <span class="nav-link product-query-by-catalog" catalogId="5">其他</span>
-                </li>
-            </ul>
-        </div>
-
-
-        <div class="col-9 justify-content-center">
-            <div class="card" th:each="product:${productModel.list}" id="productContainer"
-                 style="width: 137%; margin-bottom: 10px;">
+        <div class="col-9 justify-content-center" >
+            <div class="card" th:each="product:${productModel.list}" id="productContainer"  style="width: 137%; margin-bottom: 10px;">
                 <div class="card-body">
                     <div class="d-flex justify-content-between" style="border: 0px solid transparent">
                         <table>
                             <tr>
                                 <th class="font-weight-bold" th:text="${product.name}">励恒1号基金</th>
                                 <th class="little font-weight-normal">立即预约</th>
-                                <th class="little font-weight-normal">产品咨询</th>
+                                <th  class="little font-weight-normal">产品咨询</th>
                             </tr>
                             <tbody>
                             <tr>
@@ -106,8 +102,8 @@
                             </tr>
                             </tbody>
                         </table>
+                        </div>
                     </div>
-                </div>
 
             </div>
         </div>
@@ -118,15 +114,6 @@
     </div>
 
 </div>
-
-
-</div>
-
 <script type="application/javascript" th:src="@{/js/home/productservice.js}"></script>
-
-<script>
-
-
-</script>
 </body>
 </html>
