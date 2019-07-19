@@ -1,7 +1,9 @@
 package sales.salesmen.service.Impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +20,10 @@ import java.util.Optional;
 
 @Service
 public class ServingServiceImpl implements ServingService {
+
+    @Value("${pageSize}")
+    int pageSize;
+
     @Autowired
     FileService fileService;
 
@@ -108,5 +114,9 @@ public class ServingServiceImpl implements ServingService {
         return servingRepository.findAll(pageable);
     }
 
-
+    @Override
+    public Page<Serving> getServingPageBySCatalog2(SCatalog2 sCatalog2, int page) {
+        PageRequest pageRequest = PageRequest.of(page, this.pageSize);
+        return servingRepository.findAllBySCatalog2(pageRequest, sCatalog2);
+    }
 }

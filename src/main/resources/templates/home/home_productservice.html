@@ -10,6 +10,7 @@
     <link rel="stylesheet" th:href="@{/css/page/productservice.css}">
     <script th:src="@{/js/jquery-3.1.1.min.js}"></script>
     <script th:src="@{/lib/bootstrap/js/bootstrap.js}"></script>
+    <script type="application/javascript" th:src="@{/js/vue/vue.js}"></script>
 </head>
 <body>
 
@@ -18,57 +19,69 @@
     <div class="row">
         <ul class="nav nav-pills mb-3">
             <li class="nav-item">
-                <a class="nav-link active" id="pills-product-tab" data-toggle="pill" href="#pills-product" role="tab" aria-controls="pills-product" aria-selected="true">
-        <div>
-            <div class="text-center">
-                <span style="font-size: 30px">产品</span>
-            </div>
-        </div></a>
+                <a class="nav-link active tabchangebtn" data-tab="product" id="pills-product-tab" data-toggle="pill"
+                   href="#pills-product"
+                   role="tab"
+                   aria-controls="pills-product" aria-selected="true">
+                    <div>
+                        <div class="text-center">
+                            <span style="font-size: 30px">产品</span>
+                        </div>
+                    </div>
+                </a>
             </li>
-            <li class="nav-item"><a class="nav-link" id="pills-serving-tab" data-toggle="pill" href="#pills-serving" role="tab" aria-controls="pills-serving" aria-selected="false">
-        <div>
-            <div class="text-center">
-                <span style="font-size: 30px">服务</span>
-            </div>
-        </div></a>
+            <li class="nav-item">
+                <a class="nav-link tabchangebtn" data-tab="serving" id="pills-serving-tab" data-toggle="pill"
+                   href="#pills-serving"
+                   role="tab" aria-controls="pills-serving" aria-selected="false">
+                    <div>
+                        <div class="text-center">
+                            <span style="font-size: 30px">服务</span>
+                        </div>
+                    </div>
+                </a>
             </li>
         </ul>
     </div>
 
 </div>
 
-<div class="centerinline catalog-content-container">
-    <ul class="nav justify-content-center">
-        <li class="nav-item">
-            <span class="nav-link product-query-by-catalog" catalogId="1">私募基金</span>
-        </li>
-        <li class="nav-item">
-            <span class="nav-link product-query-by-catalog" catalogId="2">公墓基金</span>
-        </li>
-        <li class="nav-item">
-            <span class="nav-link product-query-by-catalog"  catalogId="3" >现金管理</span>
-        </li>
-        <li class="nav-item">
-            <span class="nav-link product-query-by-catalog" catalogId="4" >类固收</span>
-        </li>
-        <li class="nav-item">
-            <span class="nav-link product-query-by-catalog" catalogId="5" >其他</span>
-        </li>
-    </ul>
-</div>
-
 
 <div class="tab-content" id="pills-tabContent">
     <div class="tab-pane fade show active" id="pills-product" role="tabpanel" aria-labelledby="pills-product-tab">
-        <div class="col-9 justify-content-center" >
-            <div class="card" th:each="product:${productModel.list}" id="productContainer"  style="width: 137%; margin-bottom: 10px;">
+
+
+        <div class="centerinline catalog-content-container">
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <span class="nav-link product-query-by-catalog" catalogId="1">私募基金</span>
+                </li>
+                <li class="nav-item">
+                    <span class="nav-link product-query-by-catalog" catalogId="2">公墓基金</span>
+                </li>
+                <li class="nav-item">
+                    <span class="nav-link product-query-by-catalog" catalogId="3">现金管理</span>
+                </li>
+                <li class="nav-item">
+                    <span class="nav-link product-query-by-catalog" catalogId="4">类固收</span>
+                </li>
+                <li class="nav-item">
+                    <span class="nav-link product-query-by-catalog" catalogId="5">其他</span>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="col-9 justify-content-center">
+            <div class="card" th:each="product:${productModel.list}" id="productContainer"
+                 style="width: 137%; margin-bottom: 10px;">
                 <div class="card-body">
                     <div class="d-flex justify-content-between" style="border: 0px solid transparent">
                         <table>
                             <tr>
                                 <th class="font-weight-bold" th:text="${product.name}">励恒1号基金</th>
                                 <th class="little font-weight-normal">立即预约</th>
-                                <th  class="little font-weight-normal">产品咨询</th>
+                                <th class="little font-weight-normal">产品咨询</th>
                             </tr>
                             <tbody>
                             <tr>
@@ -93,15 +106,27 @@
                             </tr>
                             </tbody>
                         </table>
-                        </div>
                     </div>
-
                 </div>
+
             </div>
         </div>
     </div>
-    <div class="tab-pane fade" id="pills-serving" role="tabpanel" aria-labelledby="pills-serving-tab">asad</div>
+
+    <div class="tab-pane fade" id="pills-serving" role="tabpanel" aria-labelledby="pills-serving-tab">
+        <div th:include="/home/home_serving::servingfragment"></div>
+    </div>
+
 </div>
+
+
+</div>
+
 <script type="application/javascript" th:src="@{/js/home/productservice.js}"></script>
+
+<script>
+
+
+</script>
 </body>
 </html>

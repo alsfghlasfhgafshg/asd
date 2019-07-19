@@ -1,0 +1,206 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<div th:fragment="servingfragment">
+
+
+    <div class="centerinline">
+        <ul class="nav justify-content-center" id="scataloglist">
+            <li class="nav-item" v-for="item in items">
+                <button class="btn-link btn scatalog1btn" href="#" v-bind:data-itemid="item.id">{{item.name}}</button>
+            </li>
+        </ul>
+    </div>
+    <br>
+
+    <div class="container">
+
+        <select name="catalog2" id="catalogtag2select" class="form-control">
+
+        </select>
+
+        <br>
+        <br>
+        <br>
+
+        <div id="servinglist">
+            <div class="card" v-for="serving in items">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div class="">
+                            <h5 class="card-title align-self-start">{{serving.title}}</h5>
+                        </div>
+                        <div>
+                            <a class="align-self-end" href="#">立即预约</a>
+                            <a class="align-self-end" href="#">产品咨询</a>
+                        </div>
+                    </div>
+                    <div class="row" style="max-height: 100px">
+                        <div class="col-4">
+                            <img v-bind:src="serving.pictureuri" alt="" style="max-width: 80%;max-height: 100%">
+                        </div>
+                        <div class="col-8">
+                            <div>{{serving.subtitle}}</div>
+                            <div style="margin-bottom: 6px;max-height: 50px;overflow: hidden">
+                                {{serving.summary}}
+                            </div>
+                            <div class="h4">{{serving.price}}</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <script>
+        var nowscatalog1;
+        var nowscatalog2;
+        var nowpage = 0;
+
+
+        $(".tabchangebtn").click(function () {
+            console.log(this.dataset.tab);
+
+            if (this.dataset.tab == "serving") {
+
+
+            }
+        });
+
+
+        var scataloglist = new Vue({
+            el: '#scataloglist',
+            data: {
+                items: []
+            }, methods: {}
+        });
+
+        var servinglist = new Vue({
+            el: '#servinglist',
+            data: {
+                items: []
+            }, methods: {}
+        })
+
+
+        //获得catalog
+        function getscatalog(scatalogid, scatalog2id) {
+            $.ajax({
+                url: "/serving/getscatalog",
+                success: function (data) {
+                    scataloglist.items = data
+
+                },
+                error: function () {
+                    toastr.error("error");
+                }
+            })
+        }
+
+        //获得catalog2
+        function getcatalog2(catalogid, scatalog2id) {
+
+            $.ajax({
+                url: "/serving/getscatalog2",
+                data: {
+                    scatalogid: catalogid
+                },
+                success: function (data) {
+                    $("#catalogtag2select").empty();
+                    data.forEach(function (item) {
+
+                        var tempoption = document.createElement("option");
+                        tempoption.setAttribute("value", item.id);
+                        tempoption.innerText = item.name;
+
+                        $("#catalogtag2select").prepend(tempoption);
+                    });
+                    if (scatalog2id != null) {
+                        $("#catalogtag2select").val(scatalog2id);
+                    }
+                    console.log("scatalog2id" + scatalog2id);
+                    if (data[0] != null) {
+                        getserving(data[0].id, nowpage)
+                    } else {
+                        servinglist.items = []
+                    }
+                },
+                error: function () {
+                    toastr.error("error");
+                }
+            })
+
+        }
+
+        //获得serving
+        function getserving(scatalog2id, page) {
+
+            if (page == null) {
+                page = 0;
+            }
+
+            $.ajax({
+                url: "/serving/getserving",
+                data: {
+                    scatalog2: scatalog2id,
+                    page: page
+                },
+                success: function (data) {
+                    servinglist.items = data
+                },
+                error: function () {
+                    toastr.error("error");
+                }
+            })
+
+        }
+
+
+        $("body").on("click", ".scatalog1btn", function () {
+            console.log(this)
+            var scatalogid = this.dataset.itemid;
+            nowscatalog1 = scatalogid;
+            activescatalog1(scatalogid)
+            getcatalog2(scatalogid)
+
+        });
+
+
+        $("body").on("change", "#catalogtag2select", function () {
+            nowpage = 0;
+            console.log(this)
+            console.log(this.value)
+            getserving(this.value, nowpage)
+
+        });
+
+
+        function activescatalog1(scatalogid) {
+            nowpage = 0;
+            $(".scatalog1btn").each(function () {
+                $(this).css("background", "")
+                if (this.dataset.itemid == scatalogid) {
+                    $(this).css("background", "gray")
+                }
+            })
+
+        }
+
+        function init() {
+            getscatalog()
+            getcatalog2(1)
+
+            nowscatalog1 = 1;
+            nowscatalog2 = 1;
+        }
+
+        init()
+
+
+    </script>
+
+
+</div>
