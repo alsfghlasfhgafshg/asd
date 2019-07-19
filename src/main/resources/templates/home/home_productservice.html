@@ -37,32 +37,33 @@
 
 </div>
 
-<div class="centerinline catalog-content-container">
-    <ul class="nav justify-content-center">
-        <li class="nav-item">
-            <span class="nav-link product-query-by-catalog" catalogId="1">私募基金</span>
-        </li>
-        <li class="nav-item">
-            <span class="nav-link product-query-by-catalog" catalogId="2">公墓基金</span>
-        </li>
-        <li class="nav-item">
-            <span class="nav-link product-query-by-catalog"  catalogId="3" >现金管理</span>
-        </li>
-        <li class="nav-item">
-            <span class="nav-link product-query-by-catalog" catalogId="4" >类固收</span>
-        </li>
-        <li class="nav-item">
-            <span class="nav-link product-query-by-catalog" catalogId="5" >其他</span>
-        </li>
-    </ul>
-</div>
+
 
 
 <div class="tab-content" id="pills-tabContent">
     <div class="tab-pane fade show active" id="pills-product" role="tabpanel" aria-labelledby="pills-product-tab">
-        <div class="col-9 justify-content-center" >
-            <div class="card" th:each="product:${productModel.list}" id="productContainer"  style="width: 137%; margin-bottom: 10px;">
-                <div class="card-body">
+        <div class="centerinline catalog-content-container">
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <span class="nav-link product-query-by-catalog" catalogId="1">私募基金</span>
+                </li>
+                <li class="nav-item">
+                    <span class="nav-link product-query-by-catalog" catalogId="2">公墓基金</span>
+                </li>
+                <li class="nav-item">
+                    <span class="nav-link product-query-by-catalog"  catalogId="3" >现金管理</span>
+                </li>
+                <li class="nav-item">
+                    <span class="nav-link product-query-by-catalog" catalogId="4" >类固收</span>
+                </li>
+                <li class="nav-item">
+                    <span class="nav-link product-query-by-catalog" catalogId="5" >其他</span>
+                </li>
+            </ul>
+        </div>
+        <div class=" justify-content-center" id="productContainer">
+            <div class="card " th:each="product:${productModel.list}" style="margin-bottom: 10px;margin: 20px;">
+                <div class="card-body" style="padding: 15px">
                     <div class="d-flex justify-content-between" style="border: 0px solid transparent">
                         <table>
                             <tr>
@@ -76,8 +77,8 @@
                                 <th th:text="${product.scale}">Otto</th>
                                 <th th:text="${product.startmoney}">@mdo</th>
                             </tr>
-                            <tr>
-                                <td class="little">产品类型</td>
+                            <tr class="text-center">
+                                <td class="little ">产品类型</td>
                                 <td class="little">产品规模</td>
                                 <td class="little">起投金额</td>
                             </tr>
@@ -86,7 +87,7 @@
                                 <th th:text="${product.performance}">the Bird</th>
                                 <th th:text="${product.startDate}">@twitter</th>
                             </tr>
-                            <tr>
+                            <tr class="text-center">
                                 <td class="little">投资期限</td>
                                 <td class="little">业绩比较基准</td>
                                 <td class="little">起售日期</td>
@@ -99,9 +100,10 @@
                 </div>
             </div>
         </div>
-    </div>
     <div class="tab-pane fade" id="pills-serving" role="tabpanel" aria-labelledby="pills-serving-tab">asad</div>
+
 </div>
+    </div>
 <script type="application/javascript" th:src="@{/js/home/productservice.js}"></script>
 </body>
 </html>

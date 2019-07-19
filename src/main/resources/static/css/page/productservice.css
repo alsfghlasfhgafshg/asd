@@ -16,3 +16,12 @@ table th{
 table{
     width: 100%;
 }
+th{
+    text-align: center !important;
+}
+.catalog-content-container li{
+    margin-left: -20px;
+}
+.catalog-content-container {
+    margin-left: 18px;
+}
