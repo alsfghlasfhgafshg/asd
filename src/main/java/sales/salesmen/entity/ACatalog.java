@@ -17,9 +17,11 @@ public class ACatalog implements Serializable {
     @Column(nullable = false)
     private String name;
 
-    public ACatalog(@NotEmpty(message = "类型名为空") String name) {
+    public ACatalog(Integer id,@NotEmpty(message = "类型名为空") String name) {
+        this.id = id;
         this.name = name;
     }
+
 
     protected ACatalog() {}
 

@@ -36,6 +36,12 @@ public class AppListener implements ApplicationListener {
     @Autowired
     CCatalog2Repository cCatalog2Repository;
 
+    @Autowired
+    PCatalogRepository pCatalogRepository;
+
+    @Autowired
+    ACatalogRepository aCatalogRepository;
+
 
     @Override
     public void onApplicationEvent(ApplicationEvent event) {
@@ -101,6 +107,31 @@ public class AppListener implements ApplicationListener {
             cCatalog2Repository.save(haiwaizichanpeizhi);
             cCatalog2Repository.save(xilieke);
             cCatalog2Repository.save(qita);
+
+            PCatalog simujijin = new PCatalog(1,"私募基金");
+            PCatalog gongmujijin = new PCatalog(2,"公募基金");
+            PCatalog xianjinguanli = new PCatalog(3,"现金管理");
+            PCatalog leigushou = new PCatalog(4,"类固收");
+            PCatalog qitachanpin = new PCatalog(5,"其他");
+
+            pCatalogRepository.save(simujijin);
+            pCatalogRepository.save(gongmujijin);
+            pCatalogRepository.save(xianjinguanli);
+            pCatalogRepository.save(leigushou);
+            pCatalogRepository.save(qitachanpin);
+
+            ACatalog jinronghuati = new ACatalog(6,"金融话题");
+            ACatalog touzijineng = new ACatalog(7,"投资技能");
+            ACatalog dakaguandian = new ACatalog(8,"大咖观点");
+            ACatalog shichanghuodong = new ACatalog(9,"市场活动");
+
+            aCatalogRepository.save(jinronghuati);
+            aCatalogRepository.save(touzijineng);
+            aCatalogRepository.save(dakaguandian);
+            aCatalogRepository.save(shichanghuodong);
+
+
+
         }
 
     }

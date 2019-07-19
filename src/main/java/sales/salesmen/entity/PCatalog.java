@@ -16,7 +16,10 @@ public class PCatalog implements Serializable {
     protected PCatalog() {
     }
 
-    public PCatalog(String name) {
+
+
+    public PCatalog(Integer id,String name) {
+        this.id = id;
         this.name = name;
     }
 
