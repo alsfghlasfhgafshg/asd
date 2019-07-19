@@ -64,7 +64,11 @@ public class Home_courseController {
     List<Course> getapage(@RequestParam(value = "page", required = false, defaultValue = "0") int page,
                           @RequestParam(value = "ccatalog", required = false, defaultValue = "0") int ccatalog,
                           @RequestParam(value = "ccatalog2", required = false, defaultValue = "0") int ccatalog2) {
-        return courseService.getAllCourseByccatalog12(ccatalog, ccatalog2, page);
+        List<Course> allCourseByccatalog12 = courseService.getAllCourseByccatalog12(ccatalog, ccatalog2, page);
+        for (Course course : allCourseByccatalog12) {
+            course.setUsers(null);
+        }
+        return allCourseByccatalog12;
     }
 
     @PostMapping("/starcourse")
