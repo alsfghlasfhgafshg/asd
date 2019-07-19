@@ -117,5 +117,16 @@
 
 </div>
 <script type="application/javascript" th:src="@{/js/home/productservice.js}"></script>
+<script>
+
+    var nowtab = "product";
+
+    $(".tabchangebtn").click(function () {
+
+        nowtab = this.dataset.tab;
+    });
+
+</script>
+
 </body>
 </html>
