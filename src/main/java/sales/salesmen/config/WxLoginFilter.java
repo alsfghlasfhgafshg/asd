@@ -111,11 +111,13 @@ public class WxLoginFilter extends OncePerRequestFilter {
 
 //                session.setAttribute();
 
-                if ((Boolean) session.getAttribute("wxlogin") == null || (Boolean) session.getAttribute("wxlogin") == false) {
+                Boolean wxlogin = (Boolean) session.getAttribute("wxlogin");
+
+                if (wxlogin == null || wxlogin == false) {
                     //没登录，调转到微信授权页
 
                     //保存被拦截的url
-                    if(request.getMethod().equals("GET")){
+                    if (request.getMethod().equals("GET")) {
                         if (session.getAttribute("Interceptedurl") == null) {
                             session.setAttribute("Interceptedurl", UrlUtil.getUrlWithParameterNames(request));
                         }
