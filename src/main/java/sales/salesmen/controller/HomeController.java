@@ -78,11 +78,11 @@ public class HomeController {
         }
 
         if(avatarimg==null){
-            avatarimg="/img/star.png";
+            avatarimg="/img/defaultavatar.png";
         }
 
         if(principal==null){
-            model.addAttribute("avatarimg","/img/star.png");
+            model.addAttribute("avatarimg","/img/defaultavatar.png");
         }else {
             model.addAttribute("avatarimg",avatarimg);
         }
