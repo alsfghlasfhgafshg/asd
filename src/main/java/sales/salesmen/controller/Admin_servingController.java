@@ -37,7 +37,7 @@ public class Admin_servingController {
         Page<Serving> servingspage = servingService.getServingByPage(pageable);
         List<Serving> servings = servingspage.getContent();
 
-        model.addAttribute("page", pageIndex + 1);
+        model.addAttribute("page", servingspage );
         model.addAttribute("servings", servings);
 
         return "/admin/serving_list";
