@@ -3,6 +3,8 @@ package sales.salesmen.controller;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import sales.salesmen.entity.Authority;
 import sales.salesmen.entity.User;
 import sales.salesmen.entity.WxUser;
 import sales.salesmen.model.WXUserinfo;
+import sales.salesmen.repository.AuthorityRepository;
 import sales.salesmen.repository.UserRepository;
 import sales.salesmen.repository.WxUserRepository;
 import sales.salesmen.service.AuthorityService;
@@ -29,9 +32,13 @@ import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class WxLogin {
+
+    @Autowired
+    AuthorityRepository authorityRepository;
 
     @Autowired
     RedisService redisService;
@@ -69,70 +76,39 @@ public class WxLogin {
     String wxLogin(HttpSession session, HttpServletRequest request, HttpServletResponse response, @RequestParam("code") String code) {
 
         JSONObject jsonObject = wxService.code2OpenidAndAccessToken(code);
-
         String openid = jsonObject.getString("openid");
-
         WxUser wxUser = wxUserRepository.findWxUserByWxopenid(openid);
 
         if (wxUser == null) {
             wxUser = new WxUser();
             wxUser.setWxopenid(openid);
             wxUserRepository.save(wxUser);
-            try {
-                response.sendRedirect(getUserInfoUrl(request));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
         } else {
-            if (wxUser.getUser() == null) {
-                try {
-                    response.sendRedirect(getUserInfoUrl(request));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                 //判断是不是有手机号和权限
-                if(wxUser.getUser().getPhonenum()==null|| wxUser.getUser().getAuthorities()==null){
-                    Long userid = wxUser.getUser().getId();
-
-                    PasswordEncoder encoder = new BCryptPasswordEncoder();
-                    String encodeUserid = encoder.encode(String.valueOf(userid));
-
-                    redisService.set("encodeUserid_" + encodeUserid, String.valueOf(userid));
-                    return "redirect:/setauthorityandphonenum?uid=" + encodeUserid;
-
-                }else {
-                    try {
-                        request.getSession().setAttribute("wxlogin",true);
-
-                        String InterceptedUrl= (String) request.getSession().getAttribute("Interceptedurl");
-                        request.getSession().removeAttribute("Interceptedurl");
-
-                        response.sendRedirect(InterceptedUrl);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
+            if (wxUser.getUser() != null && wxUser.getUser().getAuthorities().size() != 0) {
+                SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(
+                        wxUser.getUser(), null, wxUser.getUser().getAuthorities()));
+                session.setAttribute("iswxlogin", true);
             }
         }
-
-//        session.setAttribute("wxlogin", true);
-
-        return "/";
+        session.setAttribute("hasopenid", true);
+        try {
+            String InterceptedUrl = (String) request.getSession().getAttribute("Interceptedurl");
+            InterceptedUrl = redirectIndexOrUrl(InterceptedUrl);
+            response.sendRedirect(InterceptedUrl);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //redirect to Interceptedurl
+        return "redirect to Interceptedurl";
     }
 
 
     @GetMapping("/setauthorityandphonenum")
-    public String setauthorityandphonenum(@RequestParam("uid") String encodeUserid, Model model) {
+    public String setauthorityandphonenum(@RequestParam("uid") String encodeUserid, Model model, @RequestParam(value = "errmsg", required = false) String errmsg) {
 
-//        long userid = Long.valueOf(redisService.get("encodeUserid_" + encodeUserid));
-//
-//        User user=userRepository.findById(userid).get();
-
-        String errMsgs="验证码错误";
-        model.addAttribute("errmsg",errMsgs);
-
+        if (errmsg != null) {
+            model.addAttribute("errmsg", errmsg);
+        }
 
         List<Authority> authorities = authorityService.findAll();
         for (Authority authority : authorities) {
@@ -151,7 +127,7 @@ public class WxLogin {
     @PostMapping("/setauthorityandphonenum")
     public String postsetauthorityandphonenum(@RequestParam("uid") String encodeUserid, @RequestParam("authorityid") int authorityid,
                                               @RequestParam("phonenum") String phonenum, @RequestParam("verificationcode") int verificationcode,
-                                              Model model,HttpServletRequest request, HttpServletResponse response) {
+                                              Model model, HttpServletRequest request, HttpServletResponse response) {
         //如果验证码正确
         if (true) {
 
@@ -161,29 +137,43 @@ public class WxLogin {
 
             User user = userRepository.findById(userid).get();
             user.setPhonenum(phonenum);
-            List<Authority> authorities=new ArrayList<>();
+            List<Authority> authorities = new ArrayList<>();
             authorities.add(authorityService.getAuthorityById(Long.valueOf(authorityid)).get());
+            user.setAuthorities(authorities);
 
             userRepository.save(user);
 
-            String InterceptedUrl= (String) request.getSession().getAttribute("Interceptedurl");
+            Authority userauthority = authorityRepository.findById(Long.valueOf(authorityid)).get();
+            ArrayList<Authority> authorityArrayList = new ArrayList<>();
+            authorityArrayList.add(userauthority);
+
+            SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(
+                    userRepository.findById(userid).get(), null, authorityArrayList));
+
+            String InterceptedUrl = (String) request.getSession().getAttribute("Interceptedurl");
+            InterceptedUrl = redirectIndexOrUrl(InterceptedUrl);
+
             request.getSession().removeAttribute("Interceptedurl");
+            request.getSession().setAttribute("iswxlogin", true);
 
             try {
-                request.getSession().setAttribute("wxlogin",true);
-
                 response.sendRedirect(InterceptedUrl);
             } catch (IOException e) {
                 e.printStackTrace();
             }
             return null;
 
+        } else {
+            return "redirect:/setauthorityandphonenum?errmsg=验证码错误";
         }
-        else {
-            String errMsgs="验证码错误";
-            model.addAttribute("errmsg",errMsgs);
-            return "/setauthorityandphonenum";
-        }
+    }
+
+    private String redirectIndexOrUrl(String InterceptedUrl) {
+        if (InterceptedUrl.startsWith("/myself") || InterceptedUrl.startsWith("/home")
+                || InterceptedUrl.startsWith("/productservice") || InterceptedUrl.startsWith("/course")) {
+            return "/";
+        } else return InterceptedUrl;
+
     }
 
 
@@ -205,6 +195,7 @@ public class WxLogin {
             wxUser.setWxopenid(openid);
             wxUserRepository.save(wxUser);
         }
+
         User u = wxUser.getUser();
         if (u == null) {
             u = new User();
@@ -219,27 +210,11 @@ public class WxLogin {
             wxUserRepository.save(wxUser);
         }
 
-        Long userid = wxUser.getUser().getId();
+        Long userid = wxUserRepository.findWxUserByWxopenid(openid).getUser().getId();
 
-        PasswordEncoder encoder = new BCryptPasswordEncoder();
-        String encodeUserid = encoder.encode(String.valueOf(userid));
-
-        redisService.set("encodeUserid_" + encodeUserid, String.valueOf(userid));
-
-        return "redirect:/setauthorityandphonenum?uid=" + encodeUserid;
-    }
-
-
-    //获取用户信息的url
-    private String getUserInfoUrl(HttpServletRequest request) {
-
-        String encoded_wechat_redirect_uri = "";
-        try {
-            encoded_wechat_redirect_uri = URLEncoder.encode(UrlUtil.getBaseUrl(request) + this.userinfo_redirect_uri, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=snsapi_userinfo&state=2#wechat_redirect", this.appid, encoded_wechat_redirect_uri);
+        String uuidUserid = UUID.randomUUID().toString();
+        redisService.set("encodeUserid_" + uuidUserid, String.valueOf(userid));
+        return "redirect:/setauthorityandphonenum?uid=" + uuidUserid;
     }
 
 }

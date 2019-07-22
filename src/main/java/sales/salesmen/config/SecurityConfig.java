@@ -14,7 +14,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -70,7 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/druid/**").hasIpAddress("127.0.0.1");
 
         //注销登录
-        http.logout().logoutUrl("/logout").logoutSuccessUrl("/home").invalidateHttpSession(true);
+        http.logout().logoutUrl("/logout").logoutSuccessUrl("/").invalidateHttpSession(true);
 
         http.headers().frameOptions().sameOrigin();
         http.addFilterAfter(wxLoginFilter, UsernamePasswordAuthenticationFilter.class);

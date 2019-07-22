@@ -17,7 +17,9 @@
     <h4 class="text-center">完善信息</h4>
 
     <!--/*@thymesVar id="errmsg" type="java.lang.String"*/-->
-    <div class="alert alert-danger" role="alert" th:text="${errmsg}"></div>
+    <div th:if="*{errmsg!=null}">
+        <div class="alert alert-danger" role="alert" th:text="${errmsg}"></div>
+    </div>
 
 
     <br>
