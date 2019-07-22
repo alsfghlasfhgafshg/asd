@@ -28,9 +28,6 @@ public class HomeController {
     private ArticleService articleService;
 
     @Autowired
-    private AuthorityService authorityService;
-
-    @Autowired
     private ACatalogService aCatalogService;
 
     @Autowired

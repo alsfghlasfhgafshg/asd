@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import sales.salesmen.entity.*;
+import sales.salesmen.esentity.EsCourse;
 import sales.salesmen.repository.CCatalog2Repository;
 import sales.salesmen.repository.CCatalogRepository;
 import sales.salesmen.repository.CourseRepository;
@@ -41,9 +42,8 @@ public class CourseService {
     @Autowired
     UserCourseStarRespository userCourseStarRespository;
 
-    public Course saveOrUpdate(Course course) {
-        return null;
-    }
+    @Autowired
+    private EsCourseService esCourseService;
 
 
     public String uploadsrc(int catalogid, MultipartFile src) {
@@ -65,7 +65,7 @@ public class CourseService {
     public boolean saveOrUpdate(Long courseid, int catalogid, int catalog2id, String title, String teacher,
                                 MultipartFile pic, MultipartFile src, String summary) {
         CCatalog cCatalog = cCatalogRepository.getOne(catalogid);
-
+        EsCourse esCourse;
         if (courseid == null) {
             Course course;
             String picuri = fileService.uploadImage(pic);
@@ -74,6 +74,8 @@ public class CourseService {
             CCatalog2 cCatalog2 = cCatalog2Repository.getOne(catalog2id);
             course = new Course(courseid, title, picuri, teacher, summary, 0, 0, srcuri, cCatalog, cCatalog2);
             courseRepository.save(course);
+            esCourse = new EsCourse(course);
+            esCourseService.updateEsCourse(esCourse);
             return true;
         } else {
             try {
@@ -92,6 +94,9 @@ public class CourseService {
                 course.setSummary(summary);
                 course.setcCatalog(cCatalogRepository.getOne(catalogid));
                 course.setcCatalog2(cCatalog2Repository.getOne(catalog2id));
+                esCourse = esCourseService.getEsCourseByCourseId(course.getId());
+                esCourse.update(course);
+                esCourseService.updateEsCourse(esCourse);
                 courseRepository.save(course);
                 return true;
 

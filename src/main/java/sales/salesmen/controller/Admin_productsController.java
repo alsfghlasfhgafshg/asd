@@ -29,7 +29,7 @@ public class Admin_productsController {
     private PCatalogService pCatalogService;
 
     @GetMapping
-    public ModelAndView getArticle(@RequestParam(value = "async",required = false)boolean async,
+    public ModelAndView getProducts(@RequestParam(value = "async",required = false)boolean async,
                                    @RequestParam(value = "pageIndex",required = false,defaultValue = "0")int pageIndex,
                                    @RequestParam(value = "pageSize",required = false,defaultValue = "10")int pageSize,
                                    Model model){
@@ -43,13 +43,13 @@ public class Admin_productsController {
     }
 
     @GetMapping("/add")
-    public ModelAndView addArticle(Model model){
+    public ModelAndView addProduct(Model model){
         model.addAttribute("product",new Products(null,null,null,null,null,null,null));
         return new ModelAndView("/admin/add_product","productModel",model);
     }
 
     @PostMapping
-    public ResponseEntity<Response> saveOrUpdateArticle(@RequestBody JSONObject fastjson) {
+    public ResponseEntity<Response> saveOrUpdateProduct(@RequestBody JSONObject fastjson) {
         SimpleDateFormat sdf1 =new SimpleDateFormat("yyyy-MM-dd" );
         Long id = fastjson.getLong("id");
         Products products;

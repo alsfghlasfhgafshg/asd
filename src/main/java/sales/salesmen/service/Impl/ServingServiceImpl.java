@@ -10,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import sales.salesmen.entity.SCatalog2;
 import sales.salesmen.entity.Serving;
+import sales.salesmen.esentity.EsServing;
 import sales.salesmen.repository.ServingRepository;
+import sales.salesmen.service.EsServingService;
 import sales.salesmen.service.FileService;
 import sales.salesmen.service.SCatalogService;
 import sales.salesmen.service.ServingService;
@@ -33,8 +35,13 @@ public class ServingServiceImpl implements ServingService {
     @Autowired
     SCatalogService sCatalogService;
 
+    @Autowired
+    private EsServingService esServingService;
+
     @Override
     public Serving saveServing(Serving serving) {
+        EsServing esServing = new EsServing(serving);
+        esServingService.updateEsServing(esServing);
         return servingRepository.save(serving);
     }
 
@@ -57,7 +64,8 @@ public class ServingServiceImpl implements ServingService {
 
         serving.setTitle(title);
         serving.setSubtitle(subtitle);
-
+        EsServing esServing = new EsServing(serving);
+        esServingService.updateEsServing(esServing);
         return saveServing(serving);
     }
 
@@ -78,7 +86,8 @@ public class ServingServiceImpl implements ServingService {
         serving.setTitle(title);
         serving.setSubtitle(subtitle);
 
-
+        EsServing esServing = new EsServing(serving);
+        esServingService.updateEsServing(esServing);
         return saveServing(serving);
     }
 
@@ -98,6 +107,8 @@ public class ServingServiceImpl implements ServingService {
 
         try {
             servingRepository.delete(serving.get());
+            EsServing esServing = esServingService.getEsServingByServingId(servingid);
+            esServingService.removeEsServing(esServing.getId());
             return true;
         } catch (NoSuchElementException e) {
             return false;

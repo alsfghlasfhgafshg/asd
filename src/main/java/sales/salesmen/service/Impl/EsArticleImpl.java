@@ -17,8 +17,6 @@ public class EsArticleImpl implements EsArticleService {
 
     @Autowired
     private EsArticleRepository esArticleRepository;
-    @Autowired
-    private ElasticsearchTemplate elasticsearchTemplate;
 
     @Override
     public void removeEsArticle(String id) {
