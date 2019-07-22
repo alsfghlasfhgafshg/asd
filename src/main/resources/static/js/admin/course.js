@@ -1,4 +1,31 @@
 $(function () {
+    $.tbpage("#mainContainer", function (pageIndex, pageSize) {
+        console.log(pageIndex);
+        // console.log(pageIndex, pageSize);
+        _pageSize = pageSize;
+
+
+        $.ajax({
+            url: "/admins/courses",
+            data: {
+                "async": true,
+                "pageIndex": pageIndex,
+                "pageSize": pageSize,
+            },
+            success: function (data) {
+                console.log(data)
+                $("#mainContainer").html(data)
+            },
+            error: function () {
+                toastr.error("error");
+            }
+        })
+
+
+    });
+
+
+
     //添加按钮
     $("#addbtn").click(function () {
         $("#exampleModalLongTitle").text("添加课程")

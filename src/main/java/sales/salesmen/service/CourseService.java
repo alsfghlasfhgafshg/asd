@@ -4,21 +4,19 @@ package sales.salesmen.service;
 import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import sales.salesmen.entity.CCatalog;
-import sales.salesmen.entity.CCatalog2;
-import sales.salesmen.entity.Course;
-import sales.salesmen.entity.User;
+import sales.salesmen.entity.*;
 import sales.salesmen.repository.CCatalog2Repository;
 import sales.salesmen.repository.CCatalogRepository;
 import sales.salesmen.repository.CourseRepository;
 import sales.salesmen.repository.UserCourseStarRespository;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
 @Service
@@ -111,6 +109,11 @@ public class CourseService {
     public boolean deleteCourse(Long courseid) {
         courseRepository.deleteById(courseid);
         return true;
+    }
+
+
+    public Page<Course> listCourses(Pageable pageable) {
+        return courseRepository.findAll(pageable);
     }
 
 

@@ -4,6 +4,9 @@ package sales.salesmen.controller;
 import com.alibaba.fastjson.JSONObject;
 import io.netty.handler.codec.json.JsonObjectDecoder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import sales.salesmen.entity.CCatalog;
 import sales.salesmen.entity.CCatalog2;
 import sales.salesmen.entity.Course;
+import sales.salesmen.entity.Products;
 import sales.salesmen.service.CourseService;
 
 import java.util.List;
@@ -23,9 +27,17 @@ public class Admin_courseController {
     CourseService courseService;
 
     @GetMapping
-    public String indexpage(Model model) {
-        model.addAttribute("courses", courseService.getAllCourse());
-        return "/admin/course_list";
+    public String indexpage(@RequestParam(value = "async", required = false) boolean async,
+                            @RequestParam(value = "pageIndex", required = false, defaultValue = "0") int pageIndex,
+                            @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize,
+                            Model model) {
+        Pageable pageable = PageRequest.of(pageIndex, pageSize);
+        Page<Course> page = courseService.listCourses(pageable);
+        List<Course> list = page.getContent();
+        model.addAttribute("page", page);
+        model.addAttribute("courses", list);
+//        model.addAttribute("courses", courseService.getAllCourse());
+        return async ? "/admin/course_list::#mainContainer" : "/admin/course_list";
     }
 
     @GetMapping("/getccatalog")
@@ -59,10 +71,10 @@ public class Admin_courseController {
     @PostMapping("/changecourse")
     public @ResponseBody
     JSONObject cahngeCource(@RequestParam(value = "courseid", required = false) Long courseid,
-                         @RequestParam("catalogid") int catalogid, @RequestParam("catalog2id") int catalog2id,
-                         @RequestParam("title") String title, @RequestParam("teacher") String teacher,
-                         @RequestParam(value = "pic",required = false) MultipartFile pic, @RequestParam(value = "src",required = false) MultipartFile src,
-                         @RequestParam("summary") String summary) {
+                            @RequestParam("catalogid") int catalogid, @RequestParam("catalog2id") int catalog2id,
+                            @RequestParam("title") String title, @RequestParam("teacher") String teacher,
+                            @RequestParam(value = "pic", required = false) MultipartFile pic, @RequestParam(value = "src", required = false) MultipartFile src,
+                            @RequestParam("summary") String summary) {
 
         JSONObject responsejson = new JSONObject();
         boolean result = courseService.saveOrUpdate(courseid, catalogid, catalog2id, title, teacher, pic, src, summary);
@@ -84,7 +96,7 @@ public class Admin_courseController {
 
     @GetMapping("/getcourse")
     public @ResponseBody
-    String getcource(@RequestParam("courseid") Long courseid){
+    String getcource(@RequestParam("courseid") Long courseid) {
         return JSONObject.toJSONString(courseService.getCourseById(courseid));
     }
 

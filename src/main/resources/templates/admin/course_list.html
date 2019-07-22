@@ -12,7 +12,7 @@
 </button>
 <hr>
 
-<div class="container">
+<div class="container" id="mainContainer" >
 
     <!--/*@thymesVar id="courses" type="java.util.List"*/-->
     <div th:each="course:${courses}">
@@ -63,6 +63,8 @@
 
     </div>
     <br>
+    <div th:replace="~{page :: page}">...</div>
+
 </div>
 
 
