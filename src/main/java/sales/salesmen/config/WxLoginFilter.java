@@ -1,5 +1,6 @@
 package sales.salesmen.config;
 
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.regex.Pattern;
@@ -25,9 +27,11 @@ public class WxLoginFilter extends OncePerRequestFilter {
     String appsecret;
     String redirect_uri;
 
+    String userinfo_redirect_uri;
+
     String[] needloginpatterns = new String[]{
-            "/",
-            "/article*",
+            "/myself*"
+//            "/article*",
     };
 
     String[] passpatterns = new String[]{
@@ -35,6 +39,7 @@ public class WxLoginFilter extends OncePerRequestFilter {
             "/wxlogin*",
             "/setauthorityandphonenum*"
     };
+
 
     private boolean isMatchPatterns(String uri, String[] uripatterns) {
         for (String uripattern : uripatterns) {
@@ -58,7 +63,7 @@ public class WxLoginFilter extends OncePerRequestFilter {
     }
 
     @Autowired
-    public WxLoginFilter(@Value("${wechat_redirect_uri}") String redirect_uri, @Value("${appid}") String appid, @Value("${appsecret}") String appsecret) {
+    public WxLoginFilter(@Value("${wechat_userinfo_redirect_uri}") String userinfo_redirect_uri, @Value("${wechat_redirect_uri}") String redirect_uri, @Value("${appid}") String appid, @Value("${appsecret}") String appsecret) {
         this.appid = appid;
         this.appsecret = appsecret;
         if (redirect_uri.startsWith("/")) {
@@ -66,79 +71,76 @@ public class WxLoginFilter extends OncePerRequestFilter {
         } else {
             this.redirect_uri = "/" + redirect_uri;
         }
+
+        if (userinfo_redirect_uri.startsWith("/")) {
+            this.userinfo_redirect_uri = userinfo_redirect_uri;
+        } else {
+            this.userinfo_redirect_uri = "/" + userinfo_redirect_uri;
+        }
     }
+
+
+    //获取用户信息的url
+    private String getUserInfoUrl(HttpServletRequest request) {
+
+        String encoded_wechat_redirect_uri = "";
+        try {
+            encoded_wechat_redirect_uri = URLEncoder.encode(UrlUtil.getBaseUrl(request) + this.userinfo_redirect_uri, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=snsapi_userinfo&state=2#wechat_redirect", this.appid, encoded_wechat_redirect_uri);
+    }
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        boolean needlogin = false;
+        String ua = request.getHeader("User-Agent");
+        //判断是不是微信的浏览器和method是不是get
+        if (!ua.contains("MicroMessenger") || !request.getMethod().equals("GET")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        HttpSession session = request.getSession();
 
         String uri = request.getRequestURI();
         String url = UrlUtil.getUrlWithParameterNames(request);
 
 
-        //是不是直接跳过
+        Boolean hasopenid = (Boolean) session.getAttribute("hasopenid");
+
         if (isMatchPatterns(uri, passpatterns)) {
             filterChain.doFilter(request, response);
             return;
         }
 
-//        if (uri.equals("/wxlogin")) {
-//            filterChain.doFilter(request, response);
-//            return;
-//        }
 
-
-        //判断是不是需要微信授权
-        needlogin = isMatchPatterns(uri, needloginpatterns);
-
-//        for (String uripattern : needloginpatterns) {
-//            if (Pattern.matches(uripattern, uri)) {
-//                needlogin = true;
-//                break;
-//            }
-//        }
-
-        //获取ua
-        String ua = request.getHeader("User-Agent");
-
-        if (ua.contains("MicroMessenger")) {
-            if (needlogin) {
-                //是微信浏览器并且需要登录的url
-
-                HttpSession session = request.getSession();
-
-                //设置要登录成功之后跳转的页面
-
-//                session.setAttribute();
-
-                if ((Boolean) session.getAttribute("wxlogin") == null || (Boolean) session.getAttribute("wxlogin") == false) {
-                    //没登录，调转到微信授权页
-
-                    //保存被拦截的url
-                    if(request.getMethod().equals("GET")){
-                        if (session.getAttribute("Interceptedurl") == null) {
-                            session.setAttribute("Interceptedurl", UrlUtil.getUrlWithParameterNames(request));
-                        }
-                    }
-
-                    String redirectUrl = getWxAuthUrl(request);
-                    response.sendRedirect(redirectUrl);
-                } else {
-                    //已登录，跳过
-                    filterChain.doFilter(request, response);
-                    return;
-                }
-
-                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-                int a = 1;
-
-            }
-        } else {
-            //不是微信浏览器，直接跳过
-            filterChain.doFilter(request, response);
+        if (hasopenid == null || hasopenid == false) {
+            session.setAttribute("Interceptedurl", url);
+            String redirectUrl = getWxAuthUrl(request);
+            response.sendRedirect(redirectUrl);
             return;
         }
 
-
+        //保证有openid
+        if (isMatchPatterns(uri, needloginpatterns)) {
+            session.setAttribute("Interceptedurl", UrlUtil.getUrlWithParameterNames(request));
+            Boolean iswxlogin = (Boolean) session.getAttribute("iswxlogin");
+            if (iswxlogin != null && iswxlogin == true) {
+                filterChain.doFilter(request, response);
+                return;
+            } else {
+                response.setStatus(401);
+                PrintWriter writer = response.getWriter();
+                JSONObject responsejson = new JSONObject();
+                responsejson.put("url", getUserInfoUrl(request));
+                writer.write(JSONObject.toJSONString(responsejson));
+                writer.close();
+                return;
+            }
+        }
+        filterChain.doFilter(request, response);
+        return;
     }
 }

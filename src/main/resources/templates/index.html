@@ -19,7 +19,7 @@
         <form class="weui-search-bar__form" onkeydown="if(event.keyCode==13) return false;">
             <div class="weui-search-bar__box">
                 <i class="weui-icon-search"></i>
-                <input type="search" class="weui-search-bar__input" id="searchInput"  placeholder="搜索"
+                <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索"
                        required="">
                 <a href="javascript:clear()" class="weui-icon-clear" id="searchClear"></a>
             </div>
@@ -35,6 +35,7 @@
 
     <!--    对应四个页面-->
     <div class="weui-tab__panel" id="pagecontent">
+
         <!--        js 初始化-->
     </div>
     <!--    底部 tabbar-->
@@ -67,47 +68,55 @@
     var coursepageinited = false;
     var myselfinited = false;
 
+    var homeframeuri = "/home"
+    var productserviceframeuri = "/productservice"
+    var coursepageframeuri = "/course"
+    var myselfframeuri = "/myself"
 
-    var homeframe = '<iframe src="/home" frameborder="0" width="100%" height="100%" id="homepage"></iframe>'
-    var productserviceframe = '<iframe src="/productservice" frameborder="0" width="100%" height="100%" id="productservicepage"></iframe>'
-    var coursepageframe = '<iframe src="/course" frameborder="0" width="100%" height="100%" id="coursepage"></iframe>'
-    var myselfframe = '<iframe src="/myself" frameborder="0" width="100%" height="100%" id="myselfpage"></iframe>'
+
+    function showcontent(url) {
+
+        $.ajax({
+            url,
+            success: function (data) {
+                $("#pagecontent").html(data);
+            }
+            , error: function (data) {
+                var responsejson = JSON.parse(data.responseText)
+                console.log(responsejson);
+                location.href = responsejson.url
+
+            }
+        })
+
+    }
+
 
     function initpage(p) {
         $("#pagecontent").append(p)
     }
 
     function hideall() {
-        $("#homepage").hide()
-        $("#productservicepage").hide()
-        $("#coursepage").hide()
-        $("#myselfpage").hide()
+
 
         $("#homea").removeClass("weui-bar__item_on")
         $("#productservicea").removeClass("weui-bar__item_on")
         $("#coursea").removeClass("weui-bar__item_on")
         $("#myselfa").removeClass("weui-bar__item_on")
 
-
     }
 
     function showhome() {
-        if (homeinited == false) {
-            initpage(homeframe)
-            homeinited = true
-        }
+        showcontent(homeframeuri)
+
         hideall()
         $("#homepage").show()
         $("#homea").addClass("weui-bar__item_on")
-
     }
 
     function showproductservice() {
-        if (productserviceinited == false) {
-            initpage(productserviceframe)
-            productserviceinited = true
+        showcontent(productserviceframeuri)
 
-        }
         hideall()
         $("#productservicepage").show()
         $("#productservicea").addClass("weui-bar__item_on")
@@ -115,11 +124,8 @@
     }
 
     function showcourse() {
-        if (coursepageinited == false) {
-            initpage(coursepageframe)
-            coursepageinited = true
+        showcontent(coursepageframeuri)
 
-        }
         hideall()
         $("#coursepage").show()
         $("#coursea").addClass("weui-bar__item_on")
@@ -127,10 +133,8 @@
     }
 
     function showmyself() {
-        if (myselfinited == false) {
-            initpage(myselfframe)
-            myselfinited = true
-        }
+        showcontent(myselfframeuri)
+
         hideall()
         $("#myselfpage").show()
         $("#myselfa").addClass("weui-bar__item_on")
@@ -142,7 +146,7 @@
 
 </script>
 <script>
-    $('#searchInput').bind('input propertychange', function() {
+    $('#searchInput').bind('input propertychange', function () {
         var text = $("#searchInput").val();
         var reg = new RegExp("[\\u4E00-\\u9FFF]+", "g");
         if (reg.test(text)) {
@@ -160,12 +164,12 @@
         }
     });
 
-    function cancel(){
-        $('.weui-cell').css("display","")
+    function cancel() {
+        $('.weui-cell').css("display", "")
 
     }
 
-    function clear(){
+    function clear() {
         $('#searchInput').val('')
         $('.weui-cell').css("display", "")
     }
