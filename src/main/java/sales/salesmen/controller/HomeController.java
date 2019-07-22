@@ -61,10 +61,12 @@ public class HomeController {
         else {
             boolean isUser = false;
             ACatalog aCatalog;
-            for (GrantedAuthority authority:principal.getAuthorities()){
-                if ( authority.getAuthority().equals("ROLE_USER")) isUser=true;
+            if (principal!=null) {
+                for (GrantedAuthority authority : principal.getAuthorities()) {
+                    if (authority.getAuthority().equals("ROLE_USER")) isUser = true;
+                }
             }
-            if (isUser) {
+            if (isUser||principal==null) {
                 aCatalog = aCatalogService.findCatalogById(6).get();
             }else {
                 aCatalog = aCatalogService.findCatalogById(1).get();
