@@ -15,7 +15,7 @@
     <script type="application/javascript" th:src="@{/js/home/home.js}"></script>
 </head>
 <body>
-<div sec:authorize="hasRole('ROLE_USER')" id="customer">
+<div th:if="${#authorization.expression('hasRole(''ROLE_USER'')')} or ${#authentication.name=='anonymousUser'}" id="customer">
     <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
         <ul class="layui-tab-title catalog-content-container">
             <li class="layui-this article-query-by-catalog" catalogId="6">金融话题</li>
