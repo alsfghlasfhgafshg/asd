@@ -54,6 +54,7 @@ $(function () {
 
         var editor = window.editor;
         var bid = $("#articleId").val();
+        var content = $(".ck-content").text();
         var htmlContent = editor.getData();
         var title = $("#title").val();
         var author = $("#author").val();
@@ -68,6 +69,7 @@ $(function () {
         formdata.append("title",title);
         formdata.append("author",author);
         formdata.append("htmlContent",htmlContent);
+        formdata.append("Content",content);
         formdata.append("cid",cid);
 
         if ($("#picinput")[0].files[0]!=null){

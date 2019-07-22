@@ -65,7 +65,8 @@ public class Admin_articleController {
                                                         @RequestParam("author")String author,
                                                         @RequestParam("htmlContent")String htmlContent,
                                                         @RequestParam("cid")Integer cid,
-                                                        @RequestParam(value = "avatar",required = false) MultipartFile avatar) {
+                                                        @RequestParam(value = "avatar",required = false) MultipartFile avatar,
+                                                        @RequestParam(value = "Content")String Content) {
 
         Article article;
         String imgpath;
@@ -79,8 +80,9 @@ public class Admin_articleController {
             article.setAuthor(author);
             article.setaCatalog(aCatalogService.findCatalogById(cid).get());
             article.setAvatar(imgpath);
+            article.setContent(Content);
         }else {
-            article = new Article(author, title, htmlContent,imgpath);
+            article = new Article(author,title,Content,htmlContent,imgpath);
             article.setaCatalog(aCatalogService.findCatalogById(cid).get());
         }
         articleService.saveArticle(article);

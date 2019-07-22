@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" th:href="@{/css/weui/weui.css}">
+    <script th:src="@{/js/jquery.js}"></script>
+    <script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/jquery-weui.min.js"></script>
+</head>
+<body>
+<div class="weui-search-bar" id="searchBar">
+    <form class="weui-search-bar__form" onkeydown="if(event.keyCode==13) return false;">
+        <div class="weui-search-bar__box">
+            <i class="weui-icon-search"></i>
+            <input type="search" class="weui-search-bar__input" id="searchInput"  placeholder="搜索"
+                   required="">
+            <a href="javascript:clear()" class="weui-icon-clear" id="searchClear"></a>
+        </div>
+
+        <label class="weui-search-bar__label" id="searchText">
+            <i class="weui-icon-search"></i>
+            <span>请输入你想要查看的关键字</span>
+        </label>
+    </form>
+    <a href="javascript:0" class="weui-search-bar__cancel-btn" id="searchButton">搜索</a>
+</div>
+<div id="mainContainer"></div>
+</body>
+<script>
+
+    var pageIndex=0;
+    var pageSize = 10;
+
+    $("#searchButton").click(function () {
+        $.ajax({
+            url: "/search/esarticle",
+            contentType : 'application/json',
+            data:{
+                "async":true,
+                "pageIndex":pageIndex,
+                "pageSize":pageSize,
+                "keyword":$("#searchInput").val()
+            },
+            success: function(data){
+                $("#mainContainer").html(data);
+            },
+            error : function() {
+                toastr.error("error!");
+            }
+        });
+    })
+</script>
+</html>

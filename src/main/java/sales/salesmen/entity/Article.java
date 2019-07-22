@@ -23,6 +23,11 @@ public class Article implements Serializable {
     private String title;
 
     @Lob
+    @NotEmpty(message = "content为空")
+    @Column
+    private String Content;
+
+    @Lob
     @NotEmpty(message = "内容为空")
     @Column
     private String htmlContent;
@@ -64,6 +69,14 @@ public class Article implements Serializable {
         this.avatar = avatar;
     }
 
+    public Article(@NotEmpty(message = "作者为空") String author, @NotEmpty(message = "标题为空") String title, @NotEmpty(message = "content为空") String content, @NotEmpty(message = "内容为空") String htmlContent, String avatar) {
+        this.author = author;
+        this.title = title;
+        Content = content;
+        this.htmlContent = htmlContent;
+        this.avatar = avatar;
+    }
+
     public String getAuthor() {
         return author;
     }
@@ -78,6 +91,14 @@ public class Article implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getContent() {
+        return Content;
+    }
+
+    public void setContent(String content) {
+        Content = content;
     }
 
     public String getHtmlContent() {

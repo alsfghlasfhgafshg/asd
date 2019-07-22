@@ -5,13 +5,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import sales.salesmen.entity.ACatalog;
 import sales.salesmen.entity.Article;
 import sales.salesmen.entity.Comment;
 import sales.salesmen.entity.User;
+import sales.salesmen.esentity.EsArticle;
 import sales.salesmen.repository.ArticleRepository;
 import sales.salesmen.repository.UserRepository;
 import sales.salesmen.service.ArticleService;
+import sales.salesmen.service.EsArticleService;
 
 import javax.servlet.annotation.ServletSecurity;
 import java.util.Optional;
@@ -20,22 +23,32 @@ import java.util.Optional;
 public class ArticleServiceImpl implements ArticleService{
 
     @Autowired
+    private EsArticleService esArticleService;
+    @Autowired
     private ArticleRepository articleRepository;
 
+    @Transactional
     @Override
     public Article saveArticle(Article article) {
+        boolean isNew = (article.getId()==null);
         Article rarticle=null;
-        try {
-            rarticle = articleRepository.save(article);
-        }catch (Exception e){
-            System.out.println(e.toString());
+        EsArticle esArticle = null;
+        rarticle = articleRepository.save(article);
+        if (isNew){
+            esArticle = new EsArticle(article);
+        }else {
+            esArticle = esArticleService.getEsArticleByArticleId(article.getId());
+            esArticle.update(rarticle);
         }
+        esArticleService.updateEsArticle(esArticle);
         return rarticle;
     }
 
     @Override
     public void removeArticle(Long id) {
         articleRepository.deleteById(id);
+        EsArticle esArticle = esArticleService.getEsArticleByArticleId(id);
+        esArticleService.removeEsArticle(esArticle.getId());
     }
 
     @Override

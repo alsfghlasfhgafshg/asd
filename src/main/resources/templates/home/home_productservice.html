@@ -74,9 +74,9 @@
             </ul>
         </div>
 
-        <div class="col-9 justify-content-center">
-            <div class="card" th:each="product:${productModel.list}" id="productContainer"
-                 style="width: 137%; margin-bottom: 10px;">
+        <div class="justify-content-center" id="productContainer">
+            <div class="card" th:each="product:${productModel.list}"
+                 style="margin-bottom: 10px">
                 <div class="card-body">
                     <div class="d-flex justify-content-between" style="border: 0px solid transparent">
                         <table>
@@ -91,7 +91,7 @@
                                 <th th:text="${product.scale}">Otto</th>
                                 <th th:text="${product.startmoney}">@mdo</th>
                             </tr>
-                            <tr>
+                            <tr class="text-center">
                                 <td class="little">产品类型</td>
                                 <td class="little">产品规模</td>
                                 <td class="little">起投金额</td>
@@ -101,7 +101,7 @@
                                 <th th:text="${product.performance}">the Bird</th>
                                 <th th:text="${product.startDate}">@twitter</th>
                             </tr>
-                            <tr>
+                            <tr class="text-center">
                                 <td class="little">投资期限</td>
                                 <td class="little">业绩比较基准</td>
                                 <td class="little">起售日期</td>

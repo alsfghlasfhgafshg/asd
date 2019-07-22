@@ -6,16 +6,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import sales.salesmen.entity.*;
-import sales.salesmen.service.ACatalogService;
-import sales.salesmen.service.ArticleService;
-import sales.salesmen.service.PCatalogService;
-import sales.salesmen.service.ProductsService;
+import sales.salesmen.service.*;
 import sales.salesmen.utils.TimeCompareUtil;
 
 import java.security.Principal;
@@ -27,6 +26,9 @@ public class HomeController {
 
     @Autowired
     private ArticleService articleService;
+
+    @Autowired
+    private AuthorityService authorityService;
 
     @Autowired
     private ACatalogService aCatalogService;
@@ -47,19 +49,29 @@ public class HomeController {
                              @RequestParam(value = "pageIndex",required = false,defaultValue = "0")int pageIndex,
                              @RequestParam(value = "pageSize",required = false,defaultValue = "10")int pageSize,
                              @RequestParam(value = "catalog",required = false)Integer catalog,
-                             Model model){
+                             Model model,UsernamePasswordAuthenticationToken principal){
         Page<Article> page;
         List<Article> list;
+        Pageable pageable = PageRequest.of(pageIndex, pageSize);
         if (catalog!=null&&catalog>0){
             ACatalog aCatalog = aCatalogService.findCatalogById(catalog).get();
-            Pageable pageable = PageRequest.of(pageIndex,pageSize);
             page = articleService.listByACatalog(aCatalog,pageable);
             list = page.getContent();
         }
         else {
-            Pageable pageable = PageRequest.of(pageIndex, pageSize);
-            page = articleService.listAllArticle(pageable);
+            boolean isUser = false;
+            ACatalog aCatalog;
+            for (GrantedAuthority authority:principal.getAuthorities()){
+                if ( authority.getAuthority().equals("ROLE_USER")) isUser=true;
+            }
+            if (isUser) {
+                aCatalog = aCatalogService.findCatalogById(6).get();
+            }else {
+                aCatalog = aCatalogService.findCatalogById(1).get();
+            }
+            page = articleService.listByACatalog(aCatalog, pageable);
             list = page.getContent();
+
         }
         Date date = new Date();
         TimeCompareUtil timeCompareUtil = new TimeCompareUtil();
@@ -105,7 +117,8 @@ public class HomeController {
             list = page.getContent();
         }
         else {//没分类的时候
-            page = productsService.listProducts(pageable);
+            PCatalog pCatalog = pCatalogService.findCatalogById(1).get();
+            page = productsService.listAllByPcatalog(pCatalog,pageable);
             list = page.getContent();
         }
         model.addAttribute("list",list);
