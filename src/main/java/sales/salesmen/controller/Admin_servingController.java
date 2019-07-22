@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import sales.salesmen.entity.SCatalog;
 import sales.salesmen.entity.SCatalog2;
 import sales.salesmen.entity.Serving;
@@ -30,17 +31,18 @@ public class Admin_servingController {
     SCatalogService sCatalogService;
 
     @GetMapping
-    public String getArticle(@RequestParam(value = "pageIndex", required = false, defaultValue = "0") int pageIndex,
+    public String getArticle(@RequestParam(value = "async", required = false) boolean async,
+                             @RequestParam(value = "pageIndex", required = false, defaultValue = "0") int pageIndex,
                              @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize,
                              Model model) {
         Pageable pageable = PageRequest.of(pageIndex, pageSize);
         Page<Serving> servingspage = servingService.getServingByPage(pageable);
         List<Serving> servings = servingspage.getContent();
 
-        model.addAttribute("page", servingspage );
+        model.addAttribute("page", servingspage);
         model.addAttribute("servings", servings);
 
-        return "/admin/serving_list";
+        return async ? "/admin/serving_list :: #mainContainer" : "admin/serving_list";
 
     }
 
@@ -74,7 +76,7 @@ public class Admin_servingController {
     JSONObject addaddserving(@RequestParam("catalog2id") int catalog2id,
                              @RequestParam("title") String title,
                              @RequestParam("subtitle") String subtitle,
-                             @RequestParam(value = "pic",required = false) MultipartFile file,
+                             @RequestParam(value = "pic", required = false) MultipartFile file,
                              @RequestParam("summary") String summary,
                              @RequestParam("price") String price) {
 

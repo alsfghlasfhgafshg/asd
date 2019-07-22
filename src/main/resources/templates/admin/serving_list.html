@@ -5,14 +5,14 @@
     <title>服务管理</title>
     <script th:src="@{js/admin/serving.js}"></script>
 </head>
-<body>
+<body id="body">
 <br>
 <button id="addbtn" class="btn btn-primary btn-lg btn-block"
         style="max-width: 80%;margin:auto" data-toggle="modal" data-target="#addserving">添加服务
 </button>
 <hr>
 
-<div class="container">
+<div class="container" id="mainContainer" >
 
     <!--/*@thymesVar id="servings" type="java.util.List"*/-->
     <div th:each="serving:${servings}">
@@ -63,6 +63,7 @@
 
     </div>
 
+    <div th:replace="~{page :: page}">...</div>
 
 </div>
 
@@ -248,7 +249,6 @@
     </div>
 </div>
 
-<div th:replace="~{page :: page}">...</div>
 
 <br>
 </body>

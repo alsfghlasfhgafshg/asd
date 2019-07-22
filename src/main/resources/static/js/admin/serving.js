@@ -1,5 +1,32 @@
 $(function () {
 
+    var _pageSize;
+
+    $.tbpage("#mainContainer", function (pageIndex, pageSize) {
+        console.log(pageIndex);
+        // console.log(pageIndex, pageSize);
+        _pageSize = pageSize;
+
+
+        $.ajax({
+            url: "/admins/serving",
+            data: {
+                "async": true,
+                "pageIndex": pageIndex,
+                "pageSize": pageSize,
+            },
+            success: function (data) {
+                $("#mainContainer").html(data)
+            },
+            error: function () {
+                toastr.error("error");
+            }
+        })
+
+
+    });
+
+
     //获得catalog
     function getscatalog(scatalogid, scatalog2id) {
         $.ajax({
