@@ -22,29 +22,18 @@
         <div id="coursecontainer" class="mui-scroll">
             <ul>
 
-                <div id="toplun">
-                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                        <ol class="carousel-indicators">
-                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                        </ol>
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img src="..." class="d-block w-100" alt="...">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="..." class="d-block w-100" alt="...">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="..." class="d-block w-100" alt="...">
-                            </div>
+                <div class="mui-slider">
+                    <div class="mui-slider-group">
+                        <div class="mui-slider-item" th:each="carousel:${carousels}">
+                            <a href="#">
+                                <img th:src="${carousel.picPath}" style="max-height: 100px"/>
+                            </a>
                         </div>
                     </div>
                 </div>
 
-
                 <div class="two row">
+
                     <button id="shipinkecheng"
                             class="ccatalog1btn col-5  border-primary border text-center align-middle">视频课程
                     </button>
@@ -96,7 +85,7 @@
                                 <div class="card-body">
                                     <a class="h5 card-title" id="coursetitle"
                                        style="color: black;text-decoration: underline "
-                                       v-bind:href="'/course/'+item.id" >{{item.title}}</a>
+                                       v-bind:href="'/course/'+item.id">{{item.title}}</a>
                                     <p class="card-text text-muted">
                                         <small id="coursesummary">{{item.summary}}</small>
                                     </p>

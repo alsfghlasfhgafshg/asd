@@ -15,7 +15,20 @@
     <script type="application/javascript" th:src="@{/js/home/home.js}"></script>
 </head>
 <body>
-<div th:if="${#authorization.expression('hasRole(''ROLE_USER'')')} or ${#authentication.name=='anonymousUser'}" id="customer">
+
+<div class="mui-slider">
+    <div class="mui-slider-group">
+        <div class="mui-slider-item" th:each="carousel:${articleModel.carousels}">
+            <a th:href="'/home/article/'+${carousel.article.id}">
+                <img th:src="${carousel.picPath}" style="max-height: 100px"/>
+            </a>
+        </div>
+    </div>
+</div>
+
+<br>
+<div th:if="${#authorization.expression('hasRole(''ROLE_USER'')')} or ${#authentication.name=='anonymousUser'}"
+     id="customer">
     <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
         <ul class="layui-tab-title catalog-content-container">
             <li class="layui-this article-query-by-catalog" catalogId="6">金融话题</li>
@@ -34,10 +47,13 @@
                                 </div>
                                 <div class="col-8">
                                     <div class="card-body">
-                                        <h6 class="card-title text-dark" th:text="${article.title}">1990年崩溃的日本经济，给了投资人多少教训？深度数据大揭秘，不得不看</h6>
+                                        <h6 class="card-title text-dark" th:text="${article.title}">
+                                            1990年崩溃的日本经济，给了投资人多少教训？深度数据大揭秘，不得不看</h6>
                                         <br>
                                         <p class="card-text">
-                                            <small class="text-muted">[[${article.author}]] &nbsp;[[${article.commentSize}]]评论 &nbsp;[[${article.timeDifference}]]</small>
+                                            <small class="text-muted">[[${article.author}]] &nbsp;[[${article.commentSize}]]评论
+                                                &nbsp;[[${article.timeDifference}]]
+                                            </small>
                                         </p>
                                     </div>
                                 </div>
@@ -56,22 +72,26 @@
 <div id="sales" sec:authorize="hasRole('ROLE_SALES')">
     <div class="mui-slider">
         <div class="mui-slider-group">
-            <div class="mui-slider-item"><a href="#"><img src="1.jpg" /></a></div>
-            <div class="mui-slider-item"><a href="#"><img src="2.jpg" /></a></div>
-            <div class="mui-slider-item"><a href="#"><img src="3.jpg" /></a></div>
-            <div class="mui-slider-item"><a href="#"><img src="4.jpg" /></a></div>
+            <div class="mui-slider-item"><a href="#"><img src="1.jpg"/></a></div>
+            <div class="mui-slider-item"><a href="#"><img src="2.jpg"/></a></div>
+            <div class="mui-slider-item"><a href="#"><img src="3.jpg"/></a></div>
+            <div class="mui-slider-item"><a href="#"><img src="4.jpg"/></a></div>
         </div>
     </div>
     <div class="four">
         <div class="row">
             <div class="col border border-primary text-center">
-                服务预约</div>
+                服务预约
+            </div>
             <div class="col border border-primary text-center">
-                名片分享</div>
+                名片分享
+            </div>
             <div class="col border border-primary text-center">
-                海报分享</div>
+                海报分享
+            </div>
             <div class="col border border-primary text-center">
-                转发助手</div>
+                转发助手
+            </div>
         </div>
     </div>
 
@@ -84,33 +104,36 @@
                 <span class="nav-link article-query-by-catalog" catalogId="2">股票</span>
             </li>
             <li class="nav-item">
-                <span class="nav-link article-query-by-catalog"  catalogId="3" >海外资产配置</span>
+                <span class="nav-link article-query-by-catalog" catalogId="3">海外资产配置</span>
             </li>
             <li class="nav-item">
-                <span class="nav-link article-query-by-catalog" catalogId="4" >系列课</span>
+                <span class="nav-link article-query-by-catalog" catalogId="4">系列课</span>
             </li>
             <li class="nav-item">
-                <span class="nav-link article-query-by-catalog" catalogId="5" >其他</span>
+                <span class="nav-link article-query-by-catalog" catalogId="5">其他</span>
             </li>
         </ul>
     </div>
     <div id="articless">
         <div class="card" th:each="article:${articleModel.articleList}">
             <a th:href="'/home/article/'+${article.id}">
-            <div class="row no-gutters">
-                <div th:if="${article.avatar}!=null" class="col-4">
-                    <img src="..." th:src="${article.avatar}" class="card-img">
-                </div>
-                <div class="col-8">
-                    <div class="card-body">
-                        <h6 class="card-title text-dark" th:text="${article.title}">1990年崩溃的日本经济，给了投资人多少教训？深度数据大揭秘，不得不看</h6>
-                        <br>
-                        <p class="card-text">
-                            <small class="text-muted">[[${article.author}]] &nbsp;[[${article.commentSize}]]评论 &nbsp;[[${article.timeDifference}]]</small>
-                        </p>
+                <div class="row no-gutters">
+                    <div th:if="${article.avatar}!=null" class="col-4">
+                        <img src="..." th:src="${article.avatar}" class="card-img">
+                    </div>
+                    <div class="col-8">
+                        <div class="card-body">
+                            <h6 class="card-title text-dark" th:text="${article.title}">
+                                1990年崩溃的日本经济，给了投资人多少教训？深度数据大揭秘，不得不看</h6>
+                            <br>
+                            <p class="card-text">
+                                <small class="text-muted">[[${article.author}]] &nbsp;[[${article.commentSize}]]评论
+                                    &nbsp;[[${article.timeDifference}]]
+                                </small>
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
             </a>
         </div>
     </div>

@@ -1,5 +1,8 @@
 package sales.salesmen.entity;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import sales.salesmen.repository.AuthorityRepository;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -15,9 +18,29 @@ public class CCatalog implements Serializable {
     @Column
     private String name;
 
+    @OneToOne(cascade = CascadeType.DETACH)
+    private Authority authority;
+
+
+    public Authority getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(Authority authority) {
+        this.authority = authority;
+    }
+
+
     public CCatalog(String name) {
         this.name = name;
     }
+
+    public CCatalog(Integer id, String name, Authority authority) {
+        this.id = id;
+        this.name = name;
+        this.authority = authority;
+    }
+
 
     public CCatalog(Integer id, String name) {
         this.id = id;

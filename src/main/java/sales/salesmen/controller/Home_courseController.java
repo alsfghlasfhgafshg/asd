@@ -1,17 +1,24 @@
 package sales.salesmen.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import org.hibernate.collection.internal.PersistentBag;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import sales.salesmen.entity.Authority;
+import sales.salesmen.entity.Carousel;
 import sales.salesmen.entity.Course;
 import sales.salesmen.entity.User;
+import sales.salesmen.repository.AuthorityRepository;
+import sales.salesmen.repository.CarouselRepository;
 import sales.salesmen.repository.UserRepository;
 import sales.salesmen.service.CourseService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -19,6 +26,11 @@ import java.util.List;
 @RequestMapping("/course")
 public class Home_courseController {
 
+    @Autowired
+    AuthorityRepository authorityRepository;
+
+    @Autowired
+    CarouselRepository carouselRepository;
 
     @Autowired
     CourseService courseService;
@@ -55,7 +67,29 @@ public class Home_courseController {
     }
 
     @GetMapping
-    public String course() {
+    public String course(UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken, Model model) {
+        Authority authority = null;
+
+        if (usernamePasswordAuthenticationToken == null) {
+            authority = authorityRepository.findById(3L).get();
+        } else {
+            for (GrantedAuthority usernamePasswordAuthenticationTokenAuthority : usernamePasswordAuthenticationToken.getAuthorities()) {
+                if (usernamePasswordAuthenticationTokenAuthority.getAuthority().equals("ROLE_SALES")) {
+                    authority = authorityRepository.findById(2L).get();
+                } else {
+                    authority = authorityRepository.findById(3L).get();
+                }
+            }
+        }
+        List<Carousel> carousels = new ArrayList<>();
+
+        for (Carousel carousel : carouselRepository.findAllByCourseNotNull()) {
+            if (carousel.getCourse().getcCatalog().getAuthority().getId() == authority.getId()) {
+                carousels.add(carousel);
+            }
+        }
+
+        model.addAttribute("carousels", carousels);
         return "page/course";
     }
 

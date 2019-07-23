@@ -47,7 +47,7 @@ public class User implements UserDetails {
     @Column(length = 200)
     private String avatar;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
     @JoinTable(name = "user_authority", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
     private List<Authority> authorities;
 

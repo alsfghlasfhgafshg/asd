@@ -63,9 +63,13 @@ public class AppListener implements ApplicationListener {
             log.info("Application Event:{}", "ApplicationReadyEvent");
 
             //添加/更新 权限表数据
-            authorityRepository.save(new Authority(1L, "管理员", "ROLE_ADMIN"));
-            authorityRepository.save(new Authority(2L, "销售员", "ROLE_SALES"));
-            authorityRepository.save(new Authority(3L, "顾客", "ROLE_USER"));
+            Authority adminauth = new Authority(1L, "管理员", "ROLE_ADMIN");
+            Authority saleauth = new Authority(2L, "销售员", "ROLE_SALES");
+            Authority userauth = new Authority(3L, "顾客", "ROLE_USER");
+
+            authorityRepository.save(adminauth);
+            authorityRepository.save(saleauth);
+            authorityRepository.save(userauth);
 
 
             //添加/更新 服务分类表数据
@@ -86,10 +90,15 @@ public class AppListener implements ApplicationListener {
             sCatalog2Repository.save(new SCatalog2(3, "美国房产", touzizhiye));
 
 
-            CCatalog shipinkecheng = new CCatalog(1, "视频课程");
-            CCatalog yinpinkecheng = new CCatalog(2, "音频课程");
-            CCatalog wendangkecheng = new CCatalog(3, "文档课程");
+            CCatalog shipinkecheng = new CCatalog(1, "视频课程", userauth);
+            CCatalog yinpinkecheng = new CCatalog(2, "音频课程", userauth);
+            CCatalog wendangkecheng = new CCatalog(3, "文档课程", userauth);
             CCatalog waibulianjie = new CCatalog(4, "外部链接");
+
+            CCatalog chanpinziliao = new CCatalog(5, "产品资料", saleauth);
+            CCatalog neibupeixun = new CCatalog(6, "内部培训", saleauth);
+            CCatalog neibugongju = new CCatalog(7, "内部工具", saleauth);
+
 
             CCatalog2 jijin = new CCatalog2(1, "基金");
             CCatalog2 gupiao = new CCatalog2(2, "股票");
@@ -102,17 +111,21 @@ public class AppListener implements ApplicationListener {
             cCatalogRepository.save(wendangkecheng);
             cCatalogRepository.save(waibulianjie);
 
+            cCatalogRepository.save(chanpinziliao);
+            cCatalogRepository.save(neibupeixun);
+            cCatalogRepository.save(neibugongju);
+
             cCatalog2Repository.save(jijin);
             cCatalog2Repository.save(gupiao);
             cCatalog2Repository.save(haiwaizichanpeizhi);
             cCatalog2Repository.save(xilieke);
             cCatalog2Repository.save(qita);
 
-            PCatalog simujijin = new PCatalog(1,"私募基金");
-            PCatalog gongmujijin = new PCatalog(2,"公募基金");
-            PCatalog xianjinguanli = new PCatalog(3,"现金管理");
-            PCatalog leigushou = new PCatalog(4,"类固收");
-            PCatalog qitachanpin = new PCatalog(5,"其他");
+            PCatalog simujijin = new PCatalog(1, "私募基金");
+            PCatalog gongmujijin = new PCatalog(2, "公募基金");
+            PCatalog xianjinguanli = new PCatalog(3, "现金管理");
+            PCatalog leigushou = new PCatalog(4, "类固收");
+            PCatalog qitachanpin = new PCatalog(5, "其他");
 
             pCatalogRepository.save(simujijin);
             pCatalogRepository.save(gongmujijin);
@@ -120,16 +133,15 @@ public class AppListener implements ApplicationListener {
             pCatalogRepository.save(leigushou);
             pCatalogRepository.save(qitachanpin);
 
-            ACatalog jinronghuati = new ACatalog(6,"金融话题");
-            ACatalog touzijineng = new ACatalog(7,"投资技能");
-            ACatalog dakaguandian = new ACatalog(8,"大咖观点");
-            ACatalog shichanghuodong = new ACatalog(9,"市场活动");
+            ACatalog jinronghuati = new ACatalog(6, "金融话题");
+            ACatalog touzijineng = new ACatalog(7, "投资技能");
+            ACatalog dakaguandian = new ACatalog(8, "大咖观点");
+            ACatalog shichanghuodong = new ACatalog(9, "市场活动");
 
             aCatalogRepository.save(jinronghuati);
             aCatalogRepository.save(touzijineng);
             aCatalogRepository.save(dakaguandian);
             aCatalogRepository.save(shichanghuodong);
-
 
 
         }

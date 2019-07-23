@@ -24,7 +24,7 @@ public class AdminController {
         list.add(new Menu("产品管理", "/admins/products", "products"));
         list.add(new Menu("服务管理", "/admins/serving", "serving"));
         list.add(new Menu("课程管理", "/admins/courses", "courses"));
-        list.add(new Menu("轮播图管理", "/admins/pages", "pages"));
+        list.add(new Menu("轮播图管理", "/admins/carousel", "carousel"));
 
         model.addAttribute("list", list);
         return new ModelAndView("admin/index", "menuList", model);
