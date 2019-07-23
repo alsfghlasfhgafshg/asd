@@ -18,7 +18,7 @@
     <form class="weui-search-bar__form" onkeydown="if(event.keyCode==13) return false;">
         <div class="weui-search-bar__box">
             <i class="weui-icon-search"></i>
-            <input type="search" class="weui-search-bar__input" id="searchInput"  placeholder="搜索"
+            <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索"
                    required="">
             <a href="javascript:clear()" class="weui-icon-clear" id="searchClear"></a>
         </div>
@@ -30,32 +30,122 @@
     </form>
     <a href="javascript:0" class="weui-search-bar__cancel-btn" id="searchButton">搜索</a>
 </div>
+<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+    <ul class="layui-tab-title catalog-content-container">
+        <li class="layui-this" id="article">文章</li>
+        <li id="product">产品</li>
+        <li id="serving">服务</li>
+        <li id="course">课程</li>
+    </ul>
+    <div class="layui-tab-item">内容2</div>
+</div>
+
 <div id="mainContainer"></div>
 </body>
 <script>
-
-    var pageIndex=0;
+    var keyword;
+    var pageIndex = 0;
     var pageSize = 10;
 
     $("#searchButton").click(function () {
+        keyword = $("#searchInput").val();
+        this.keyword=keyword;
         $.ajax({
             url: "/search/esarticle",
-            contentType : 'application/json',
-            data:{
-                "async":true,
-                "pageIndex":pageIndex,
-                "pageSize":pageSize,
-                "keyword":$("#searchInput").val()
+            contentType: 'application/json',
+            data: {
+                "async": true,
+                "pageIndex": pageIndex,
+                "pageSize": pageSize,
+                "keyword": keyword
             },
-            success: function(data){
+            success: function (data) {
                 $("#mainContainer").html(data);
             },
-            error : function() {
+            error: function () {
+                toastr.error("error!");
+            }
+        });
+    })
+
+    $("#article").click(function () {
+        $.ajax({
+            url: "/search/esarticle",
+            contentType: 'application/json',
+            data: {
+                "async": true,
+                "pageIndex": pageIndex,
+                "pageSize": pageSize,
+                "keyword": keyword
+            },
+            success: function (data) {
+                $("#mainContainer").html(data);
+            },
+            error: function () {
+                toastr.error("error!");
+            }
+        });
+    })
+
+    $("#product").click(function () {
+        $.ajax({
+            url: "/search/esproduct",
+            contentType: 'application/json',
+            data: {
+                "async": true,
+                "pageIndex": pageIndex,
+                "pageSize": pageSize,
+                "keyword": keyword
+            },
+            success: function (data) {
+                $("#mainContainer").html(data);
+            },
+            error: function () {
+                toastr.error("error!");
+            }
+        });
+    })
+
+    $("#serving").click(function () {
+        $.ajax({
+            url: "/search/esserving",
+            contentType: 'application/json',
+            data: {
+                "async": true,
+                "pageIndex": pageIndex,
+                "pageSize": pageSize,
+                "keyword": keyword
+            },
+            success: function (data) {
+                $("#mainContainer").html(data);
+            },
+            error: function () {
+                toastr.error("error!");
+            }
+        });
+    })
+
+
+    $("#course").click(function () {
+        $.ajax({
+            url: "/search/escourse",
+            contentType: 'application/json',
+            data: {
+                "async": true,
+                "pageIndex": pageIndex,
+                "pageSize": pageSize,
+                "keyword": keyword
+            },
+            success: function (data) {
+                $("#mainContainer").html(data);
+            },
+            error: function () {
                 toastr.error("error!");
             }
         });
     })
 </script>
+<script th:src="@{/lib/layui/layui.js}"></script>
 <script>
     layui.use('element', function () {
         var element = layui.element;

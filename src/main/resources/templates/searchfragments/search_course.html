@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="courselist">
+    <ul th:each="course:${courseModel.list}">
+
+        <div class="container" th:attr="courseid=${course.id}">
+            <div class="card mb-3" id="courseitem">
+                <div class="d-flex align-items-center row no-gutters">
+                    <div class="col-4" style="padding-left: 5px">
+                        <img th:src="${course.pictureuri}" class="card-img" style="max-height: 70%">
+                    </div>
+                    <div class="col-8">
+                        <div class="card-body">
+                            <a class="h5 card-title" id="coursetitle"
+                               style="color: black;text-decoration: underline "
+                               th:href="'/course/'+${course.courseId}" th:text="${course.title}"></a>
+                            <p class="card-text text-muted">
+                                <small id="coursesummary" th:text="${course.summary}"></small>
+                            </p>
+                            <p class="card-text text-muted">
+                                <small id="courseteacher" th:text="${course.teacher}"></small>
+                            </p>
+                            <p class="card-text text-right">
+                                <small class="text-muted">播放量：<span
+                                        id="coursesumplay" th:text="${course.sumplay}"></span>
+                                    &nbsp;&nbsp;收藏量：<span id="coursesumstar" th:text="${course.sumstar}"></span></small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="articless">
+    <div class="card" th:each="article:${articleModel.articleList}">
+        <a th:href="'/home/article/'+${article.articleId}">
+            <div class="row no-gutters">
+                <div th:if="${article.avatar}!=null" class="col-4">
+                    <img src="..." th:src="${article.avatar}" class="card-img">
+                </div>
+                <div class="col-8">
+                    <div class="card-body">
+                        <h6 class="card-title text-dark" th:text="${article.title}">1990年崩溃的日本经济，给了投资人多少教训？深度数据大揭秘，不得不看</h6>
+                        <br>
+                        <p class="card-text">
+                            <small class="text-muted">[[${article.author}]] &nbsp;[[${article.commentSize}]]评论 &nbsp;[[${article.timeDifference}]]</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+</body>
+</html>

@@ -104,36 +104,33 @@
                 <span class="nav-link article-query-by-catalog" catalogId="2">股票</span>
             </li>
             <li class="nav-item">
-                <span class="nav-link article-query-by-catalog" catalogId="3">海外资产配置</span>
+                <span class="nav-link article-query-by-catalog"  catalogId="3" >海外资产配置</span>
             </li>
             <li class="nav-item">
-                <span class="nav-link article-query-by-catalog" catalogId="4">系列课</span>
+                <span class="nav-link article-query-by-catalog" catalogId="4" >系列课</span>
             </li>
             <li class="nav-item">
-                <span class="nav-link article-query-by-catalog" catalogId="5">其他</span>
+                <span class="nav-link article-query-by-catalog" catalogId="5" >其他</span>
             </li>
         </ul>
     </div>
     <div id="articless">
         <div class="card" th:each="article:${articleModel.articleList}">
             <a th:href="'/home/article/'+${article.id}">
-                <div class="row no-gutters">
-                    <div th:if="${article.avatar}!=null" class="col-4">
-                        <img src="..." th:src="${article.avatar}" class="card-img">
-                    </div>
-                    <div class="col-8">
-                        <div class="card-body">
-                            <h6 class="card-title text-dark" th:text="${article.title}">
-                                1990年崩溃的日本经济，给了投资人多少教训？深度数据大揭秘，不得不看</h6>
-                            <br>
-                            <p class="card-text">
-                                <small class="text-muted">[[${article.author}]] &nbsp;[[${article.commentSize}]]评论
-                                    &nbsp;[[${article.timeDifference}]]
-                                </small>
-                            </p>
-                        </div>
+            <div class="row no-gutters">
+                <div th:if="${article.avatar}!=null" class="col-4">
+                    <img src="..." th:src="${article.avatar}" class="card-img">
+                </div>
+                <div class="col-8">
+                    <div class="card-body">
+                        <h6 class="card-title text-dark" th:text="${article.title}">1990年崩溃的日本经济，给了投资人多少教训？深度数据大揭秘，不得不看</h6>
+                        <br>
+                        <p class="card-text">
+                            <small class="text-muted">[[${article.author}]] &nbsp;[[${article.commentSize}]]评论 &nbsp;[[${article.timeDifference}]]</small>
+                        </p>
                     </div>
                 </div>
+            </div>
             </a>
         </div>
     </div>

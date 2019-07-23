@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="servinglist">
+    <div class="card" th:each="serving:${servingModel.list}">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <div class="card-title align-self-start" style="font-size: 20px;color: black" th:text="${serving.title}"></div>
+                </div>
+                <div>
+                    <a class="align-self-end" href="#">立即预约</a>
+                    <a class="align-self-end" href="#">产品咨询</a>
+                </div>
+            </div>
+            <div class="row" style="max-height: 100px">
+                <div class="col-4">
+                    <img th:src="${serving.pictureuri}" alt="" style="max-width: 80%;max-height: 100%">
+                </div>
+                <div class="col-8">
+                    <div th:text="${serving.subtitle}"></div>
+                    <div style="margin-bottom: 6px;max-height: 50px;overflow: hidden" th:text="${serving.summary}">
+                    </div>
+                    <div class="h4" th:text="${serving.price}"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

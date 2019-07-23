@@ -111,11 +111,10 @@ public class SearchController {
         }
 
         list = page.getContent();
-        //下面有待更改
 
         model.addAttribute("list",list);
 
-        return new ModelAndView("/home/home_productservice :: #productContainer","productModel",model);
+        return new ModelAndView("/searchfragments/search_serving :: #servinglist","servingModel",model);
 
     }
 
@@ -139,11 +138,9 @@ public class SearchController {
         }
 
         list = page.getContent();
-        //下面有待更改+1
-
         model.addAttribute("list",list);
 
-        return new ModelAndView("/home/home_productservice :: #productContainer","productModel",model);
+        return new ModelAndView("/searchfragments/search_course :: #courselist","courseModel",model);
 
 
     }

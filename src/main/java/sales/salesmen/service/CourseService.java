@@ -118,6 +118,8 @@ public class CourseService {
 
     public boolean deleteCourse(Long courseid) {
         courseRepository.deleteById(courseid);
+        EsCourse esCourse = esCourseService.getEsCourseByCourseId(courseid);
+        esCourseService.removeEsCourse(esCourse.getId());
         return true;
     }
 
