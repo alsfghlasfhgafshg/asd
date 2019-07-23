@@ -1,5 +1,6 @@
 package sales.salesmen.esentity;
 
+import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import sales.salesmen.entity.Course;
@@ -7,6 +8,7 @@ import sales.salesmen.entity.Course;
 import javax.persistence.Id;
 import java.io.Serializable;
 
+@Document(indexName = "course",type = "course")
 public class EsCourse implements Serializable {
 
     @Id

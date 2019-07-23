@@ -61,6 +61,11 @@ public class CourseService {
         return srcuri;
     }
 
+
+    public void saveOrUpdate(Course course) {
+        courseRepository.save(course);
+    }
+
     @Transactional
     public boolean saveOrUpdate(Long courseid, int catalogid, int catalog2id, String title, String teacher,
                                 MultipartFile pic, MultipartFile src, String summary) {
