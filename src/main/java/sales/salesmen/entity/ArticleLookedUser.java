@@ -11,12 +11,23 @@ public class ArticleLookedUser implements Serializable {
     private Long id;
 
     @Column
+    private Long shared_user_id;
+
+    @Column
     private Long user_id;
 
     @Column
     private Long article_id;
 
     protected ArticleLookedUser() {
+    }
+
+    public Long getShared_user_id() {
+        return shared_user_id;
+    }
+
+    public void setShared_user_id(Long shared_user_id) {
+        this.shared_user_id = shared_user_id;
     }
 
     public Long getId() {
