@@ -34,6 +34,7 @@ public class EsCourse implements Serializable {
     }
 
     public EsCourse(Course course) {
+        this.courseId = course.getId();
         this.title = course.getTitle();
         this.pictureuri = course.getPictureuri();
         this.teacher = course.getTeacher();
@@ -43,7 +44,8 @@ public class EsCourse implements Serializable {
         this.srcuri = course.getSrcuri();
     }
 
-    public EsCourse(String title, String pictureuri, String teacher, String summary, int sumplay, int sumstar, String srcuri) {
+    public EsCourse(String title, String pictureuri, String teacher, String summary, int sumplay, int sumstar, String srcuri,Long courseId) {
+        this.courseId = courseId;
         this.title = title;
         this.pictureuri = pictureuri;
         this.teacher = teacher;
@@ -54,6 +56,7 @@ public class EsCourse implements Serializable {
     }
 
     public void update(Course course) {
+        this.courseId = course.getId();
         this.title = course.getTitle();
         this.pictureuri = course.getPictureuri();
         this.teacher = course.getTeacher();
@@ -125,5 +128,13 @@ public class EsCourse implements Serializable {
 
     public void setSrcuri(String srcuri) {
         this.srcuri = srcuri;
+    }
+
+    public Long getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
     }
 }
