@@ -5,7 +5,6 @@ $(function () {
     var coursecontentvue;
 
     var isloading = false;
-    var mmui;
 
 
     function getapage(pagenum, ccatalog, ccatalog2, m) {
@@ -19,16 +18,15 @@ $(function () {
                     ccatalog2: ccatalog2
                 },
                 success: function (data) {
-                    isloading = false
-                    m.endPullupToRefresh()
+                    console.log(data)
                     if (data.length == 0) {
-                        mui("#pullRefresh").pullRefresh().disablePullupToRefresh()
                     }
                     page = page + 1
-                    console.log(data)
+
                     data.forEach(function (item) {
                         coursecontentvue.items.push(item)
                     });
+                    isloading = false
                 },
                 error: function () {
                     toastr.error("error");
@@ -73,7 +71,6 @@ $(function () {
 
     //点击ccatalog1
     $("body").on("click", ".ccatalog1btn", function () {
-
         if (this.id == "shipinkecheng") {
             ccatalog = 1;
         } else if (this.id == "yinpinkecheng") {
@@ -83,20 +80,23 @@ $(function () {
         } else if (this.id == "waibulianjie") {
             ccatalog = 4;
         }
+        page=0;
         activecccatalog("#" + this.id)
         cleardata()
-        mui('#pullRefresh').pullRefresh().refresh(true);
-        getapage(page, ccatalog, ccatalog2, mmui)
+        getapage(page, ccatalog, ccatalog2)
 
     });
 
 
     //点击ccatalog2
     $("body").on("click", ".ccatalog2btn", function () {
-        ccatalog2id = this.dataset.ccata2logid;
-        mui('#pullRefresh').pullRefresh().refresh(true);
-        activecccatalog2(ccatalog2id)
-        getapage(page, ccatalog, ccatalog2, mmui)
+        page=0;
+        console.log(this.dataset)
+        ccatalog2 = this.dataset.ccata2logid;
+        cleardata()
+
+        activecccatalog2(ccatalog2)
+        getapage(page, ccatalog, ccatalog2)
     });
 
 
@@ -105,8 +105,8 @@ $(function () {
             el: '#coursecontainer',
             data: {
                 items: []
-            },methods:{
-                tocourse:function (event) {
+            }, methods: {
+                tocourse: function (event) {
                     console.log(event)
 
                 }
@@ -118,26 +118,17 @@ $(function () {
 
     init();
 
-    mui.init({
-        pullRefresh: {
-            container: "#pullRefresh",//待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
-            up: {
-                height: 50,//可选.默认50.触发上拉加载拖动距离
-                auto: true,//可选,默认false.自动上拉加载一次
-                contentrefresh: "正在加载...",//可选，正在加载状态时，上拉加载控件上显示的标题内容
-                contentnomore: '没有更多数据了',//可选，请求完毕若没有更多数据时显示的提醒内容；
 
-                callback: function () {
-                    mmui = this;
-                    getapage(page, ccatalog, ccatalog2, this)
+    getapage(page, ccatalog, ccatalog2)
 
-                }
-            }
+    $(window).scroll(function () {
+        var scrollTop = $(this).scrollTop();
+        var scrollHeight = $(document).height();
+        var windowHeight = $(this).height();
+        console.log(scrollTop + windowHeight + ":" + scrollHeight)
+        if (scrollTop + windowHeight > scrollHeight - 50) {
+            getapage(page, ccatalog, ccatalog2)
         }
-    });
-
-    mui('body').on('tap','a',function(){
-        document.location.href=this.href;
     });
 
 });

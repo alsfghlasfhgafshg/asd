@@ -15,100 +15,97 @@
     <script type="application/javascript" th:src="@{/js/home/course.js}"></script>
     <script type="application/javascript" th:src="@{/lib/mui/js/mui.js}"></script>
 </head>
+<style>
+
+    .row {
+        margin-right: 0px !important;
+    }
+</style>
 
 <body>
-<div class="mui-content">
-    <div class="mui-scroll-wrapper" id="pullRefresh">
-        <div id="coursecontainer" class="mui-scroll">
-            <ul>
 
-                <div class="mui-slider">
-                    <div class="mui-slider-group">
-                        <div class="mui-slider-item" th:each="carousel:${carousels}">
-                            <a href="#">
-                                <img th:src="${carousel.picPath}" style="max-height: 100px"/>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="two row">
-
-                    <button id="shipinkecheng"
-                            class="ccatalog1btn col-5  border-primary border text-center align-middle">视频课程
-                    </button>
-                    <button id="yinpinkecheng"
-                            class="ccatalog1btn col-5  offset-1 border-primary border text-center align-middle">音频课程
-                    </button>
-                </div>
-                <div class="two row">
-                    <button id="wendangkecheng"
-                            class="ccatalog1btn col-5  border-primary border text-center align-middle">
-                        文档课程
-                    </button>
-                    <button id="waibulianjie"
-                            class="ccatalog1btn col-5  offset-1 border-primary border text-center align-middle">外部链接
-                    </button>
-                </div>
-
-
-                <div class="centerinline">
-                    <ul class="nav justify-content-center">
-                        <li class="nav-item">
-                            <button class="ccatalog2btn btn-link btn" href="#" data-ccata2logid="1">基金</button>
-                        </li>
-                        <li class="nav-item ">
-                            <button class="ccatalog2btn btn btn-link" href="#" data-ccata2logid="2">股票</button>
-                        </li>
-                        <li class="nav-item">
-                            <button class="ccatalog2btn btn btn-link" href="#" data-ccata2logid="3">海外资产配置</button>
-                        </li>
-                        <li class="nav-item">
-                            <button class="ccatalog2btn btn btn-link" href="#" data-ccata2logid="4">系列课</button>
-                        </li>
-                        <li class="nav-item">
-                            <button class="ccatalog2btn btn btn-link" href="#" data-ccata2logid="5">其他</button>
-                        </li>
-                    </ul>
-                </div>
-
-            </ul>
-            <ul v-for="item in items">
-
-                <div class="container" v-bind:courseid="item.id">
-                    <div class="card mb-3" id="courseitem">
-                        <div class="d-flex align-items-center row no-gutters">
-                            <div class="col-4" style="padding-left: 5px">
-                                <img v-bind:src="item.pictureuri" class="card-img" style="max-height: 70%">
-                            </div>
-                            <div class="col-8">
-                                <div class="card-body">
-                                    <a class="h5 card-title" id="coursetitle"
-                                       style="color: black;text-decoration: underline "
-                                       v-bind:href="'/course/'+item.id">{{item.title}}</a>
-                                    <p class="card-text text-muted">
-                                        <small id="coursesummary">{{item.summary}}</small>
-                                    </p>
-                                    <p class="card-text text-muted">
-                                        <small id="courseteacher">{{item.teacher}}</small>
-                                    </p>
-                                    <p class="card-text text-right">
-                                        <small class="text-muted">播放量：<span
-                                                id="coursesumplay">{{item.sumplay}}</span>
-                                            &nbsp;&nbsp;收藏量：<span id="coursesumstar">{{item.sumstar}}</span></small>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </ul>
+<div class="mui-slider">
+    <div class="mui-slider-group">
+        <div class="mui-slider-item" th:each="carousel:${carousels}">
+            <a href="#">
+                <img th:src="${carousel.picPath}" style="max-height: 100px"/>
+            </a>
         </div>
+    </div>
+</div>
+<br>
+<div id="coursecontainer">
 
+    <div class="two row">
 
+        <button id="shipinkecheng"
+                class="ccatalog1btn col-5  border-primary border text-center align-middle">视频课程
+        </button>
+        <button id="yinpinkecheng"
+                class="ccatalog1btn col-5  offset-1 border-primary border text-center align-middle">音频课程
+        </button>
+    </div>
+    <div class="two row">
+        <button id="wendangkecheng"
+                class="ccatalog1btn col-5  border-primary border text-center align-middle">
+            文档课程
+        </button>
+        <button id="waibulianjie"
+                class="ccatalog1btn col-5  offset-1 border-primary border text-center align-middle">外部链接
+        </button>
     </div>
 
+
+    <div class="centerinline">
+        <ul class="nav justify-content-center">
+            <li class="nav-item">
+                <button class="ccatalog2btn btn-link btn" href="#" data-ccata2logid="1">基金</button>
+            </li>
+            <li class="nav-item ">
+                <button class="ccatalog2btn btn btn-link" href="#" data-ccata2logid="2">股票</button>
+            </li>
+            <li class="nav-item">
+                <button class="ccatalog2btn btn btn-link" href="#" data-ccata2logid="3">海外资产配置</button>
+            </li>
+            <li class="nav-item">
+                <button class="ccatalog2btn btn btn-link" href="#" data-ccata2logid="4">系列课</button>
+            </li>
+            <li class="nav-item">
+                <button class="ccatalog2btn btn btn-link" href="#" data-ccata2logid="5">其他</button>
+            </li>
+        </ul>
+    </div>
+    <ul v-for="item in items">
+
+        <div class="container" v-bind:courseid="item.id">
+            <div class="card mb-3" id="courseitem">
+                <div class="d-flex align-items-center row no-gutters">
+                    <div class="col-4" style="padding-left: 5px">
+                        <img v-bind:src="item.pictureuri" class="card-img" style="max-height: 70%">
+                    </div>
+                    <div class="col-8">
+                        <div class="card-body">
+                            <a class="h5 card-title" id="coursetitle"
+                               style="color: black;text-decoration: underline "
+                               v-bind:href="'/course/'+item.id">{{item.title}}</a>
+                            <p class="card-text text-muted">
+                                <small id="coursesummary">{{item.summary}}</small>
+                            </p>
+                            <p class="card-text text-muted">
+                                <small id="courseteacher">{{item.teacher}}</small>
+                            </p>
+                            <p class="card-text text-right">
+                                <small class="text-muted">播放量：<span
+                                        id="coursesumplay">{{item.sumplay}}</span>
+                                    &nbsp;&nbsp;收藏量：<span id="coursesumstar">{{item.sumstar}}</span></small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </ul>
 </div>
 
 </body>
