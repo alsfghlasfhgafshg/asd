@@ -55,6 +55,7 @@ public class HomeController {
         List<Article> list;
         Pageable pageable = PageRequest.of(pageIndex, pageSize);
         if (catalog != null && catalog > 0) {
+            model.addAttribute("defaultacatalogid", catalog);
             ACatalog aCatalog = aCatalogService.findCatalogById(catalog).get();
             page = articleService.listByACatalog(aCatalog, pageable);
             list = page.getContent();
@@ -68,8 +69,10 @@ public class HomeController {
             }
             if (isUser || principal == null) {
                 aCatalog = aCatalogService.findCatalogById(6).get();
+                model.addAttribute("defaultacatalogid", 6);
             } else {
                 aCatalog = aCatalogService.findCatalogById(1).get();
+                model.addAttribute("defaultacatalogid", 1);
             }
             page = articleService.listByACatalog(aCatalog, pageable);
             list = page.getContent();

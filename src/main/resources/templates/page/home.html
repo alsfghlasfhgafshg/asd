@@ -13,18 +13,13 @@
     <link rel="stylesheet" th:href="@{/css/page/home.css}">
     <script type="application/javascript" th:src="@{/lib/mui/js/mui.js}"></script>
     <script type="application/javascript" th:src="@{/js/home/home.js}"></script>
+
+    <meta name="dafaultacatalogid" th:content="${articleModel.defaultacatalogid}"/>
+
+
 </head>
 <body>
 
-<div class="mui-slider">
-    <div class="mui-slider-group">
-        <div class="mui-slider-item" th:each="carousel:${articleModel.carousels}">
-            <a th:href="'/home/article/'+${carousel.article.id}">
-                <img th:src="${carousel.picPath}" style="max-height: 100px"/>
-            </a>
-        </div>
-    </div>
-</div>
 
 <br>
 <div th:if="${#authorization.expression('hasRole(''ROLE_USER'')')} or ${#authentication.name=='anonymousUser'}"
@@ -39,7 +34,8 @@
         <div class="layui-tab-content">
             <div class="layui-tab-item layui-show">
                 <div id="articles">
-                    <div th:if="${#authentication.name=='anonymousUser'}" class="card" th:each="article:${articleModel.articleList}">
+                    <div th:if="${#authentication.name=='anonymousUser'}" class="card"
+                         th:each="article:${articleModel.articleList}">
                         <a th:href="'/home/article/'+${article.id}">
                             <div class="row no-gutters">
                                 <div th:if="${article.avatar}!=null" class="col-4">
@@ -60,7 +56,8 @@
                             </div>
                         </a>
                     </div>
-                    <div th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}" class="card" th:each="article:${articleModel.articleList}">
+                    <div th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}" class="card"
+                         th:each="article:${articleModel.articleList}">
                         <a th:href="'/home/article/'+${article.id}+'/'+${#authentication.principal.id}">
                             <div class="row no-gutters">
                                 <div th:if="${article.avatar}!=null" class="col-4">
@@ -91,14 +88,17 @@
 </div>
 
 <div id="sales" sec:authorize="hasRole('ROLE_SALES')">
+
     <div class="mui-slider">
         <div class="mui-slider-group">
-            <div class="mui-slider-item"><a href="#"><img src="1.jpg"/></a></div>
-            <div class="mui-slider-item"><a href="#"><img src="2.jpg"/></a></div>
-            <div class="mui-slider-item"><a href="#"><img src="3.jpg"/></a></div>
-            <div class="mui-slider-item"><a href="#"><img src="4.jpg"/></a></div>
+            <div class="mui-slider-item" th:each="carousel:${articleModel.carousels}">
+                <a th:href="'/home/article/'+${carousel.article.id}">
+                    <img th:src="${carousel.picPath}" style="max-height: 100px"/>
+                </a>
+            </div>
         </div>
     </div>
+
     <div class="four">
         <div class="row">
             <div class="col border border-primary text-center">
@@ -125,37 +125,40 @@
                 <span class="nav-link article-query-by-catalog" catalogId="2">股票</span>
             </li>
             <li class="nav-item">
-                <span class="nav-link article-query-by-catalog"  catalogId="3" >海外资产配置</span>
+                <span class="nav-link article-query-by-catalog" catalogId="3">海外资产配置</span>
             </li>
             <li class="nav-item">
-                <span class="nav-link article-query-by-catalog" catalogId="4" >系列课</span>
+                <span class="nav-link article-query-by-catalog" catalogId="4">系列课</span>
             </li>
             <li class="nav-item">
-                <span class="nav-link article-query-by-catalog" catalogId="5" >其他</span>
+                <span class="nav-link article-query-by-catalog" catalogId="5">其他</span>
             </li>
         </ul>
     </div>
     <div id="articless">
         <div class="card" th:each="article:${articleModel.articleList}">
-            <a th:href="'/home/article/'+${article.id}+'/'+${#authentication.principal.id}">
-            <div class="row no-gutters">
-                <div th:if="${article.avatar}!=null" class="col-4">
-                    <img src="..." th:src="${article.avatar}" class="card-img">
-                </div>
-                <div class="col-8">
-                    <div class="card-body">
-                        <h6 class="card-title text-dark" th:text="${article.title}">1990年崩溃的日本经济，给了投资人多少教训？深度数据大揭秘，不得不看</h6>
-                        <br>
-                        <p class="card-text">
-                            <small class="text-muted">[[${article.author}]] &nbsp;[[${article.commentSize}]]评论 &nbsp;[[${article.timeDifference}]]</small>
-                        </p>
+
+            <a th:href="${#authentication.name=='anonymousUser'?'/home/article/'+article.id:'/home/article/'+article.id+'?uid='+#authentication.principal.id}">
+                <div class="row no-gutters">
+                    <div th:if="${article.avatar}!=null" class="col-4">
+                        <img src="..." th:src="${article.avatar}" class="card-img">
+                    </div>
+                    <div class="col-8">
+                        <div class="card-body">
+                            <h6 class="card-title text-dark" th:text="${article.title}">
+                                1990年崩溃的日本经济，给了投资人多少教训？深度数据大揭秘，不得不看</h6>
+                            <br>
+                            <p class="card-text">
+                                <small class="text-muted">[[${article.author}]] &nbsp;[[${article.commentSize}]]评论
+                                    &nbsp;[[${article.timeDifference}]]
+                                </small>
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
             </a>
         </div>
     </div>
-
 </div>
 
 
@@ -170,6 +173,66 @@
             console.log(data);
         });
     });
+
+    var nowcatalog = $("meta[name='dafaultacatalogid']").attr("content");
+    console.log(nowcatalog);
+
+    var productnowpage = 1;
+    var productnowrefresh = false;
+
+
+    $(".catalog-content-container").on("click", ".article-query-by-catalog", function () {
+        console.log("adsfadsfds")
+        console.log($(this).attr('catalogId'))
+        nowcatalog = $(this).attr('catalogId');
+        productnowpage = 1;
+    });
+
+
+    $(window).scroll(function () {
+
+        var scrollTop = $(this).scrollTop();
+        var scrollHeight = $(document).height();
+        var windowHeight = $(this).height();
+        // console.log(scrollTop + windowHeight + ":" + scrollHeight + "--")
+        if (scrollTop + windowHeight > scrollHeight - 50) {
+
+            if (productnowrefresh == false) {
+                productnowrefresh = true
+
+                $.ajax({
+                    url: "/home",
+                    data: {
+                        async: true,
+                        pageIndex: productnowpage,
+                        catalog: nowcatalog
+                    },
+                    success: function (data) {
+                        productnowrefresh = false
+                        // console.log(data)
+                        console.log($(data).children())
+                        $(data).children().each(function () {
+                            console.log(this)
+                            $("#articless").append(this)
+
+                            // console.log(item.innerHTML)
+
+                        })
+
+                        // $("#articless").append(data)
+                        productnowpage = productnowpage + 1;
+
+                    },
+                    error: function () {
+                        toastr.error("error");
+                    }
+                })
+            }
+        }
+
+    });
+
+
 </script>
 </body>
 </html>
