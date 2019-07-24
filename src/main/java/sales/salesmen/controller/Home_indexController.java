@@ -25,8 +25,8 @@ public class Home_indexController {
     @Autowired
     private CommentService commentService;
 
-    @GetMapping("/article/{id}")
-    public String viewArticle(@PathVariable("id")Long id, Model model){
+    @GetMapping("/article/{id}/{userId}")
+    public String viewArticle(@PathVariable("id")Long id,@PathVariable("userId")Long userId, Model model){
 
         Article article = articleService.getArticleById(id).get();
         model.addAttribute("articleModel",article);
