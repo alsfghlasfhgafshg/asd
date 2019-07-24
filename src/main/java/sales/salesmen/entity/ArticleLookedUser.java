@@ -19,7 +19,7 @@ public class ArticleLookedUser implements Serializable {
     @Column
     private Long article_id;
 
-    protected ArticleLookedUser() {
+    public ArticleLookedUser() {
     }
 
     public Long getShared_user_id() {

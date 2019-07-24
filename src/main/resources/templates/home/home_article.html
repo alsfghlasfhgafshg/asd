@@ -17,8 +17,21 @@
     <link rel="stylesheet" type="text/css" th:href="@{/lib/bootstrap/css/bootstrap.min.css}">
 </head>
 <body>
+
+
+<div th:if="${ishared==true}">
+    <div class="alert alert-primary" role="alert" style="margin-top: 2px">
+        <img th:src="${shareduseravatar}" alt="" style="max-height: 20px">
+        <span th:text="${sharedusernickname}"></span>
+        <a th:href="${'tel:'+shareduserphonenum}" style="float: right;">
+            <img src="/img/phone.png" alt="" style="max-height: 20px">
+        </a>
+    </div>
+</div>
+
 <!-- Page Content -->
 <div class="container article-content-container">
+
 
     <div class="row">
 
@@ -28,9 +41,9 @@
             <div class="card mb-4">
                 <div class="card-block">
                     <h2 class="card-title">
-						 <a class="card-link"
-                                   th:href="'/home/article/' + ${articleModel.id}"
-                                   th:text="${articleModel.title}"></a>
+                        <a class="card-link"
+                           th:href="'/home/article/' + ${articleModel.id}"
+                           th:text="${articleModel.title}"></a>
                     </h2>
                     <div class="card-text">
                         <span th:text="${articleModel.author}"></span>
@@ -59,14 +72,16 @@
                          th:object="${comment}">
                         <h2 class="card-title col-lg-1 col-md-2">
 							<span>
-			                    <img th:src="*{user.avatar}==null?'/img/github.svg':*{user.avatar}" class="blog-avatar-50">
+			                    <img th:src="*{user.avatar}==null?'/img/github.svg':*{user.avatar}"
+                                     class="blog-avatar-50">
 					        </span>
                         </h2>
                         <div class="card-text col-lg-11 col-md-10">
                             <span class="card-link" th:text="*{user.username}">dewitt</span>
                             [[${commentStat.index}+1]]楼
                             [[${#dates.format(comment.createTime,'yyyy-MM-dd HH:mm')}]]
-                            <a href="javascript:void(0)" class="article-delete-comment" th:if="${commentOwner} eq *{user.username}"
+                            <a href="javascript:void(0)" class="article-delete-comment"
+                               th:if="${commentOwner} eq *{user.username}"
                                th:attr="commentId=*{id}">删除</a>
                             <p th:text="*{content}">不错哦，顶起！</p>
                         </div>
