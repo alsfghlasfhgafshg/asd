@@ -29,7 +29,9 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <div class="">
-                                <div class="card-title align-self-start" style="font-size: 20px;color: black">{{serving.title}}</div>
+                                <div class="card-title align-self-start" style="font-size: 20px;color: black">
+                                    {{serving.title}}
+                                </div>
                             </div>
                             <div>
                                 <a class="align-self-end" href="#">立即预约</a>
@@ -131,41 +133,41 @@
 
         //获得serving
         function getserving(scatalog2id, page, adddata) {
-            if (scatalog2id != null) {
-                nowrefreshing = true;
+            if (nowrefreshing == false) {
+                if (scatalog2id != null) {
+                    nowrefreshing = true;
 
-                if (page == null) {
-                    page = 0;
-                }
-
-                $.ajax({
-                    url: "/serving/getserving",
-                    data: {
-                        scatalog2: scatalog2id,
-                        page: page
-                    },
-                    success: function (data) {
-                        console.log(data)
-                        if (adddata == true) {
-                            data.forEach(function () {
-                                servinglist.items.push(this)
-                            })
-
-                        } else {
-                            servinglist.items = data;
-                        }
-                        nowrefreshing = false;
-
-                        nowpage = nowpage + 1;
-                        mui('#servingrefresh').pullRefresh().endPullupToRefresh()
-                    },
-                    error: function () {
-                        toastr.error("error");
+                    if (page == null) {
+                        page = 0;
                     }
-                })
-            } else {
-                mui('#servingrefresh').pullRefresh().endPullupToRefresh()
+                    $.ajax({
+                        url: "/serving/getserving",
+                        data: {
+                            scatalog2: scatalog2id,
+                            page: page
+                        },
+                        success: function (data) {
+                            console.log(data)
+                            if (adddata == true) {
+                                data.forEach(function (item) {
+                                    servinglist.items.push(item)
+                                })
+                                console.log(servinglist.items)
+                            } else {
+                                servinglist.items = data;
+                            }
+                            nowrefreshing = false;
 
+                            nowpage = nowpage + 1;
+                            // mui('#servingrefresh').pullRefresh().endPullupToRefresh()
+                        },
+                        error: function () {
+                            toastr.error("error");
+                        }
+                    })
+                } else {
+                    // mui('#servingrefresh').pullRefresh().endPullupToRefresh()
+                }
             }
         }
 
@@ -199,45 +201,40 @@
 
         }
 
-        function init() {
-            getscatalog()
-            getcatalog2(1)
-
-            nowpage = 0;
-            nowscatalog1 = 1;
-            nowscatalog2 = 1;
-        }
-
 
         $(".tabchangebtn").click(function () {
             if (this.dataset.tab == "serving") {
 
-                init()
+                getscatalog()
+                getcatalog2(1)
 
+                nowpage = 0;
+                nowscatalog1 = 1;
+                nowscatalog2 = 1;
+
+                if (nowrefreshing == false) {
+                    getserving(nowscatalog2, nowpage, true)
+                }
             }
         });
 
-        mui.init({
-            pullRefresh: {
-                container: "#servingrefresh",//待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
-                up: {
-                    height: 50,//可选.默认50.触发上拉加载拖动距离
-                    auto: false,//可选,默认false.自动上拉加载一次
-                    contentrefresh: "正在加载...",//可选，正在加载状态时，上拉加载控件上显示的标题内容
-                    contentnomore: '没有更多数据了',//可选，请求完毕若没有更多数据时显示的提醒内容；
 
-                    callback: function () {
-
-                        if (nowrefreshing == false) {
-
-                            getserving(nowscatalog2, nowpage, true)
-
-                        }
-                        console.log("======")
+        $(window).scroll(function () {
+            if (nowtab == "serving") {
+                var scrollTop = $(this).scrollTop();
+                var scrollHeight = $(document).height();
+                var windowHeight = $(this).height();
+                // console.log(scrollTop + windowHeight + ":" + scrollHeight)
+                if (scrollTop + windowHeight > scrollHeight - 50) {
+                    // console.log("dibu")
+                    console.log(nowpage)
+                    if (nowrefreshing == false) {
+                        getserving(nowscatalog2, nowpage, true)
                     }
                 }
             }
         });
+
 
     </script>
 
