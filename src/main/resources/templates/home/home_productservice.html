@@ -12,8 +12,8 @@
     <script th:src="@{/lib/bootstrap/js/bootstrap.js}"></script>
     <script type="application/javascript" th:src="@{/js/vue/vue.js}"></script>
 
-<!--    <link rel="stylesheet" th:href="@{/lib/mui/css/mui.css}">-->
-<!--    <script type="application/javascript" th:src="@{/lib/mui/js/mui.js}"></script>-->
+    <!--    <link rel="stylesheet" th:href="@{/lib/mui/css/mui.css}">-->
+    <!--    <script type="application/javascript" th:src="@{/lib/mui/js/mui.js}"></script>-->
 
 </head>
 <body>
@@ -129,6 +129,52 @@
 
         nowtab = this.dataset.tab;
     });
+
+    var productnowpage = 1;
+    var productnowrefresh = false;
+    var nowcatalog=1;
+
+    $(".catalog-content-container").on("click",".product-query-by-catalog", function () {
+        productnowpage = 1;
+        nowcatalog=$(this).attr('catalogId');
+    });
+
+
+
+    $(window).scroll(function () {
+        if (nowtab == "product") {
+            var scrollTop = $(this).scrollTop();
+            var scrollHeight = $(document).height();
+            var windowHeight = $(this).height();
+            console.log(scrollTop + windowHeight + ":" + scrollHeight + "--")
+            if (scrollTop + windowHeight > scrollHeight - 50) {
+
+                if (productnowrefresh == false) {
+                    productnowrefresh = true
+
+                    $.ajax({
+                        url: "/productservice",
+                        data: {
+                            async: true,
+                            pageIndex: productnowpage,
+                            catalog: nowcatalog
+                        },
+                        success: function (data) {
+                            productnowrefresh = false
+                            console.log(data)
+                            $("#productContainer").append(data)
+                            productnowpage = productnowpage + 1;
+
+                        },
+                        error: function () {
+                            toastr.error("error");
+                        }
+                    })
+                }
+            }
+        }
+    });
+
 
 </script>
 
