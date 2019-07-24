@@ -53,6 +53,11 @@ $(function () {
         $("#yinpinkecheng").css("background", "");
         $("#wendangkecheng").css("background", "");
         $("#waibulianjie").css("background", "");
+
+        $("#chanpinziliao").css("background", "");
+        $("#neibupeixun").css("background", "");
+        $("#neibugongju").css("background", "");
+
         $(elementid).css("background", "#007bff");
     }
 
@@ -80,6 +85,16 @@ $(function () {
         } else if (this.id == "waibulianjie") {
             ccatalog = 4;
         }
+        else if (this.id == "chanpinziliao") {
+            ccatalog = 5;
+        }
+        else if (this.id == "neibupeixun") {
+            ccatalog = 6;
+        }
+        else if (this.id == "neibugongju") {
+            ccatalog = 7;
+        }
+
         page=0;
         activecccatalog("#" + this.id)
         cleardata()
@@ -112,7 +127,16 @@ $(function () {
                 }
             }
         });
-        activecccatalog("#shipinkecheng")
+
+        var role = $("meta[name='role']").attr("content");
+
+
+        if(role=="USER"){
+            activecccatalog("#shipinkecheng")
+        }else if(role=="SALE"){
+            activecccatalog("#chanpinziliao")
+            ccatalog = 5;
+        }
         activecccatalog2(1)
     }
 

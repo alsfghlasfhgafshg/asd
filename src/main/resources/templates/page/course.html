@@ -14,6 +14,8 @@
     <script type="application/javascript" th:src="@{/js/jquery.js}"></script>
     <script type="application/javascript" th:src="@{/js/home/course.js}"></script>
     <script type="application/javascript" th:src="@{/lib/mui/js/mui.js}"></script>
+    <meta name="role" th:content="SALE" th:if="${#authorization.expression('hasRole(''ROLE_SALES'')')}"/>
+    <meta name="role" th:content="USER" th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}"/>
 </head>
 <style>
 
@@ -36,23 +38,52 @@
 <br>
 <div id="coursecontainer">
 
-    <div class="two row">
+    <div th:if="${#authorization.expression('hasRole(''ROLE_USER'')')} or ${#authentication.name=='anonymousUser'}">
 
-        <button id="shipinkecheng"
-                class="ccatalog1btn col-5  border-primary border text-center align-middle">视频课程
-        </button>
-        <button id="yinpinkecheng"
-                class="ccatalog1btn col-5  offset-1 border-primary border text-center align-middle">音频课程
-        </button>
+        <div class="two row">
+
+            <button id="shipinkecheng"
+                    class="ccatalog1btn col-5  border-primary border text-center align-middle">视频课程
+            </button>
+            <button id="yinpinkecheng"
+                    class="ccatalog1btn col-5  offset-1 border-primary border text-center align-middle">音频课程
+            </button>
+        </div>
+        <div class="two row">
+            <button id="wendangkecheng"
+                    class="ccatalog1btn col-5  border-primary border text-center align-middle">
+                文档课程
+            </button>
+            <button id="waibulianjie"
+                    class="ccatalog1btn col-5  offset-1 border-primary border text-center align-middle">外部链接
+            </button>
+        </div>
+
+
     </div>
-    <div class="two row">
-        <button id="wendangkecheng"
-                class="ccatalog1btn col-5  border-primary border text-center align-middle">
-            文档课程
-        </button>
-        <button id="waibulianjie"
-                class="ccatalog1btn col-5  offset-1 border-primary border text-center align-middle">外部链接
-        </button>
+
+    <div th:if="${#authorization.expression('hasRole(''ROLE_SALES'')')}">
+
+        <div class="two row">
+
+            <button id="chanpinziliao"
+                    class="ccatalog1btn col-5  border-primary border text-center align-middle">产品资料
+            </button>
+            <button id="neibupeixun"
+                    class="ccatalog1btn col-5  offset-1 border-primary border text-center align-middle">内部培训
+            </button>
+        </div>
+        <div class="two row">
+            <button id="neibugongju"
+                    class="ccatalog1btn col-5  border-primary border text-center align-middle">
+                内部工具
+            </button>
+            <button id="waibulianjie"
+                    class="ccatalog1btn col-5  offset-1 border-primary border text-center align-middle">外部链接
+            </button>
+        </div>
+
+
     </div>
 
 
