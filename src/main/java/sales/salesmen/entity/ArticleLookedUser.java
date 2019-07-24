@@ -11,7 +11,7 @@ public class ArticleLookedUser implements Serializable {
     private Long id;
 
     @Column
-    private Long shared_user_id;
+    private Long sharedUserId;
 
     @Column
     private Long user_id;
@@ -22,12 +22,12 @@ public class ArticleLookedUser implements Serializable {
     public ArticleLookedUser() {
     }
 
-    public Long getShared_user_id() {
-        return shared_user_id;
+    public Long getSharedUserId() {
+        return sharedUserId;
     }
 
-    public void setShared_user_id(Long shared_user_id) {
-        this.shared_user_id = shared_user_id;
+    public void setSharedUserId(Long sharedUserId) {
+        this.sharedUserId = sharedUserId;
     }
 
     public Long getId() {

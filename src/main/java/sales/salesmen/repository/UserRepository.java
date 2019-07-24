@@ -8,7 +8,10 @@ import sales.salesmen.entity.User;
 import java.util.Collection;
 import java.util.List;
 
-public interface UserRepository extends JpaRepository<User,Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
     User findByUsername(String username);
+
     Page<User> findByUsernameLike(String username, Pageable pageable);
+
+    List<User> findAllByIdIn(List<Long> id);
 }
