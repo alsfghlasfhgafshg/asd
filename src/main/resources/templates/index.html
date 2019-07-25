@@ -81,6 +81,10 @@
     }
 
     function hideall() {
+
+        $("#pagecontent").empty()
+
+
         $("#homepage").hide()
         $("#productservicepage").hide()
         $("#coursepage").hide()
@@ -95,46 +99,58 @@
     }
 
     function showhome() {
-        if (homeinited == false) {
-            initpage(homeframe)
-            homeinited = true
-        }
+        // if (homeinited == false) {
+        //     initpage(homeframe)
+        //     homeinited = true
+        // }
         hideall()
+        initpage(homeframe)
+
+
         $("#homepage").show()
         $("#homea").addClass("weui-bar__item_on")
 
     }
 
     function showproductservice() {
-        if (productserviceinited == false) {
-            initpage(productserviceframe)
-            productserviceinited = true
-
-        }
+        // if (productserviceinited == false) {
+        //     initpage(productserviceframe)
+        //     productserviceinited = true
+        //
+        // }
         hideall()
+        initpage(productserviceframe)
+
+
         $("#productservicepage").show()
         $("#productservicea").addClass("weui-bar__item_on")
 
     }
 
     function showcourse() {
-        if (coursepageinited == false) {
-            initpage(coursepageframe)
-            coursepageinited = true
-
-        }
+        // if (coursepageinited == false) {
+        //     initpage(coursepageframe)
+        //     coursepageinited = true
+        //
+        // }
         hideall()
+        initpage(coursepageframe)
+
+
         $("#coursepage").show()
         $("#coursea").addClass("weui-bar__item_on")
 
     }
 
     function showmyself() {
-        if (myselfinited == false) {
-            initpage(myselfframe)
-            myselfinited = true
-        }
+        // if (myselfinited == false) {
+        //     initpage(myselfframe)
+        //     myselfinited = true
+        // }
         hideall()
+        initpage(myselfframe)
+
+
         $("#myselfpage").show()
         $("#myselfa").addClass("weui-bar__item_on")
 

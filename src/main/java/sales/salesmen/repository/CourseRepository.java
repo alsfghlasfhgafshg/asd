@@ -15,4 +15,6 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 
     Page<Course> findAllByCCatalogIn(List<CCatalog> catalogs, Pageable pageable);
 
+    List<Course> findAllByIdIn(List<Long> ids);
+
 }

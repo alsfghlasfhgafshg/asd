@@ -94,13 +94,16 @@ public class HomeController {
     @GetMapping("/myself")
     public String myself(Principal principal, Model model) {
 
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = ((UsernamePasswordAuthenticationToken) principal);
+        if(principal!=null){
+            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = ((UsernamePasswordAuthenticationToken) principal);
 
-        for (GrantedAuthority usernamePasswordAuthenticationTokenAuthority : usernamePasswordAuthenticationToken.getAuthorities()) {
-            if (usernamePasswordAuthenticationTokenAuthority.getAuthority().equals("ROLE_ADMIN")) {
-                return "redirect:/admins";
+            for (GrantedAuthority usernamePasswordAuthenticationTokenAuthority : usernamePasswordAuthenticationToken.getAuthorities()) {
+                if (usernamePasswordAuthenticationTokenAuthority.getAuthority().equals("ROLE_ADMIN")) {
+                    return "redirect:/admins";
+                }
             }
         }
+
 
         String avatarimg = null;
         if (principal != null) {

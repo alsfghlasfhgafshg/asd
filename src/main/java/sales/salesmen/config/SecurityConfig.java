@@ -54,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         //测试
-        http.authorizeRequests().antMatchers("/test**").permitAll();
+        http.authorizeRequests().antMatchers("/test**","/myself/mystar","/course/**").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/test*").permitAll();
 
         http.authorizeRequests().antMatchers("/css/**", "/js/**", "/fonts/**",

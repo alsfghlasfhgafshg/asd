@@ -88,7 +88,7 @@ public class Home_indexController {
     }
 
     @PostMapping("/article/comments")
-    public ResponseEntity<Response> subComments(Long articleId, String commentContent) {
+    public ResponseEntity<Response> subComments(@RequestParam("articleId")Long articleId,@RequestParam("commentContent") String commentContent) {
         try {
             articleService.createComment(articleId, commentContent);
         } catch (Exception e) {

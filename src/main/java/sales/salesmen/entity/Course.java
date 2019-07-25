@@ -40,7 +40,7 @@ public class Course implements Serializable {
     @OneToOne
     private CCatalog2 cCatalog2;
 
-    @OneToMany
+    @ManyToMany
     private List<User> users;
 
     public List<User> getUsers() {
