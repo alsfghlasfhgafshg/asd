@@ -57,8 +57,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/test**").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/test*").permitAll();
 
-        http.authorizeRequests().antMatchers("/css/**", "/js/**", "/fonts/**", "/index").permitAll()
-                .antMatchers("/admins/**").permitAll();
+        http.authorizeRequests().antMatchers("/css/**", "/js/**", "/fonts/**",
+                "/index", "/img/**", "/file/**", "/lib/**").permitAll();
+
+        http.authorizeRequests().antMatchers("/login", "/register").permitAll();
+
+
+        http.authorizeRequests().antMatchers("/", "/home/**", "/myself",
+                "/productservice", "/serving", "/serving/**", "/course", "/search/**").permitAll();
+
+        http.authorizeRequests().antMatchers("/admins/**").hasRole("ADMIN");
+
+
+        http.authorizeRequests().antMatchers("/myself/myclient").hasRole("SALES");
+
+
+        http.authorizeRequests().antMatchers("/**").hasRole("SALES");
+        http.authorizeRequests().antMatchers("/**").hasRole("USER");
+
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/admins/**").hasRole("ADMIN");
+
+
+
         //基于 Form 表单登录验证
         http.formLogin().loginPage("/login").failureUrl("/login-error")
                 .successHandler(loginSuccessHandler)
@@ -69,7 +89,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/druid/**").hasIpAddress("127.0.0.1");
 
         //注销登录
-        http.logout().logoutUrl("/logout").logoutSuccessUrl("/").invalidateHttpSession(true);
+        http.logout().logoutUrl("/logout").logoutSuccessUrl("/myself").invalidateHttpSession(true);
 
         http.headers().frameOptions().sameOrigin();
         http.addFilterAfter(wxLoginFilter, UsernamePasswordAuthenticationFilter.class);

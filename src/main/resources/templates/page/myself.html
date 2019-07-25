@@ -21,6 +21,18 @@
 
     <!--    <script th:src="@{/lib/cropperjs/cropper.js}"></script>-->
 
+
+
+    <script>
+
+        function logout() {
+            console.log("logout")
+            document.getElementById('logout-form').submit();
+
+        }
+    </script>
+
+
 </head>
 <body>
 
@@ -91,10 +103,16 @@
     <img th:src="@{/img/in.png}" class="rounded float-right" style="height: 30px;max-width: 100%;padding-right: 15px">
 </div>
 
-<div style="border-bottom: 1px solid #cccccc;height: 35px;padding-bottom: 5px;margin-bottom: 20px;">
-    <a style="font-size: 22px;padding-left: 25px">我的销售</a>
-    <img th:src="@{/img/in.png}" class="rounded float-right" style="height: 30px;max-width: 100%;padding-right: 15px">
+
+<div th:if="${#authorization.expression('hasRole(''ROLE_SALES'')')}">
+    <div style="border-bottom: 1px solid #cccccc;height: 35px;padding-bottom: 5px;margin-bottom: 20px;">
+        <a style="font-size: 22px;padding-left: 25px" href="/myself/myclient">我的销售</a>
+        <img th:src="@{/img/in.png}" class="rounded float-right" style="height: 30px;max-width: 100%;padding-right: 15px">
+    </div>
 </div>
+
+
+
 
 <div style="border-bottom: 1px solid #cccccc;height: 35px;padding-bottom: 5px;margin-bottom: 20px">
     <a style="font-size: 22px;padding-left: 25px">用户反馈</a>
@@ -110,11 +128,14 @@
 <div th:if="${#authentication.name!='anonymousUser'}">
     <div style="border-bottom: 1px solid #cccccc;height: 35px;padding-bottom: 5px;margin-bottom: 20px">
         <a style="font-size: 22px;padding-left: 25px" href="#"
-           onclick="document.getElementById('logout-form').submit();">
+           onclick="logout()">
             退出登录 </a>
         <form id="logout-form" th:action="@{/logout}" method="post">
 
         </form>
+
+
+        
     </div>
 
 </div>

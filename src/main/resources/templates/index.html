@@ -16,19 +16,20 @@
 
 <div class="weui-tab" style="position: absolute;bottom:0px;width: 100%">
     <div class="weui-search-bar" id="searchBar">
-        <a th:href="@{/search}"><form class="weui-search-bar__form" onkeydown="if(event.keyCode==13) return false;">
-            <div class="weui-search-bar__box">
-                <i class="weui-icon-search"></i>
-                <input type="search" class="weui-search-bar__input" id="searchInput"  placeholder="搜索"
-                       required="">
-                <a href="javascript:clear()" class="weui-icon-clear" id="searchClear"></a>
-            </div>
+        <a th:href="@{/search}">
+            <form class="weui-search-bar__form" onkeydown="if(event.keyCode==13) return false;">
+                <div class="weui-search-bar__box">
+                    <i class="weui-icon-search"></i>
+                    <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索"
+                           required="">
+                    <a href="javascript:clear()" class="weui-icon-clear" id="searchClear"></a>
+                </div>
 
-            <label class="weui-search-bar__label" id="searchText">
-                <i class="weui-icon-search"></i>
-                <span>请输入你想要查看的关键字</span>
-            </label>
-            </a>
+                <label class="weui-search-bar__label" id="searchText">
+                    <i class="weui-icon-search"></i>
+                    <span>请输入你想要查看的关键字</span>
+                </label>
+        </a>
         </form>
         <a href="javascript:cancel()" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
     </div>
@@ -141,6 +142,11 @@
 
     // 显示home
     showhome()
+
+
+    function refreshindex() {
+        location.reload();
+    }
 
 </script>
 </body>

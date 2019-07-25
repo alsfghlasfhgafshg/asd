@@ -37,14 +37,15 @@ public class Home_indexController {
 
 
     @GetMapping("/article/{id}")
-    public String viewArticle(@PathVariable("id") Long id, @RequestParam(value = "uid", required = false) Long userId,
+    public String viewArticle(@PathVariable("id") Long id, @RequestParam(value = "uid", required = false) Long shared_user_id,
                               Model model, UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken) {
         Long lookeduserid = null;
-        if (usernamePasswordAuthenticationToken != null) {
+        if (usernamePasswordAuthenticationToken != null && shared_user_id!=null) {
             lookeduserid = ((User) usernamePasswordAuthenticationToken.getPrincipal()).getId();
         }
-
-        Long shared_user_id = userId;
+        if (lookeduserid == shared_user_id) {
+            lookeduserid = null;
+        }
 
         if (shared_user_id != null && lookeduserid != null) {
             articleLookedUserService.add(shared_user_id, lookeduserid, id);
@@ -54,11 +55,11 @@ public class Home_indexController {
             User user = userService.getUserById(shared_user_id).get();
             model.addAttribute("sharedusernickname", user.getUsername());
             model.addAttribute("shareduserphonenum", user.getPhonenum());
-            String avatar=user.getAvatar();
+            String avatar = user.getAvatar();
             if (avatar == null) {
                 avatar = "/img/defaultavatar.png";
             }
-            model.addAttribute("shareduseravatar",avatar);
+            model.addAttribute("shareduseravatar", avatar);
 
             model.addAttribute("ishared", true);
         }

@@ -16,10 +16,16 @@ import org.springframework.stereotype.Component;
 import sales.salesmen.entity.*;
 import sales.salesmen.repository.*;
 
+import java.util.ArrayList;
+
 
 public class AppListener implements ApplicationListener {
 
     Logger log = LoggerFactory.getLogger(AppListener.class);
+
+
+    @Autowired
+    UserRepository userRepository;
 
     @Autowired
     AuthorityRepository authorityRepository;
@@ -121,11 +127,11 @@ public class AppListener implements ApplicationListener {
             cCatalog2Repository.save(xilieke);
             cCatalog2Repository.save(qita);
 
-            PCatalog simujijin = new PCatalog(1,"私募基金");
-            PCatalog gongmujijin = new PCatalog(2,"公募基金");
-            PCatalog xianjinguanli = new PCatalog(3,"现金管理");
-            PCatalog leigushou = new PCatalog(4,"类固收");
-            PCatalog qitachanpin = new PCatalog(5,"其他");
+            PCatalog simujijin = new PCatalog(1, "私募基金");
+            PCatalog gongmujijin = new PCatalog(2, "公募基金");
+            PCatalog xianjinguanli = new PCatalog(3, "现金管理");
+            PCatalog leigushou = new PCatalog(4, "类固收");
+            PCatalog qitachanpin = new PCatalog(5, "其他");
             PCatalog pjijin = new PCatalog(6, "基金");
             PCatalog pgupiao = new PCatalog(7, "股票");
             PCatalog phaiwaizichanpeizhi = new PCatalog(8, "海外资产配置");
@@ -149,10 +155,10 @@ public class AppListener implements ApplicationListener {
             ACatalog ahaiwaizichanpeizhi = new ACatalog(3, "海外资产配置");
             ACatalog axilieke = new ACatalog(4, "系列课");
             ACatalog aqita = new ACatalog(5, "其他");
-            ACatalog jinronghuati = new ACatalog(6,"金融话题");
-            ACatalog touzijineng = new ACatalog(7,"投资技能");
-            ACatalog dakaguandian = new ACatalog(8,"大咖观点");
-            ACatalog shichanghuodong = new ACatalog(9,"市场活动");
+            ACatalog jinronghuati = new ACatalog(6, "金融话题");
+            ACatalog touzijineng = new ACatalog(7, "投资技能");
+            ACatalog dakaguandian = new ACatalog(8, "大咖观点");
+            ACatalog shichanghuodong = new ACatalog(9, "市场活动");
 
             aCatalogRepository.save(ajijin);
             aCatalogRepository.save(agupiao);
@@ -164,6 +170,17 @@ public class AppListener implements ApplicationListener {
             aCatalogRepository.save(dakaguandian);
             aCatalogRepository.save(shichanghuodong);
 
+
+            User admin = new User("admin", "dgdfgs", "234234");
+            admin.setId(1L);
+            admin.setEncodePassword("admin");
+
+            ArrayList<Authority> adminsauth=new ArrayList<>();
+            adminsauth.add(adminauth);
+            admin.setAuthorities(adminsauth);
+
+
+            userRepository.save(admin);
 
 
         }
