@@ -7,7 +7,7 @@
 <body>
 <div id="articless">
     <div class="card" th:each="article:${articleModel.articleList}">
-        <a th:href="'/home/article/'+${article.articleId}">
+        <a th:href="${#authentication.name=='anonymousUser'?'/home/article/'+article.articleId:'/home/article/'+article.articleId+'?uid='+#authentication.principal.id}">
             <div class="row no-gutters">
                 <div th:if="${article.avatar}!=null" class="col-4">
                     <img src="..." th:src="${article.avatar}" class="card-img">

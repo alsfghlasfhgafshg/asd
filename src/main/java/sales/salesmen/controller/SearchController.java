@@ -58,7 +58,7 @@ public class SearchController {
 
         model.addAttribute("articleList",list);
 
-        return new ModelAndView("/page/home :: #articles","articleModel",model);
+        return new ModelAndView("/searchfragments/search_article :: #articless","articleModel",model);
     }
 
     @GetMapping
