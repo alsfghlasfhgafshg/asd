@@ -96,6 +96,11 @@ public class WxLoginFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String ua = request.getHeader("User-Agent");
+        if(ua==null){
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         //判断是不是微信的浏览器和method是不是get
         if (!ua.contains("MicroMessenger") || !request.getMethod().equals("GET")) {
             filterChain.doFilter(request, response);
