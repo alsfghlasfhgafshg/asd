@@ -40,7 +40,7 @@ public class SearchController {
     public ModelAndView listEsArticles(
             @RequestParam(value = "keyword",required = false,defaultValue = "")String keyword,
             @RequestParam(value = "pageIndex",required = false,defaultValue = "0")int pageIndex,
-            @RequestParam(value = "pageSize",required = false,defaultValue = "10")int pageSize,
+            @RequestParam(value = "pageSize",required = false,defaultValue = "100")int pageSize,
             Model model){
         Page<EsArticle> page = null;
         List<EsArticle> list = null;
@@ -68,7 +68,7 @@ public class SearchController {
     public ModelAndView listEsProducts(
         @RequestParam(value = "keyword", required = false, defaultValue = "")String keyword,
         @RequestParam(value = "pageIndex",required = false,defaultValue = "0")int pageIndex,
-        @RequestParam(value = "pageSize",required = false,defaultValue = "10")int pageSize,
+        @RequestParam(value = "pageSize",required = false,defaultValue = "100")int pageSize,
         Model model){
         Page<EsProduct> page = null;
         List<EsProduct> list = null;
@@ -95,7 +95,7 @@ public class SearchController {
     public ModelAndView listEsServing(
             @RequestParam(value = "keyword", required = false, defaultValue = "")String keyword,
             @RequestParam(value = "pageIndex",required = false,defaultValue = "0")int pageIndex,
-            @RequestParam(value = "pageSize",required = false,defaultValue = "10")int pageSize,
+            @RequestParam(value = "pageSize",required = false,defaultValue = "100")int pageSize,
             Model model){
         Page<EsServing> page = null;
         List<EsServing> list = null;
@@ -122,7 +122,7 @@ public class SearchController {
     public ModelAndView listEsCourse(
             @RequestParam(value = "keyword", required = false, defaultValue = "")String keyword,
             @RequestParam(value = "pageIndex",required = false,defaultValue = "0")int pageIndex,
-            @RequestParam(value = "pageSize",required = false,defaultValue = "10")int pageSize,
+            @RequestParam(value = "pageSize",required = false,defaultValue = "100")int pageSize,
             Model model){
         Page<EsCourse> page = null;
         List<EsCourse> list = null;
